@@ -158,7 +158,9 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             {
                 // float steerFactor = Mathf.Lerp(minSteering, steering, speed / maxSpeed);
                 // rotate = steerFactor * input;
-                float steerFactor = Mathf.Lerp(minSteering, steering, (maxSpeed - speed) / maxSpeed);
+                
+                // a reverifier (adapter minSteering & steering)
+                float steerFactor = Mathf.Lerp(steering, minSteering, (maxSpeed - speed) / maxSpeed);
                 rotate = Mathf.Lerp(rotate, steerFactor * inputSteering, Time.deltaTime * 5f); // Added smoothing
             }
             else {
