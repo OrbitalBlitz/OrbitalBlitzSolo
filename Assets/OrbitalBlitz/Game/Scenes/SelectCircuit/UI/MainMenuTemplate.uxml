@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="rootContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:VisualElement name="titleContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+            <ui:Label tabindex="-1" text="OrbitalBlitz" display-tooltip-when-elided="true" name="Title" style="flex-direction: column; align-items: center; justify-content: center; -unity-text-align: lower-center; white-space: nowrap; text-overflow: ellipsis;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="buttonsContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+            <ui:Button text="Play" display-tooltip-when-elided="true" name="btn_play" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
