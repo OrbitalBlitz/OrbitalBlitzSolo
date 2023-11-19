@@ -43,9 +43,10 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         public float inputSteering;
         public bool inputBraking;
         public float rotate, currentRotate;
+        
 
-        public Vector3 initialPosition;
-        public Quaternion initialRotation;
+        private ShipPhysicsState initialPhysicsState;
+        private ShipPhysicsState lastCheckpointPhysicsState;
 
         /* Chronomètre ?? */
         private int timer = 0;
@@ -54,8 +55,12 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         private const float ZeroSpeedThreshold = 0.01f; // avoid having a direct comparison of float numbers to zero
 
         void Start() {
-            initialPosition = sphere.transform.position;
-            initialRotation = transform.rotation;
+            initialPhysicsState = new() {
+                Position = sphere.transform.position,
+                Rotation = transform.rotation,
+                Velocity = new(0f,0f,0f),
+                AngularVelocity = new(0f,0f,0f),
+            };
         }
 
         void Update() {
@@ -109,6 +114,19 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
 
         public void ActivateBlitz() {
             if (canBoost) StartCoroutine(Turbo());
+        }
+
+        public ShipPhysicsState GetCurrentPhysicsState() {
+            return new() {
+                Position = sphere.transform.position,
+                Rotation = transform.rotation,
+                Velocity = sphere.velocity,
+                AngularVelocity = sphere.angularVelocity,
+            };
+        }
+
+        public void setLastCheckpointPhysicsState(ShipPhysicsState state) {
+            lastCheckpointPhysicsState = state;
         }
 
         private void UpdateSpeed() {
@@ -182,10 +200,19 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         }
 
         public void Respawn() {
-            sphere.transform.position = this.initialPosition;
-            transform.rotation = this.initialRotation;
-            sphere.velocity = new Vector3(0, 0, 0);
-            sphere.angularVelocity = new Vector3(0, 0, 0);
+            ResetShipToPhysicsState(initialPhysicsState);
+            setLastCheckpointPhysicsState(initialPhysicsState);
+        }
+        
+        public void RespawnToLastCheckpoint() {
+            ResetShipToPhysicsState(lastCheckpointPhysicsState);
+        }
+
+        private void ResetShipToPhysicsState(ShipPhysicsState state) {
+            sphere.transform.position = state.Position;
+            transform.rotation  = state.Rotation;
+            sphere.velocity = state.Velocity;
+            sphere.angularVelocity = state.AngularVelocity;
             currentSpeed = 0;
             currentRotate = 0;
         }

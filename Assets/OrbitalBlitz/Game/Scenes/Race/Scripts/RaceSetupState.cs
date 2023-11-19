@@ -1,4 +1,5 @@
 using OrbitalBlitz.Game.Features.Ship;
+using OrbitalBlitz.Game.Features.Ship.Controllers;
 using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
 using UnityEngine;
 
@@ -66,6 +67,12 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             Debug.Log($"{ship.name} passed {checkpoint.name}");
             UpdateShipCheckpointAndLap(checkpoint, ship);
             UpdateShipHasFinished(ship);
+            UpdateShipLastCheckpointPositionAndVelocity(ship);
+        }
+
+        private void UpdateShipLastCheckpointPositionAndVelocity(GameObject ship) {
+            var _controller = ship.GetComponentInChildren<IShipController>();
+            _controller.setLastCheckpointPhysicsState(_controller.GetCurrentPhysicsState());
         }
 
         private void UpdateShipCheckpointAndLap(Checkpoint crossed_checkpoint, GameObject ship) {

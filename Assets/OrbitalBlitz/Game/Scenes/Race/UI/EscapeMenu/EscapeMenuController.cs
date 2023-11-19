@@ -10,7 +10,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.UI.EscapeMenu {
             _view.OnQuitClicked += () => { Loader.LoadScene(Loader.Scene.MainMenu); };
             _view.OnResumeClicked += () => { Hide(); };
             _view.OnRestartClicked += () => { Player.Singleton.ShipController.Respawn(); };
-            _view.OnRespawnClicked += () => { Player.Singleton.ShipController.Respawn(); };
+            _view.OnRespawnClicked += () => { Player.Singleton.ShipController.RespawnToLastCheckpoint(); };
         }
         private void OnDestroy() {  
         }

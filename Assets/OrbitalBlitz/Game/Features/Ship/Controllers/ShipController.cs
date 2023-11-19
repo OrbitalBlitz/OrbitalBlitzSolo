@@ -201,7 +201,19 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         }
 
         public void Respawn() { }
+        public void RespawnToLastCheckpoint() {
+            throw new NotImplementedException();
+        }
+
         public void ActivateBlitz() {
+            throw new NotImplementedException();
+        }
+
+        public ShipPhysicsState GetCurrentPhysicsState() {
+            throw new NotImplementedException();
+        }
+
+        public void setLastCheckpointPhysicsState(ShipPhysicsState state) {
             throw new NotImplementedException();
         }
     }
