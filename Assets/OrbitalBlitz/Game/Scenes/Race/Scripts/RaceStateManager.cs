@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using OrbitalBlitz.Game.Scenes.Race.UI.EndMenu;
+using OrbitalBlitz.Game.Scenes.Race.UI.EscapeMenu;
+using OrbitalBlitz.Game.Scenes.SelectCircuit.UI;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,7 +19,9 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         public Dictionary<RaceState, RaceBaseState> States;
         public RaceState currentState;
         public RaceBaseState currentRaceState;
-
+        
+        [SerializeField] public EndMenuController EndMenuController;
+        [SerializeField] public EscapeMenuController EscapeMenuController;
         [SerializeField] public Transform PlayerPrefab;
         [SerializeField] public Transform ShipPrefab;
 

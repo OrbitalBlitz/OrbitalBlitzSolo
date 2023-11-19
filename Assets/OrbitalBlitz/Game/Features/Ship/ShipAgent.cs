@@ -8,13 +8,13 @@ using UnityEngine;
 
 namespace OrbitalBlitz.Game.Features.Ship {
     public class ShipAgent : Agent {
-        [SerializeField] private PlayerInputActions _playerInputActions;
         [SerializeField] private IShipController _shipController;
+        [SerializeField] private Player player;
 
         private void Awake() {
-            _playerInputActions = new PlayerInputActions();
-            _playerInputActions.defaultMap.Enable();
+            player = Player.Singleton;
             _shipController = gameObject.GetComponentInChildren<IShipController>();
+            player.ShipController = _shipController;
         }
 
         public override void OnEpisodeBegin() {
@@ -42,10 +42,10 @@ namespace OrbitalBlitz.Game.Features.Ship {
         }
 
         public override void Heuristic(in ActionBuffers actionsOut) {
-            Vector2 inputVector = _playerInputActions.defaultMap.Move.ReadValue<Vector2>();
-            float brakeInput = _playerInputActions.defaultMap.Brake.ReadValue<float>();
-            float blitzInput = _playerInputActions.defaultMap.UseBlitz.ReadValue<float>();
-            float respawnInput = _playerInputActions.defaultMap.Respawn.ReadValue<float>();
+            Vector2 inputVector = player.Input.defaultMap.Move.ReadValue<Vector2>();
+            float brakeInput = player.Input.defaultMap.Brake.ReadValue<float>();
+            float blitzInput = player.Input.defaultMap.UseBlitz.ReadValue<float>();
+            float respawnInput = player.Input.defaultMap.Respawn.ReadValue<float>();
 
             var continuousActionsOut = actionsOut.ContinuousActions;
             continuousActionsOut[0] = inputVector.y;
