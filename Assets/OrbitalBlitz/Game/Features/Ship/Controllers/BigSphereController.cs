@@ -29,7 +29,7 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
 
         /* Steering (turning) */
 
-        [SerializeField] private float steering = 10f; // Lower value for more steerability at low speeds.
+        [SerializeField] private float maxSteering = 10f; // Lower value for more steerability at low speeds.
         [SerializeField] private float minSteering = 70f; // Higher value for less steerability at high speeds.
         [SerializeField] private float steeringDelay = 0.5f;
 
@@ -77,30 +77,6 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
                 Debug.Log("FINISH : " + timer);
             }
         }*/
-
-            //** ? OLD CODE**//
-            //Acceleration
-            // currentSpeed = Mathf.SmoothDamp(currentSpeed, speed, ref velocity, 1, acceleration);
-            // speed = 0f;
-
-            // sphere.AddForce(transform.forward * currentSpeed, ForceMode.Acceleration);
-            // Debug.DrawRay(transform.position, transform.forward * currentSpeed, Color.blue);
-
-            // //Steering
-            // currentRotate = Mathf.Lerp(currentRotate, rotate, Time.deltaTime);
-            // rotate = 0f;
-
-            // RaycastHit hit;
-            // Physics.Raycast(transform.position, Vector3.down, out hit, 2.0f, layerMask);
-
-            // Quaternion groundNormalRotation = Quaternion.FromToRotation(transform.up, hit.normal);
-            // Quaternion steeringRotation = Quaternion.Euler(0, currentRotate, 0);
-            // transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * steeringRotation, steeringDelay);
-            // transform.rotation = Quaternion.Lerp(transform.rotation, groundNormalRotation * transform.rotation, delay_normal);
-
-            // Debug.DrawRay(hit.point, hit.normal * 5, Color.green);
-
-            //** ? OLD CODE**//
             UpdateSpeed(); // This is where the speed is updated each physics update
             ApplyBrake();
             ApplySteering();
@@ -158,8 +134,8 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             {
                 // float steerFactor = Mathf.Lerp(minSteering, steering, speed / maxSpeed);
                 // rotate = steerFactor * input;
-                float steerFactor = Mathf.Lerp(minSteering, steering, (maxSpeed - speed) / maxSpeed);
-                rotate = Mathf.Lerp(rotate, steerFactor * inputSteering, Time.deltaTime * 5f); // Added smoothing
+                float steerFactor = Mathf.Lerp(maxSteering, minSteering, (maxSpeed - speed) / maxSpeed);
+                rotate = Mathf.Lerp(rotate, steerFactor * inputSteering, Time.deltaTime * 5f);
             }
             else {
                 rotate = 0; // The kart is not steerable if the speed is zero.
