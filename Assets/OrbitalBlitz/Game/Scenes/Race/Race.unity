@@ -134,7 +134,7 @@ PrefabInstance:
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: ShipPrefab
       value: 
-      objectReference: {fileID: 1512421324690336505, guid: e7e50ecdbf2ca7b40885c3d10e461a01, type: 3}
+      objectReference: {fileID: 1512421324690336505, guid: f513282853ee1304986b8ef8ac61ca22, type: 3}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: PlayerPrefab
       value: 
@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14d1a61193b2f6b4882c76a6d7e5b0ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RaceInfo: {fileID: 0}
 --- !u!4 &2030862557
 Transform:
   m_ObjectHideFlags: 0
@@ -254,6 +255,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 131879127142646260, guid: c44540c871e9fc446820867cc44253db, type: 3}
+      propertyPath: sourceAsset
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: dcabc5690607d94479817f3a1a9a515d, type: 3}
     - target: {fileID: 5850861003401641323, guid: c44540c871e9fc446820867cc44253db, type: 3}
       propertyPath: m_Name
       value: EndMenuUI

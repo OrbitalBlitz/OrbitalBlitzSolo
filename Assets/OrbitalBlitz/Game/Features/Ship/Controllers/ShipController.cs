@@ -216,5 +216,9 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         public void setLastCheckpointPhysicsState(ShipPhysicsState state) {
             throw new NotImplementedException();
         }
+
+        public void SetIsKinematic(bool toggle) {
+            _rb.isKinematic = toggle;
+        }
     }
 }

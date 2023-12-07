@@ -8,6 +8,12 @@ namespace OrbitalBlitz.Game.Features.Ship {
         public int lap = 1;
         public bool hasFinished = false;
 
+        public void Reset() {
+            lastCheckpoint = 0;
+            lap  = 1;
+            hasFinished = false;
+        }
+
         #if UNITY_EDITOR
         private void OnDrawGizmos()
         {

@@ -6,10 +6,16 @@ namespace OrbitalBlitz.Game.Scenes.Race.UI.EndMenu {
         [SerializeField] private EndMenuView _view;
     
         private void Start() {
+            _view.OnQuitClicked += () => { Loader.LoadScene(Loader.Scene.MainMenu); };
+            _view.OnRestartClicked += () => {
+                Hide();
+                Player.Singleton.RaceInfo.Reset();
+                Player.Singleton.ShipController.Respawn();                
+            };
+            
+            Hide();
         }
-        private void OnDestroy() {
-        }
-
+        
         public void Show() {
             _view.Show();
         }

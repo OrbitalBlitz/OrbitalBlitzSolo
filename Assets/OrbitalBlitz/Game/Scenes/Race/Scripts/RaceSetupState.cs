@@ -2,6 +2,7 @@ using OrbitalBlitz.Game.Features.Ship;
 using OrbitalBlitz.Game.Features.Ship.Controllers;
 using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
     public class RaceSetupState : RaceBaseState {
@@ -14,7 +15,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         [SerializeField] private const float CountdownLength = 3f;
 
         public override void UpdateState(RaceStateManager context) {
-            if (_setupFinished) context.SwitchState(RaceStateManager.RaceState.RacePlaying);
+            if (_setupFinished) context.SwitchState(RaceStateManager.RaceState.RaceCountDown);
             // if (_hasCountdownStarted && (_countdown += Time.deltaTime) > CountdownLength)
             //     context.SwitchState(RaceStateManager.RaceState.RacePlaying);
         }
@@ -22,13 +23,19 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         public override void EnterState(RaceStateManager context) {
             base.EnterState(context);
             _stateManager = context;
+            Player.Singleton.Input.defaultMap.ToggleEscapeMenu.started += toggleEscapeMenuCallback;
             RaceSetup();
+        }
+
+        public override void ExitState(RaceStateManager context) {
+            base.ExitState(context);
         }
 
         private void RaceSetup() {
             Debug.Log("RaceManager RaceSetup");
             AddCallbacksToCheckpoints();
             SpawnPlayer();
+            Player.Singleton.ShipController.SetIsKinematic(true);
             // SpawnBots();
             // StartRaceCountdown();
             _setupFinished = true;
@@ -56,6 +63,9 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             _lastUsedSpawnPoint = i;
         }
 
+        public void toggleEscapeMenuCallback(InputAction.CallbackContext callbackContext) {
+            RaceStateManager.Instance.EscapeMenuController.Toggle();
+        }
         public void AddCallbacksToCheckpoints() {
             CircuitManager.Instance.Checkpoints.ForEach(delegate(Checkpoint cp) {
                 Debug.Log($"Added OnShipEnter callback on {cp.name}");

@@ -19,5 +19,7 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         
         public ShipPhysicsState GetCurrentPhysicsState();
         public void setLastCheckpointPhysicsState(ShipPhysicsState state);
+
+        public void SetIsKinematic(bool toggle);
     }
 }

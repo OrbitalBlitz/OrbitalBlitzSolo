@@ -245,6 +245,10 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
 
             Debug.Log("stop turbo");
         }
+
+        public void SetIsKinematic(bool toggle) {
+            sphere.isKinematic = toggle;
+        }
     }
 
     [CustomEditor(typeof(BigSphereController))]

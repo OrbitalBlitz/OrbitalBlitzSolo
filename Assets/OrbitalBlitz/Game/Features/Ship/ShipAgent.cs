@@ -15,6 +15,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
             player = Player.Singleton;
             _shipController = gameObject.GetComponentInChildren<IShipController>();
             player.ShipController = _shipController;
+            player.RaceInfo = gameObject.GetComponentInChildren<ShipRaceInfo>();
         }
 
         public override void OnEpisodeBegin() {

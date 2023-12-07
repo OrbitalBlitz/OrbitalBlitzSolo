@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
+
 
 namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
     public class RacePlayingState : RaceBaseState {
@@ -10,7 +10,10 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         private RaceStateManager _context;
 
         private List<Action<RaceStateManager, RacePlayingState>> RaceEndConditions = new() {
-            ((context, state) => { state.isRaceOver = false; })
+            ((context, state) => {
+                if (Player.Singleton.RaceInfo.hasFinished)
+                    state.isRaceOver = true;
+            })
         };
 
         public override void UpdateState(RaceStateManager context) {
@@ -25,17 +28,14 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         public override void EnterState(RaceStateManager context) {
             base.EnterState(context);
             _context = context;
-            Player.Singleton.Input.defaultMap.ToggleEscapeMenu.started += toggleEscapeMenuCallback;
+            Player.Singleton.ShipController.SetIsKinematic(false);
         }
 
         public override void ExitState(RaceStateManager context) {
             base.ExitState(context);
-            Player.Singleton.Input.defaultMap.ToggleEscapeMenu.started -= toggleEscapeMenuCallback;
             context.EscapeMenuController.Hide();
         }
 
-        public void toggleEscapeMenuCallback(InputAction.CallbackContext callbackContext) {
-                _context.EscapeMenuController.Toggle();
-        }
+        
     }
 }
