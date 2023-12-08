@@ -25,7 +25,7 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         [SerializeField] private float currentSpeed = 0f; // current speed of the player
         [SerializeField] private float targetSpeed = 0f;
         [SerializeField] private Vector3 sphere_velocity;
-        [SerializeField] private float boosterTimer = 0;
+        [SerializeField] private float blitzTimer = 0;
 
         [Header("Lerp & delay")]
         [SerializeField] private float steeringLerpFactor = 2f;
@@ -56,11 +56,6 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
                 Velocity = new(0f,0f,0f),
                 AngularVelocity = new(0f,0f,0f),
             };
-            
-            // playerInputActions = new PlayerInputActions();
-            // playerInputActions.defaultMap.Enable();
-            // initialPosition = sphere.transform.position;
-            // initialRotation = transform.rotation;
         }
 
         void Update() {
@@ -70,18 +65,18 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             // // dev input
             // float inputV = Input.GetAxis("Vertical");
             // Accelerate(inputV);
-            //
+            
             // float inputH = Input.GetAxis("Horizontal");
             // Steer(inputH);
-            //
+            
             // bool inputB = Input.GetKey(KeyCode.Space);
             // Brake(inputB);
-            //
+            
             // if (Input.GetKeyUp(KeyCode.R))
             // {
             //     Respawn();
             // }
-            //
+            
             // if (Input.GetKeyUp(KeyCode.B)) {
             //     ActivateBlitz();
             // }
@@ -89,26 +84,14 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
 
         void FixedUpdate() {
             //Acceleration
-            switch(acceleration_mod) {
-                case "smooth":
-                    UpdateSpeedSmooth();
-                    break;
-                case "linear":
-                    UpdateSpeedLinear();
-                    break;
-                case "mario":
-                    UpdateSpeedMario();
-                    break;
-            }        
+            UpdateSpeed();
 
             //Steering
             UpdateRotate();
 
             UpdateTilt();
 
-            // UpdateBrake();
-
-            UpdateBoosterTimer();
+            UpdateBlitzTimer();
 
             UpdateParticles();
 
@@ -120,32 +103,7 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             acceleration_input = input;
         }
 
-        private void UpdateSpeedSmooth() {
-            switch (acceleration_input) {
-                case > 0:
-                    currentSpeed = Mathf.SmoothDamp(currentSpeed, max_speed_forward, ref velocity, 1, acceleration_stat);
-                    break;
-                case < 0:
-                    currentSpeed = Mathf.SmoothDamp(currentSpeed, -max_speed_backward, ref velocity, 1, acceleration_stat);
-                    break;
-                case 0:
-                    currentSpeed = Mathf.SmoothDamp(currentSpeed, 0, ref velocity, 1, deceleration_stat);
-                    break;
-            }
-
-            currentSpeed = (currentSpeed > -0.1f && currentSpeed < 0.1f) ? 0 : currentSpeed;
-
-            sphere.AddForce(transform.forward * currentSpeed, ForceMode.Acceleration);
-            Debug.DrawRay(transform.position, transform.forward * currentSpeed, Color.blue);
-        }
-
-        private void UpdateSpeedLinear() {
-            currentSpeed = acceleration_input * acceleration_stat;
-            sphere.AddForce(transform.forward * currentSpeed, ForceMode.Acceleration);
-            sphere.velocity = Vector3.ClampMagnitude(sphere.velocity, max_speed_forward);
-        }
-
-        private void UpdateSpeedMario() {
+        private void UpdateSpeed() {
             if (!isBraking) {
                 // Calculate the desired target speed based on input
                 switch (acceleration_input) {
@@ -175,16 +133,20 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
 
             currentSpeed = Mathf.Clamp(currentSpeed, 0, Mathf.Infinity);
 
-            if (boosterTimer > 0) {
+            if (blitzTimer > 0) {
+                // AddForce if the blitz is active
                 currentSpeed = boost_power;
                 sphere.AddForce(transform.forward * currentSpeed, ForceMode.Acceleration);
             } else if (currentSpeed > 0) {
                 if (!isBraking) {
+                    // Accelerate the vehicule
                     sphere.AddForce(transform.forward * currentSpeed * acceleration_input, ForceMode.Acceleration);
                 } else {
+                    // decelerate the vehicule if breaking
                     sphere.AddForce(-sphere.velocity.normalized * currentSpeed, ForceMode.Acceleration);
                 }
             } else if (isBraking) {
+                // pass the vehicule velocity to 0 if currentSpeed is null and the user is breaking, the goal is to completely stop the movement of the vehicule
                 sphere.velocity = Vector3.Lerp(sphere.velocity, Vector3.zero, delay_normal);
             }
         }
@@ -192,11 +154,6 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         public void Steer(float input)
         {
             rotate = steering * input;
-            // isSteering = input != 0;
-        }
-
-        public void Brake(int input) {
-            throw new NotImplementedException();
         }
 
         private void UpdateRotate()
@@ -217,26 +174,17 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             transform.rotation = Quaternion.Lerp(transform.rotation, groundNormalRotation * transform.rotation, delay_normal);
         }
 
-        public void Brake(bool input)
-        {
-            isBraking = input;
+        public void Brake(int input) {
+            isBraking = input > 0;
         }
 
-        // private void UpdateBrake() {
-        //     if (isBraking) {
-        //         float current_speed_opposit_sign = -1 * Mathf.Sign(currentSpeed);
+        public void ActivateBlitz() {
+            blitzTimer = boost_duration * 10;
+        }
 
-        //         currentSpeed += current_speed_opposit_sign * brake_force_stat;
-        //         currentSpeed = Mathf.Sign(currentSpeed) == current_speed_opposit_sign ? 0 : currentSpeed; // le freinage ne peut pas faire avancer
-        //         currentSpeed = (currentSpeed > -0.1f && currentSpeed < 0.1f) ? 0 : currentSpeed;
-
-        //         sphere.AddForce(transform.forward * currentSpeed, ForceMode.Acceleration);
-        //     }
-        // }
-
-        private void UpdateBoosterTimer() {
-            if (boosterTimer > 0) {
-                boosterTimer --;
+        private void UpdateBlitzTimer() {
+            if (blitzTimer > 0) {
+                blitzTimer --;
             }
         }
 
@@ -248,10 +196,6 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
 
         public void RespawnToLastCheckpoint() {
             ResetShipToPhysicsState(lastCheckpointPhysicsState);
-        }
-
-        public void ActivateBlitz() {
-            boosterTimer = boost_duration * 10;
         }
 
         public ShipPhysicsState GetCurrentPhysicsState() {
@@ -284,7 +228,7 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         {
             ParticleSystem.EmissionModule acceleration_emission = acceleration_particles.emission;
 
-            if (boosterTimer > 0) {
+            if (blitzTimer > 0) {
                 acceleration_emission.rateOverTime = 100;
             } else if (currentSpeed > max_speed_forward - 10) {
                 acceleration_emission.rateOverTime = 30;
