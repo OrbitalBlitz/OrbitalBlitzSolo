@@ -42,9 +42,9 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         }
 
         public void SpawnPlayer() {
-            int spawnpointsCount = CircuitManager.Instance.Spawnpoints.Count;
+            int spawnpointsCount = _stateManager.m_circuit_data.Spawnpoints.Count;
             int i = (_lastUsedSpawnPoint + 1) % spawnpointsCount;
-            Transform spTransform = CircuitManager.Instance.Spawnpoints[i].gameObject.transform;
+            Transform spTransform = _stateManager.m_circuit_data.Spawnpoints[i].gameObject.transform;
 
             var spPosition = spTransform.position;
             var spRotation = spTransform.rotation;
@@ -67,7 +67,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             RaceStateManager.Instance.EscapeMenuController.Toggle();
         }
         public void AddCallbacksToCheckpoints() {
-            CircuitManager.Instance.Checkpoints.ForEach(delegate(Checkpoint cp) {
+            _stateManager.m_circuit_data.Checkpoints.ForEach(delegate(Checkpoint cp) {
                 Debug.Log($"Added OnShipEnter callback on {cp.name}");
                 cp.onShipEnter += Checkpoint_OnShipEnter;
             });
@@ -87,8 +87,8 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
 
         private void UpdateShipCheckpointAndLap(Checkpoint crossed_checkpoint, GameObject ship) {
             //Debug.Log("updatePlayerCheckpointAndLap called.");
-            int numberOfCheckpoints = CircuitManager.Instance.Checkpoints.Count;
-            int passed_cp = CircuitManager.Instance.Checkpoints.IndexOf(crossed_checkpoint);
+            int numberOfCheckpoints = _stateManager.m_circuit_data.Checkpoints.Count;
+            int passed_cp = _stateManager.m_circuit_data.Checkpoints.IndexOf(crossed_checkpoint);
 
             int playerLastCp = ship.GetComponent<ShipRaceInfo>().lastCheckpoint;
             int playerLap = ship.GetComponent<ShipRaceInfo>().lap;
@@ -142,7 +142,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         private void UpdateShipHasFinished(GameObject player) {
             //Debug.Log("updatePlayerHasFinished called.");
 
-            if (player.GetComponent<ShipRaceInfo>().lap == CircuitManager.Instance.Laps + 1) {
+            if (player.GetComponent<ShipRaceInfo>().lap == _stateManager.m_circuit_data.Laps + 1) {
                 player.GetComponent<ShipRaceInfo>().hasFinished = true;
             }
         }
