@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
@@ -18,6 +21,8 @@ public class CircuitGenerator : MonoBehaviour
     public (int Min, int Max) knotSpaceRange = (100, 300); // space between knots
 
     public int checkpointInterval = 3; // frequency at which checkpoints are placed in terms of knots
+    private List<Checkpoint> checkpoints;
+    private GameObject checkpointsParent = GameObject.Find("checkpoints");
 
     public int minDistanceBetweenKnots = 90;
     public int maxKnotRotation = 90;
@@ -26,7 +31,12 @@ public class CircuitGenerator : MonoBehaviour
     public GameObject startLinePrefab;
     //public GameObject endLinePrefab;
 
+    private GameObject circuitInstance = CircuitData.Instance.gameObject;
 
+    void Awake() 
+    {
+        checkpointsParent = GameObject.Find("checkpoints");
+    }
     void Start()
     {
         //GenerateCircuit();
@@ -50,6 +60,8 @@ public class CircuitGenerator : MonoBehaviour
         // 1st knot starts at 0, 0, 0
         BezierKnot knot = new BezierKnot(new float3(0, 0, 0));
         knots[0] = knot;
+        createCheckpoint(knot);
+        
         for (int i = 1; i < numberOfKnots; i++) {
             knot = createKnot(knot, knots);
             knots[i] = knot;
@@ -69,6 +81,10 @@ public class CircuitGenerator : MonoBehaviour
 
         // Create the finish line
         createFinishLine(knot);
+
+        // Add checkpoints to circuitSData
+        CircuitData circuitData = circuitInstance.GetComponent<CircuitData>();
+        circuitData.Checkpoints = checkpoints;
         
         // Create spline using the knots
         spline.Knots = knots;   
@@ -119,25 +135,26 @@ public class CircuitGenerator : MonoBehaviour
 
         // Convert Unity.Mathematics.float3 to UnityEngine.Vector3
         Vector3 checkpointPosition = new Vector3(lastKnot.Position.x, lastKnot.Position.y + 5, lastKnot.Position.z);
+        
 
-        // Create the ckepoint
-        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-
-        // Set the cube's position
-        cube.transform.position = checkpointPosition;
-
+        GameObject checkpoint = Instantiate(checkpointPrefab);
+        checkpoint.transform.SetParent(checkpointsParent.transform);
+        checkpoint.transform.position = checkpointPosition;
+        
+        checkpoints.Add(checkpoint.GetComponent<Checkpoint>());
     }
 
     void createFinishLine(BezierKnot lastKnot){
-        // Create the finishline at the last know
+        // Create the finishline at the last know (last checkpoint)
 
         // Convert Unity.Mathematics.float3 to UnityEngine.Vector3
-        Vector3 checkpointPosition = new Vector3(lastKnot.Position.x, lastKnot.Position.y, lastKnot.Position.z);
+        Vector3 checkpointPosition = new Vector3(lastKnot.Position.x, lastKnot.Position.y + 5, lastKnot.Position.z);
+        
 
-        // Create the ckepoint
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-
-        // Set the cube's position
-        sphere.transform.position = checkpointPosition;
+        GameObject checkpoint = Instantiate(checkpointPrefab);
+        checkpoint.transform.SetParent(checkpointsParent.transform);
+        checkpoint.transform.position = checkpointPosition;
+        
+        checkpoints.Add(checkpoint.GetComponent<Checkpoint>());
     }
 }
