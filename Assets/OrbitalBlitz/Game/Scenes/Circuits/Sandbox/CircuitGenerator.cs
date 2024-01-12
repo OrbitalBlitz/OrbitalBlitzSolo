@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -22,7 +23,7 @@ public class CircuitGenerator : MonoBehaviour
 
     public int checkpointInterval = 3; // frequency at which checkpoints are placed in terms of knots
     private List<Checkpoint> checkpoints;
-    private GameObject checkpointsParent = GameObject.Find("checkpoints");
+    public GameObject checkpointsParent;
 
     public int minDistanceBetweenKnots = 90;
     public int maxKnotRotation = 90;
@@ -31,11 +32,11 @@ public class CircuitGenerator : MonoBehaviour
     public GameObject startLinePrefab;
     //public GameObject endLinePrefab;
 
-    private GameObject circuitInstance = CircuitData.Instance.gameObject;
+    private GameObject circuitParent; // init
 
     void Awake() 
     {
-        checkpointsParent = GameObject.Find("checkpoints");
+        
     }
     void Start()
     {
@@ -43,8 +44,12 @@ public class CircuitGenerator : MonoBehaviour
         
     }
 
-    public void GenerateCircuit() {
+    private void init(){
+        circuitParent = transform.parent.gameObject;
+    }
 
+    public void GenerateCircuit() {
+        init();
         // Get the SplineContainer component
         SplineContainer container = gameObject.GetComponent<SplineContainer>();
          // Add a SplineContainer component to this GameObject.
@@ -60,15 +65,16 @@ public class CircuitGenerator : MonoBehaviour
         // 1st knot starts at 0, 0, 0
         BezierKnot knot = new BezierKnot(new float3(0, 0, 0));
         knots[0] = knot;
-        createCheckpoint(knot);
+        createStartLine(knot);
         
-        for (int i = 1; i < numberOfKnots; i++) {
+        int i;
+        for (i = 1; i < numberOfKnots; i++) {
             knot = createKnot(knot, knots);
             knots[i] = knot;
             
             // Create a checkpoint every x knots
             if (knots.Length % checkpointInterval == 0){
-                    createCheckpoint(knot);
+                    createCheckpoint(knot, i);
             }
 
         }
@@ -80,10 +86,10 @@ public class CircuitGenerator : MonoBehaviour
         //How to not cross links ?
 
         // Create the finish line
-        createFinishLine(knot);
+        createFinishLine(knot, i);
 
         // Add checkpoints to circuitSData
-        CircuitData circuitData = circuitInstance.GetComponent<CircuitData>();
+        CircuitData circuitData = circuitParent.GetComponent<CircuitData>();
         circuitData.Checkpoints = checkpoints;
         
         // Create spline using the knots
@@ -130,7 +136,22 @@ public class CircuitGenerator : MonoBehaviour
         return new BezierKnot(newPosition);
     }
 
-    void createCheckpoint(BezierKnot lastKnot){
+    void createStartLine(BezierKnot lastKnot){
+        // Add a checkpoint at the last knot
+
+        // Convert Unity.Mathematics.float3 to UnityEngine.Vector3
+        Vector3 position = new Vector3(lastKnot.Position.x, lastKnot.Position.y + 5, lastKnot.Position.z);
+        
+        GameObject startLine = Instantiate(startLinePrefab);
+        startLine.transform.SetParent(circuitParent.transform);
+        startLine.transform.position = position;
+
+        startLine.name = "startLine";
+
+        
+    }
+
+    void createCheckpoint(BezierKnot lastKnot, int number){
         // Add a checkpoint at the last knot
 
         // Convert Unity.Mathematics.float3 to UnityEngine.Vector3
@@ -140,11 +161,13 @@ public class CircuitGenerator : MonoBehaviour
         GameObject checkpoint = Instantiate(checkpointPrefab);
         checkpoint.transform.SetParent(checkpointsParent.transform);
         checkpoint.transform.position = checkpointPosition;
+
+        checkpoint.name = "checkpoint" + number;
         
         checkpoints.Add(checkpoint.GetComponent<Checkpoint>());
     }
 
-    void createFinishLine(BezierKnot lastKnot){
+    void createFinishLine(BezierKnot lastKnot, int number){
         // Create the finishline at the last know (last checkpoint)
 
         // Convert Unity.Mathematics.float3 to UnityEngine.Vector3
@@ -154,6 +177,8 @@ public class CircuitGenerator : MonoBehaviour
         GameObject checkpoint = Instantiate(checkpointPrefab);
         checkpoint.transform.SetParent(checkpointsParent.transform);
         checkpoint.transform.position = checkpointPosition;
+
+        checkpoint.name = "checkpoint" + number;
         
         checkpoints.Add(checkpoint.GetComponent<Checkpoint>());
     }
