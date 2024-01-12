@@ -121,7 +121,7 @@ public class CircuitGenerator : MonoBehaviour
         Vector3 checkpointPosition = new Vector3(lastKnot.Position.x, lastKnot.Position.y + 5, lastKnot.Position.z);
 
         // Create the ckepoint
-        GameObject cube = GameObject.CreatePrimitive
+        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
         // Set the cube's position
         cube.transform.position = checkpointPosition;

@@ -166,7 +166,7 @@ public class GeneratedCircuit : MonoBehaviour {
     }
 
 
-    void Update() { }
+    // void Update() { }
 }
 
 [CustomEditor(typeof(GeneratedCircuit))]
