@@ -62,6 +62,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleEscapeMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""508bc8bd-1794-4db0-8155-84f4711a40aa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -163,6 +172,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Respawn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""350203e2-735b-41d4-8344-fd38bd00b460"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleEscapeMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -175,6 +195,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_defaultMap_Brake = m_defaultMap.FindAction("Brake", throwIfNotFound: true);
         m_defaultMap_UseBlitz = m_defaultMap.FindAction("UseBlitz", throwIfNotFound: true);
         m_defaultMap_Respawn = m_defaultMap.FindAction("Respawn", throwIfNotFound: true);
+        m_defaultMap_ToggleEscapeMenu = m_defaultMap.FindAction("ToggleEscapeMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -240,6 +261,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_defaultMap_Brake;
     private readonly InputAction m_defaultMap_UseBlitz;
     private readonly InputAction m_defaultMap_Respawn;
+    private readonly InputAction m_defaultMap_ToggleEscapeMenu;
     public struct DefaultMapActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -248,6 +270,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Brake => m_Wrapper.m_defaultMap_Brake;
         public InputAction @UseBlitz => m_Wrapper.m_defaultMap_UseBlitz;
         public InputAction @Respawn => m_Wrapper.m_defaultMap_Respawn;
+        public InputAction @ToggleEscapeMenu => m_Wrapper.m_defaultMap_ToggleEscapeMenu;
         public InputActionMap Get() { return m_Wrapper.m_defaultMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -269,6 +292,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Respawn.started += instance.OnRespawn;
             @Respawn.performed += instance.OnRespawn;
             @Respawn.canceled += instance.OnRespawn;
+            @ToggleEscapeMenu.started += instance.OnToggleEscapeMenu;
+            @ToggleEscapeMenu.performed += instance.OnToggleEscapeMenu;
+            @ToggleEscapeMenu.canceled += instance.OnToggleEscapeMenu;
         }
 
         private void UnregisterCallbacks(IDefaultMapActions instance)
@@ -285,6 +311,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Respawn.started -= instance.OnRespawn;
             @Respawn.performed -= instance.OnRespawn;
             @Respawn.canceled -= instance.OnRespawn;
+            @ToggleEscapeMenu.started -= instance.OnToggleEscapeMenu;
+            @ToggleEscapeMenu.performed -= instance.OnToggleEscapeMenu;
+            @ToggleEscapeMenu.canceled -= instance.OnToggleEscapeMenu;
         }
 
         public void RemoveCallbacks(IDefaultMapActions instance)
@@ -308,5 +337,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnBrake(InputAction.CallbackContext context);
         void OnUseBlitz(InputAction.CallbackContext context);
         void OnRespawn(InputAction.CallbackContext context);
+        void OnToggleEscapeMenu(InputAction.CallbackContext context);
     }
 }

@@ -1,6 +1,8 @@
 using OrbitalBlitz.Game.Features.Ship;
+using OrbitalBlitz.Game.Features.Ship.Controllers;
 using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
     public class RaceSetupState : RaceBaseState {
@@ -13,7 +15,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         [SerializeField] private const float CountdownLength = 3f;
 
         public override void UpdateState(RaceStateManager context) {
-            if (_setupFinished) context.SwitchState(RaceStateManager.RaceState.RacePlaying);
+            if (_setupFinished) context.SwitchState(RaceStateManager.RaceState.RaceCountDown);
             // if (_hasCountdownStarted && (_countdown += Time.deltaTime) > CountdownLength)
             //     context.SwitchState(RaceStateManager.RaceState.RacePlaying);
         }
@@ -21,22 +23,28 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         public override void EnterState(RaceStateManager context) {
             base.EnterState(context);
             _stateManager = context;
+            Player.Singleton.Input.defaultMap.ToggleEscapeMenu.started += toggleEscapeMenuCallback;
             RaceSetup();
+        }
+
+        public override void ExitState(RaceStateManager context) {
+            base.ExitState(context);
         }
 
         private void RaceSetup() {
             Debug.Log("RaceManager RaceSetup");
             AddCallbacksToCheckpoints();
             SpawnPlayer();
+            Player.Singleton.ShipController.SetIsKinematic(true);
             // SpawnBots();
             // StartRaceCountdown();
             _setupFinished = true;
         }
 
         public void SpawnPlayer() {
-            int spawnpointsCount = CircuitManager.Instance.Spawnpoints.Count;
+            int spawnpointsCount = _stateManager.m_circuit_data.Spawnpoints.Count;
             int i = (_lastUsedSpawnPoint + 1) % spawnpointsCount;
-            Transform spTransform = CircuitManager.Instance.Spawnpoints[i].gameObject.transform;
+            Transform spTransform = _stateManager.m_circuit_data.Spawnpoints[i].gameObject.transform;
 
             var spPosition = spTransform.position;
             var spRotation = spTransform.rotation;
@@ -55,8 +63,11 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             _lastUsedSpawnPoint = i;
         }
 
+        public void toggleEscapeMenuCallback(InputAction.CallbackContext callbackContext) {
+            RaceStateManager.Instance.EscapeMenuController.Toggle();
+        }
         public void AddCallbacksToCheckpoints() {
-            CircuitManager.Instance.Checkpoints.ForEach(delegate(Checkpoint cp) {
+            _stateManager.m_circuit_data.Checkpoints.ForEach(delegate(Checkpoint cp) {
                 Debug.Log($"Added OnShipEnter callback on {cp.name}");
                 cp.onShipEnter += Checkpoint_OnShipEnter;
             });
@@ -66,12 +77,18 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             Debug.Log($"{ship.name} passed {checkpoint.name}");
             UpdateShipCheckpointAndLap(checkpoint, ship);
             UpdateShipHasFinished(ship);
+            UpdateShipLastCheckpointPositionAndVelocity(ship);
+        }
+
+        private void UpdateShipLastCheckpointPositionAndVelocity(GameObject ship) {
+            var _controller = ship.GetComponentInChildren<IShipController>();
+            _controller.setLastCheckpointPhysicsState(_controller.GetCurrentPhysicsState());
         }
 
         private void UpdateShipCheckpointAndLap(Checkpoint crossed_checkpoint, GameObject ship) {
             //Debug.Log("updatePlayerCheckpointAndLap called.");
-            int numberOfCheckpoints = CircuitManager.Instance.Checkpoints.Count;
-            int passed_cp = CircuitManager.Instance.Checkpoints.IndexOf(crossed_checkpoint);
+            int numberOfCheckpoints = _stateManager.m_circuit_data.Checkpoints.Count;
+            int passed_cp = _stateManager.m_circuit_data.Checkpoints.IndexOf(crossed_checkpoint);
 
             int playerLastCp = ship.GetComponent<ShipRaceInfo>().lastCheckpoint;
             int playerLap = ship.GetComponent<ShipRaceInfo>().lap;
@@ -125,7 +142,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         private void UpdateShipHasFinished(GameObject player) {
             //Debug.Log("updatePlayerHasFinished called.");
 
-            if (player.GetComponent<ShipRaceInfo>().lap == CircuitManager.Instance.Laps + 1) {
+            if (player.GetComponent<ShipRaceInfo>().lap == _stateManager.m_circuit_data.Laps + 1) {
                 player.GetComponent<ShipRaceInfo>().hasFinished = true;
             }
         }

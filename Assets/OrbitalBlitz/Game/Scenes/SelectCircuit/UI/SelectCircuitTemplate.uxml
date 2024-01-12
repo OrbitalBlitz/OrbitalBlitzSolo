@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="rootContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; height: 100%; flex-direction: column; justify-content: flex-start; align-items: center;">
+        <ui:Label tabindex="-1" text="Select a circuit" display-tooltip-when-elided="true" />
+        <ui:Button text="Play" display-tooltip-when-elided="true" name="btn_play" />
+        <ui:ListView focusable="true" name="ListView" style="width: 100%; height: 100%;" />
+    </ui:VisualElement>
+</ui:UXML>

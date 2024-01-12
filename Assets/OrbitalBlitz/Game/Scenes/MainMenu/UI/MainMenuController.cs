@@ -13,8 +13,8 @@ namespace OrbitalBlitz.Game.Scenes.MainMenu.UI {
         }
 
         private void goToSelectScene() {
-            Loader.LoadScene(Loader.Scene.TestCircuit_1);
-            Loader.LoadScene(Loader.Scene.Race, LoadSceneMode.Additive);
+            Loader.LoadScene(Loader.Scene.SelectCircuit);
+            // Loader.LoadScene(Loader.Scene.Race, LoadSceneMode.Additive);
         }
     }
 }

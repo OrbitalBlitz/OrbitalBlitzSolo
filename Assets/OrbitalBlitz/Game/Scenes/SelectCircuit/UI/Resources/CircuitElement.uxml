@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Button display-tooltip-when-elided="true" name="btn_select" style="background-color: rgba(142, 142, 142, 0); width: initial; max-height: 100px;">
+        <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-items: flex-start;">
+            <ui:Label tabindex="-1" text="Circuit Name" display-tooltip-when-elided="true" name="text_name" style="-unity-font-style: bold;" />
+            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; padding-left: 50px;">
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+                    <ui:Label tabindex="-1" text="Personal Best :" display-tooltip-when-elided="true" />
+                    <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="text_pb" style="-unity-font-style: italic;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+                    <ui:Label tabindex="-1" text="World Record :" display-tooltip-when-elided="true" />
+                    <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="text_wr" style="-unity-font-style: italic;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:Button>
+</ui:UXML>

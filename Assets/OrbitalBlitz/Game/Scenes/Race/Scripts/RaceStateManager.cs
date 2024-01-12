@@ -1,4 +1,8 @@
 using System.Collections.Generic;
+using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
+using OrbitalBlitz.Game.Scenes.Race.UI.EndMenu;
+using OrbitalBlitz.Game.Scenes.Race.UI.EscapeMenu;
+using OrbitalBlitz.Game.Scenes.SelectCircuit.UI;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,9 +20,13 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         public Dictionary<RaceState, RaceBaseState> States;
         public RaceState currentState;
         public RaceBaseState currentRaceState;
-
+        
+        [SerializeField] public EndMenuController EndMenuController;
+        [SerializeField] public EscapeMenuController EscapeMenuController;
         [SerializeField] public Transform PlayerPrefab;
         [SerializeField] public Transform ShipPrefab;
+        
+        public CircuitData m_circuit_data;
 
         void Start() {
             Instance = this;
@@ -29,6 +37,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
                     { RaceState.RacePlaying, new RacePlayingState() },
                     { RaceState.RaceEnded, new RaceEndedState() },
                 };
+            m_circuit_data = FindObjectOfType<CircuitData>();
             SwitchState(RaceState.RaceSetup);
         }
 

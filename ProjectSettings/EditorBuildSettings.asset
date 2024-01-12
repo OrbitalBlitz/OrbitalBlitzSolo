@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/OrbitalBlitz/Game/Scenes/Circuits/TestCircuit_1.unity
     guid: 9728f998435f7a247a50e1e8d08ea5ad
+  - enabled: 1
+    path: Assets/OrbitalBlitz/Game/Scenes/Circuits/TestCircuitGen.unity
+    guid: 64494128427c84a42b4caed0a99d80f3
   m_configObjects: {}

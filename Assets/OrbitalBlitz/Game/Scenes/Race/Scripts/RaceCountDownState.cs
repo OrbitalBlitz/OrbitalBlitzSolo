@@ -9,7 +9,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
 
         public override void UpdateState(RaceStateManager context) {
             if (isTimeOut(context))
-                context.SwitchState(RaceStateManager.RaceState.RaceCountDown);
+                context.SwitchState(RaceStateManager.RaceState.RacePlaying);
         }
 
         public override void EnterState(RaceStateManager context) {
@@ -18,11 +18,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
 
         private bool isTimeOut(RaceStateManager context) {
             _timeRemaining -= Time.deltaTime;
-            _acc += Time.deltaTime;
-            if (_acc >= 1) {
-                Debug.Log($"{_initialTime - (_countDown += 1)} seconds left before race starts...", context);
-                _acc = 0;
-            }
+            Debug.Log($"{_timeRemaining} seconds left before race starts...", context);
             if (_timeRemaining < 0)
                 return true;
             return false;

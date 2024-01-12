@@ -29,7 +29,7 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
 
         /* Steering (turning) */
 
-        [SerializeField] private float maxSteering = 10f; // Lower value for more steerability at low speeds.
+        [SerializeField] private float steering = 10f; // Lower value for more steerability at low speeds.
         [SerializeField] private float minSteering = 70f; // Higher value for less steerability at high speeds.
         [SerializeField] private float steeringDelay = 0.5f;
 
@@ -43,9 +43,10 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         public float inputSteering;
         public bool inputBraking;
         public float rotate, currentRotate;
+        
 
-        public Vector3 initialPosition;
-        public Quaternion initialRotation;
+        private ShipPhysicsState initialPhysicsState;
+        private ShipPhysicsState lastCheckpointPhysicsState;
 
         /* Chronomètre ?? */
         private int timer = 0;
@@ -54,8 +55,12 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         private const float ZeroSpeedThreshold = 0.01f; // avoid having a direct comparison of float numbers to zero
 
         void Start() {
-            initialPosition = sphere.transform.position;
-            initialRotation = transform.rotation;
+            initialPhysicsState = new() {
+                Position = sphere.transform.position,
+                Rotation = transform.rotation,
+                Velocity = new(0f,0f,0f),
+                AngularVelocity = new(0f,0f,0f),
+            };
         }
 
         void Update() {
@@ -77,6 +82,30 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
                 Debug.Log("FINISH : " + timer);
             }
         }*/
+
+            //** ? OLD CODE**//
+            //Acceleration
+            // currentSpeed = Mathf.SmoothDamp(currentSpeed, speed, ref velocity, 1, acceleration);
+            // speed = 0f;
+
+            // sphere.AddForce(transform.forward * currentSpeed, ForceMode.Acceleration);
+            // Debug.DrawRay(transform.position, transform.forward * currentSpeed, Color.blue);
+
+            // //Steering
+            // currentRotate = Mathf.Lerp(currentRotate, rotate, Time.deltaTime);
+            // rotate = 0f;
+
+            // RaycastHit hit;
+            // Physics.Raycast(transform.position, Vector3.down, out hit, 2.0f, layerMask);
+
+            // Quaternion groundNormalRotation = Quaternion.FromToRotation(transform.up, hit.normal);
+            // Quaternion steeringRotation = Quaternion.Euler(0, currentRotate, 0);
+            // transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * steeringRotation, steeringDelay);
+            // transform.rotation = Quaternion.Lerp(transform.rotation, groundNormalRotation * transform.rotation, delay_normal);
+
+            // Debug.DrawRay(hit.point, hit.normal * 5, Color.green);
+
+            //** ? OLD CODE**//
             UpdateSpeed(); // This is where the speed is updated each physics update
             ApplyBrake();
             ApplySteering();
@@ -85,6 +114,19 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
 
         public void ActivateBlitz() {
             if (canBoost) StartCoroutine(Turbo());
+        }
+
+        public ShipPhysicsState GetCurrentPhysicsState() {
+            return new() {
+                Position = sphere.transform.position,
+                Rotation = transform.rotation,
+                Velocity = sphere.velocity,
+                AngularVelocity = sphere.angularVelocity,
+            };
+        }
+
+        public void setLastCheckpointPhysicsState(ShipPhysicsState state) {
+            lastCheckpointPhysicsState = state;
         }
 
         private void UpdateSpeed() {
@@ -134,8 +176,10 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             {
                 // float steerFactor = Mathf.Lerp(minSteering, steering, speed / maxSpeed);
                 // rotate = steerFactor * input;
-                float steerFactor = Mathf.Lerp(maxSteering, minSteering, (maxSpeed - speed) / maxSpeed);
-                rotate = Mathf.Lerp(rotate, steerFactor * inputSteering, Time.deltaTime * 5f);
+                
+                // a reverifier (adapter minSteering & steering)
+                float steerFactor = Mathf.Lerp(steering, minSteering, (maxSpeed - speed) / maxSpeed);
+                rotate = Mathf.Lerp(rotate, steerFactor * inputSteering, Time.deltaTime * 5f); // Added smoothing
             }
             else {
                 rotate = 0; // The kart is not steerable if the speed is zero.
@@ -156,10 +200,19 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         }
 
         public void Respawn() {
-            sphere.transform.position = this.initialPosition;
-            transform.rotation = this.initialRotation;
-            sphere.velocity = new Vector3(0, 0, 0);
-            sphere.angularVelocity = new Vector3(0, 0, 0);
+            ResetShipToPhysicsState(initialPhysicsState);
+            setLastCheckpointPhysicsState(initialPhysicsState);
+        }
+        
+        public void RespawnToLastCheckpoint() {
+            ResetShipToPhysicsState(lastCheckpointPhysicsState);
+        }
+
+        private void ResetShipToPhysicsState(ShipPhysicsState state) {
+            sphere.transform.position = state.Position;
+            transform.rotation  = state.Rotation;
+            sphere.velocity = state.Velocity;
+            sphere.angularVelocity = state.AngularVelocity;
             currentSpeed = 0;
             currentRotate = 0;
         }
@@ -191,6 +244,10 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             isBoosting = false;
 
             Debug.Log("stop turbo");
+        }
+
+        public void SetIsKinematic(bool toggle) {
+            sphere.isKinematic = toggle;
         }
     }
 
