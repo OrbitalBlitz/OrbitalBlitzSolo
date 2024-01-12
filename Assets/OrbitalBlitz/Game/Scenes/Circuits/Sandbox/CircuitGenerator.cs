@@ -1,4 +1,5 @@
 using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -20,6 +21,10 @@ public class CircuitGenerator : MonoBehaviour
 
     public int minDistanceBetweenKnots = 90;
     public int maxKnotRotation = 90;
+
+    public GameObject checkpointPrefab;
+    public GameObject startLinePrefab;
+    //public GameObject endLinePrefab;
 
 
     void Start()
@@ -116,7 +121,7 @@ public class CircuitGenerator : MonoBehaviour
         Vector3 checkpointPosition = new Vector3(lastKnot.Position.x, lastKnot.Position.y + 5, lastKnot.Position.z);
 
         // Create the ckepoint
-        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        GameObject cube = GameObject.CreatePrimitive
 
         // Set the cube's position
         cube.transform.position = checkpointPosition;
@@ -130,9 +135,9 @@ public class CircuitGenerator : MonoBehaviour
         Vector3 checkpointPosition = new Vector3(lastKnot.Position.x, lastKnot.Position.y, lastKnot.Position.z);
 
         // Create the ckepoint
-        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
         // Set the cube's position
-        cube.transform.position = checkpointPosition;
+        sphere.transform.position = checkpointPosition;
     }
 }
