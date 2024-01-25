@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &265813778831238422
 MeshFilter:
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: fbe41c1e8cf83fb49bbcae09dc1dd6f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -118,3 +118,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab3bc0aa2166d584ba6844ad4ed5e211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circuitData: {fileID: 0}

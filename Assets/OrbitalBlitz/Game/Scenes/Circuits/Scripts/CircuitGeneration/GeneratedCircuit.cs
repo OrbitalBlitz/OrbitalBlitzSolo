@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,16 +18,17 @@ public class GeneratedCircuit : MonoBehaviour {
     [SerializeField] private GameObject checkpointPrefab;
     [SerializeField] private GameObject spawnpointPrefab;
 
-    [Header("Path Generation")] 
-    [SerializeField]
+    
+    [HideInInspector][SerializeField]
     public GridSplineGenerator m_path_generator;
+    [Header("Path Generation")] 
     [SerializeField]
     private GridSplineGenerator.GenerationMode m_generationMode = GridSplineGenerator.GenerationMode.Backtracking;
     [SerializeField] private int m_seed = 40;
     [SerializeField] private int m_circuitGridMaxSize = 40;
     [SerializeField] private int m_gridCellSize = 10;
 
-    [Header("Circuit Generation")]
+    [Header("Circuit Parameters")]
     [SerializeField] private int m_circuit_laps = 2;
     const string k_spawnpoints_root = "spawnpoints";
     const string k_checkpoints_root = "checkpoints";
@@ -34,21 +36,29 @@ public class GeneratedCircuit : MonoBehaviour {
     [Header("Mesh Extruding")] 
     [SerializeField] private float m_roadWidth = 4f;
     [SerializeField] private Material m_roadMaterial;
-    private SplineExtrude m_extruder;
-    private MeshFilter m_mesh_filter;
-    private MeshRenderer m_mesh_renderer;
-    private MeshCollider m_mesh_collider;
+    [HideInInspector][SerializeField] private SplineExtrude m_extruder;
+    [HideInInspector][SerializeField] private MeshFilter m_mesh_filter;
+    [HideInInspector][SerializeField] private MeshRenderer m_mesh_renderer;
+    [HideInInspector][SerializeField] private MeshCollider m_mesh_collider;
 
 
-    private SplineContainer m_container;
+    [HideInInspector][SerializeField] private SplineContainer m_container;
 
-    private Spline m_spline;
+    [HideInInspector][SerializeField] private Spline m_spline;
 
-    private CustomSplineInstantiate m_checkpoint_instantiator;
-    private CustomSplineInstantiate m_spawnpoint_instantiator;
-    private int m_numberOfCheckpoints = 10;
-    private CircuitData m_circuit_data;
-    public bool m_generated { get; private set; }
+    [HideInInspector][SerializeField] private CustomSplineInstantiate m_checkpoint_instantiator;
+    [HideInInspector][SerializeField] private int m_numberOfCheckpoints = 10;
+    [HideInInspector][SerializeField] private CircuitData m_circuit_data;
+    [SerializeField] public bool m_generated { get; private set; }
+
+    private void Awake() {
+        m_extruder = gameObject.GetComponent<SplineExtrude>();
+        m_mesh_filter = gameObject.GetComponent<MeshFilter>();
+        m_mesh_renderer = gameObject.GetComponent<MeshRenderer>();
+        m_mesh_collider = gameObject.GetComponent<MeshCollider>();
+        m_container = gameObject.GetComponent<SplineContainer>();
+        m_circuit_data = gameObject.GetComponent<CircuitData>();
+    }
 
     public void Generate() {
         // Create a new Spline on the SplineContainer.
@@ -61,6 +71,8 @@ public class GeneratedCircuit : MonoBehaviour {
     }
 
     public void Clear() {
+        Debug.Log("Clearing");
+        DestroyImmediate(m_path_generator);
         DestroyImmediate(m_extruder);
         DestroyImmediate(m_mesh_renderer);
         DestroyImmediate(m_mesh_filter);
@@ -191,9 +203,13 @@ public class GeneratedCircuitEditor : Editor {
         if (GUILayout.Button("Generate")) {
             generated_circuit.Generate();
         }
-
-        if (GUILayout.Button("Count Checkpoints")) {
-            generated_circuit.CountCheckpoints();
+        if (GUILayout.Button("Clear")) {
+            generated_circuit.Clear();
         }
+
+
+        // if (GUILayout.Button("Count Checkpoints")) {
+        //     generated_circuit.CountCheckpoints();
+        // }
     }
 }
