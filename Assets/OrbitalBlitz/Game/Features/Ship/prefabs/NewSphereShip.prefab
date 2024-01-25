@@ -52,21 +52,22 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 0
-  max_speed_forward: 50
-  max_speed_backward: 30
+  max_speed_forward: 20
+  max_speed_backward: 10
   acceleration_stat: 20
-  deceleration_stat: 70
+  deceleration_stat: 100
   brake_force_stat: 100
-  boost_power: 100
+  boost_power: 40
   boost_duration: 10
   steering: 5
   currentSpeed: 0
   targetSpeed: 0
   sphere_velocity: {x: 0, y: 0, z: 0}
-  boosterTimer: 0
+  blitzTimer: 0
   steeringLerpFactor: 2
   stopSteeringLerpFactor: 5
   delay_normal: 0.1
+  isDrifting: 1
 --- !u!1 &2756786118950463956
 GameObject:
   m_ObjectHideFlags: 0
