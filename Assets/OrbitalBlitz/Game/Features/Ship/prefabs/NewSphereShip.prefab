@@ -57,7 +57,7 @@ MonoBehaviour:
   max_speed_backward: 10
   acceleration_stat: 20
   deceleration_stat: 100
-  brake_force_stat: 100
+  brake_force_stat: 50
   boost_power: 60
   boost_duration: 5
   steering: 5

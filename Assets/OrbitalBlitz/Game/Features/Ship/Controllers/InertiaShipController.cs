@@ -48,10 +48,6 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         private ShipPhysicsState initialPhysicsState;
         private ShipPhysicsState lastCheckpointPhysicsState;
 
-        /* Chronomètre ?? */
-        private int timer = 0;
-        private bool timerOn = false;
-
         private const float ZeroSpeedThreshold = 0.01f; // avoid having a direct comparison of float numbers to zero
 
         void Start() {
