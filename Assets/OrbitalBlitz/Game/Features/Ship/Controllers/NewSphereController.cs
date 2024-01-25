@@ -12,13 +12,13 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         [SerializeField] private LayerMask layerMask;
 
         [Header("Stats")]
-        [SerializeField] private float max_speed_forward = 20f;
+        [SerializeField] private float max_speed_forward = 30f;
         [SerializeField] private float max_speed_backward = 10f;
         [SerializeField] private float acceleration_stat = 20f;
         [SerializeField] private float deceleration_stat = 100f;    
         [SerializeField] private float brake_force_stat = 100f;
-        [SerializeField] private float boost_power = 40f;
-        [SerializeField] private float boost_duration = 10f;
+        [SerializeField] private float boost_power = 60f;
+        [SerializeField] private float boost_duration = 5f;
         [SerializeField] private float steering = 5f;
 
         [Header("Data visualisation")]
@@ -238,11 +238,14 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         public void UpdateParticles()
         {
             ParticleSystem.EmissionModule acceleration_emission = acceleration_particles.emission;
+            float max_speed_division = max_speed_forward / 2;
 
             if (blitzTimer > 0) {
                 acceleration_emission.rateOverTime = 100;
-            } else if (currentSpeed > max_speed_forward - 10) {
-                acceleration_emission.rateOverTime = 30;
+            } else if (currentSpeed >= max_speed_forward - 5) {
+                acceleration_emission.rateOverTime = 20;
+            } else if (currentSpeed >= max_speed_division) {
+                acceleration_emission.rateOverTime = 5;
             } else {
                 acceleration_emission.rateOverTime = 0;
             }
