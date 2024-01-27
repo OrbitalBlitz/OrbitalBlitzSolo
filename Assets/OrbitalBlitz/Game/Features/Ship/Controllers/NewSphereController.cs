@@ -12,13 +12,13 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         [SerializeField] private LayerMask layerMask;
 
         [Header("Stats")]
-        [SerializeField] private float max_speed_forward = 50f;
-        [SerializeField] private float max_speed_backward = 30f;
+        [SerializeField] private float max_speed_forward = 30f;
+        [SerializeField] private float max_speed_backward = 10f;
         [SerializeField] private float acceleration_stat = 20f;
-        [SerializeField] private float deceleration_stat = 70f;    
+        [SerializeField] private float deceleration_stat = 100f;    
         [SerializeField] private float brake_force_stat = 100f;
-        [SerializeField] private float boost_power = 100f;
-        [SerializeField] private float boost_duration = 10f;
+        [SerializeField] private float boost_power = 60f;
+        [SerializeField] private float boost_duration = 5f;
         [SerializeField] private float steering = 5f;
 
         [Header("Data visualisation")]
@@ -32,8 +32,9 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         [SerializeField] private float stopSteeringLerpFactor = 5f;
         [SerializeField] private float delay_normal = 0.1f;
 
+        [Header("Behavior")]
+        [SerializeField] private bool isDrifting = true;
 
-        string acceleration_mod = "mario";
         float acceleration_input = 0f; 
         bool isBraking = false;
         float velocity;
@@ -88,6 +89,16 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
 
             //Steering
             UpdateRotate();
+
+            if (!isDrifting) {
+                // Project velocity onto forward and vertical directions
+                Vector3 forward = transform.forward;
+                Vector3 vertical = Vector3.up;
+                Vector3 projectedVelocity = Vector3.Project(sphere.velocity, forward) + Vector3.Project(sphere.velocity, vertical);
+
+                // Apply the projected velocity
+                sphere.velocity = projectedVelocity;
+            }
 
             UpdateTilt();
 
@@ -227,11 +238,14 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         public void UpdateParticles()
         {
             ParticleSystem.EmissionModule acceleration_emission = acceleration_particles.emission;
+            float max_speed_division = max_speed_forward / 2;
 
             if (blitzTimer > 0) {
                 acceleration_emission.rateOverTime = 100;
-            } else if (currentSpeed > max_speed_forward - 10) {
-                acceleration_emission.rateOverTime = 30;
+            } else if (currentSpeed >= max_speed_forward - 5) {
+                acceleration_emission.rateOverTime = 20;
+            } else if (currentSpeed >= max_speed_division) {
+                acceleration_emission.rateOverTime = 5;
             } else {
                 acceleration_emission.rateOverTime = 0;
             }

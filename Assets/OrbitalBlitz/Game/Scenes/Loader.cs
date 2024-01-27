@@ -27,6 +27,12 @@ namespace OrbitalBlitz.Game.Scenes {
         
         public static List<CircuitInfo> Circuits = new() {
             new CircuitInfo {
+                Name = "TestCircuitGen_Custom",
+                Scene = Scene.TestCircuitGen_Custom,
+                PersonalBests = dummyPersonalRecords,
+                WorldBests = dummyWorldRecords
+            },
+            new CircuitInfo {
                 Name = "TestCircuit",
                 Scene = Scene.TestCircuit_1,
                 PersonalBests = dummyPersonalRecords,
@@ -52,6 +58,7 @@ namespace OrbitalBlitz.Game.Scenes {
             Race,
             TestCircuit_1,
             TestCircuitGen,
+            TestCircuitGen_Custom
         }
 
         public static void LoadScene(Scene scene, LoadSceneMode mode = LoadSceneMode.Single) {

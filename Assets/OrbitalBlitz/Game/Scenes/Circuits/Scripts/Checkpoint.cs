@@ -12,16 +12,15 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts {
         [FormerlySerializedAs("circuitManager")] [SerializeField] CircuitData circuitData;
 
 
-        #if UNITY_EDITOR
-        private void OnDrawGizmos() {
-            if (Application.isPlaying) {
-                GUIStyle style = new GUIStyle();
-                style.normal.textColor = UnityEngine.Color.green;
-                Handles.Label(transform.position + Vector3.up * 2, circuitData.Checkpoints.IndexOf(this).ToString(),
-                    style);
-            }
-        }
-        #endif
+        // #if UNITY_EDITOR
+        // private void OnDrawGizmos() {
+        //     if (Application.isPlaying) {
+        //         GUIStyle style = new GUIStyle();
+        //         style.normal.textColor = UnityEngine.Color.green;
+        //         Handles.Label(transform.position + Vector3.up * 2, circuitData.Checkpoints.IndexOf(this).ToString(), style);
+        //     }
+        // }
+        // #endif
         private void OnTriggerEnter(Collider other) {
             IShipController shipController = other.transform.parent.GetComponentInChildren<IShipController>();
             if (shipController == null) {
