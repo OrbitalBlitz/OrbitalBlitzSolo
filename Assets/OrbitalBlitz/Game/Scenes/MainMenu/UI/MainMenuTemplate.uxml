@@ -1,10 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="rootContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
-        <ui:VisualElement name="titleContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
-            <ui:Label tabindex="-1" text="OrbitalBlitz" display-tooltip-when-elided="true" name="Title" style="flex-direction: column; align-items: center; justify-content: center; -unity-text-align: lower-center; white-space: nowrap; text-overflow: ellipsis;" />
-        </ui:VisualElement>
-        <ui:VisualElement name="buttonsContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
-            <ui:Button text="Play" display-tooltip-when-elided="true" name="btn_play" />
-        </ui:VisualElement>
+    <ui:VisualElement name="rootContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); justify-content: center; align-items: center;">
+        <ui:Label tabindex="-1" text="OrbitalBlitz" display-tooltip-when-elided="true" name="Title" style="flex-direction: column; align-items: center; justify-content: flex-start; -unity-text-align: middle-center; white-space: nowrap; text-overflow: clip; align-self: center; -unity-font-style: bold-and-italic; font-size: 50px; padding-right: 2px; color: rgb(241, 216, 69); text-shadow: 5px 5px 0 rgba(0, 0, 0, 0.5); letter-spacing: 5px; margin-bottom: 20px; margin-top: 2px; top: 20%; position: absolute;" />
+        <ui:Button text="Play" display-tooltip-when-elided="true" name="btn_play" style="color: rgb(255, 31, 25); -unity-font-style: italic; font-size: 30px; width: 30%; min-width: auto; min-height: auto; justify-content: center; opacity: 0.69; align-items: center; align-self: center; background-color: rgba(245, 225, 114, 0); text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.52); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; transition-property: color; transition-duration: 1s; transition-timing-function: ease; transition-delay: 0s;" />
     </ui:VisualElement>
 </ui:UXML>
