@@ -74,6 +74,9 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             _acceleration = input;
         }
 
+        public float GetSpeed() {
+            return _rb.velocity.magnitude;
+        }
 
         // Start is called before the first frame update
         void Start() {

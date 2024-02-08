@@ -15,12 +15,12 @@ EditorBuildSettings:
     path: Assets/OrbitalBlitz/Game/Scenes/Race/Race.unity
     guid: 99fec15bd3d02ce4982b984599d9d95a
   - enabled: 1
-    path: Assets/OrbitalBlitz/Game/Scenes/Circuits/TestCircuit_1.unity
-    guid: 9728f998435f7a247a50e1e8d08ea5ad
+    path: Assets/OrbitalBlitz/Game/Scenes/Circuits/Level1.unity
+    guid: b80e261f1b39e994393235289d0be968
   - enabled: 1
-    path: Assets/OrbitalBlitz/Game/Scenes/Circuits/TestCircuitGen.unity
-    guid: 64494128427c84a42b4caed0a99d80f3
+    path: Assets/OrbitalBlitz/Game/Scenes/Circuits/Level2.unity
+    guid: 4301aeabe7ae6f94a857021094836dc6
   - enabled: 1
-    path: Assets/OrbitalBlitz/Game/Scenes/Circuits/TestCircuitGen_Custom.unity
-    guid: a2d25f7544868c246872c1d6e787ac81
+    path: Assets/OrbitalBlitz/Game/Scenes/Circuits/Level3.unity
+    guid: 751323113a9c6c2478190386beef3e71
   m_configObjects: {}

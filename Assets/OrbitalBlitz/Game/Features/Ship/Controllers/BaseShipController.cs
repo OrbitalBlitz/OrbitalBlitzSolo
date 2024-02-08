@@ -26,6 +26,9 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         public void Steer(float input) {
             throw new System.NotImplementedException();
         }
+        public float GetSpeed() {
+            return _rigidbody.velocity.magnitude;
+        }
 
         public void Brake(int input) {
             throw new System.NotImplementedException();

@@ -8,8 +8,8 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         public Vector3 AngularVelocity;
     }
 
-    public interface IShipController
-    {
+    public interface IShipController {
+        public float GetSpeed();
         public void Accelerate(float input);
         public void Steer(float input);
         public void Brake(int input);

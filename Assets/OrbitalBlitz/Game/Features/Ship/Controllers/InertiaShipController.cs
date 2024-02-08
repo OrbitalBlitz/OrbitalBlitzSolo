@@ -1,6 +1,8 @@
 using System.Collections;
 using System.ComponentModel;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace OrbitalBlitz.Game.Features.Ship.Controllers {
@@ -162,6 +164,10 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
                 if (speed < 0) speed = 0; // Ensure speed doesn't go below 0
             }
         }
+        
+        public float GetSpeed() {
+            return sphere.velocity.magnitude;
+        }
 
         public void Respawn() {
             ResetShipToPhysicsState(initialPhysicsState);
@@ -210,7 +216,7 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             Debug.Log("stop turbo");
         }
     }
-
+    #if UNITY_EDITOR
     [CustomEditor(typeof(InertiaShipController))]
     [CanEditMultipleObjects]
     class InertiaShipControllerEditor : Editor {
@@ -223,4 +229,5 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             serializedObject.Update();
         }
     }
+    #endif
 }

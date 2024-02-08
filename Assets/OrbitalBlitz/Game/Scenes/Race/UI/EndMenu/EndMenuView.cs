@@ -6,6 +6,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.UI.EndMenu {
     public class EndMenuView : MonoBehaviour, IHideableView {
         private Button restart_Button;
         private Button quit_Button;
+        public Label time;
 
         public event Action OnRestartClicked;
         public event Action OnQuitClicked;
@@ -13,6 +14,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.UI.EndMenu {
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
             restart_Button = root.Q<Button>("btn_restart");
             quit_Button = root.Q<Button>("btn_quit");
+            time = root.Q<Label>("time");
             
             restart_Button.clicked += () => { OnRestartClicked?.Invoke(); };
             quit_Button.clicked += () => { OnQuitClicked?.Invoke(); };

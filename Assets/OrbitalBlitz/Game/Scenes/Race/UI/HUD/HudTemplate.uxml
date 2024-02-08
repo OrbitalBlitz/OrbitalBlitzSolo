@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/OrbitalBlitz/Game/Scenes/_USS/main.uss?fileID=7433441132597879392&amp;guid=386a62d47083c3f4bae1a00091ed7d57&amp;type=3#main" />
+    <ui:VisualElement name="VisualElement" class="behind" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: column; justify-content: space-between; align-items: center; height: 100%; margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0; -unity-font-style: bold; font-size: 24px; width: 100%;">
+        <ui:Label tabindex="0" text="0&apos;00&apos;&apos;00&apos;&apos;&apos;" display-tooltip-when-elided="true" enable-rich-text="false" name="timer" class="outlined" />
+        <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; flex-direction: row; justify-content: space-between;">
+            <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); width: 20%;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); width: 100%; align-items: flex-start; justify-content: space-between; flex-direction: row;">
+            <ui:Label tabindex="-1" text="help: Esc" display-tooltip-when-elided="true" class="hint" style="align-items: auto; align-self: flex-end; width: 0;" />
+            <ui:VisualElement class="outlined" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: auto; flex-direction: row; justify-content: flex-end; align-self: flex-end; width: 33%; align-items: auto;">
+                <ui:Label tabindex="-1" text="100" display-tooltip-when-elided="true" enable-rich-text="false" name="speed" style="padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0;" />
+                <ui:Label tabindex="-1" text="km/h" display-tooltip-when-elided="true" enable-rich-text="false" name="unit" class="outline" style="margin-top: 2px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+            </ui:VisualElement>
+            <ui:Label tabindex="-1" display-tooltip-when-elided="true" class="hint" style="align-items: auto; align-self: flex-end;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

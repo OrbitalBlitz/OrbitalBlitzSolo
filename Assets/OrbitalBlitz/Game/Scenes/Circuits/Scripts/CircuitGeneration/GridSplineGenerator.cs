@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using Random = System.Random;
 
@@ -161,6 +163,7 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
         }
     }
     
+    #if UNITY_EDITOR
     [CustomEditor(typeof(GridSplineGenerator))]
     public class GridSplineGeneratorEditor : Editor
     {
@@ -171,4 +174,5 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
             // generator.generator.someField = EditorGUILayout.FloatField("Some Field", generator.generator.someField);
         }
     }
+    #endif
 }

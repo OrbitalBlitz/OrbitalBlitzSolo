@@ -64,6 +64,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""0a3d7a8d-7d68-437c-babe-e319defda505"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ToggleEscapeMenu"",
                     ""type"": ""Button"",
                     ""id"": ""508bc8bd-1794-4db0-8155-84f4711a40aa"",
@@ -75,8 +84,19 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""ZQSD"",
-                    ""id"": ""893f33fd-02d7-45da-8c1c-b101ac7640b4"",
+                    ""name"": """",
+                    ""id"": ""00d2a1fa-68b7-4894-92d9-3552e01e13a9"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""arrows"",
+                    ""id"": ""5dcdc95e-462a-4fe6-beb6-eb5d915c7a84"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -87,8 +107,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""c2af69c9-15b1-4303-abe7-81b729981ff1"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""id"": ""f3e3db43-27d2-4e24-8ce8-fe979df69939"",
+                    ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -98,8 +118,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""61bc6b45-d4fb-4dd6-aa2f-ddfea52733de"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""id"": ""f9c4a254-2f01-4c3a-92c6-cd484dffe475"",
+                    ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -109,8 +129,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""67683bfd-804a-4f53-9600-10a8826ab560"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""id"": ""30e17c8d-95de-4cbd-92f2-c50e16da1887"",
+                    ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -120,25 +140,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""6536bf24-8079-44b6-9ff1-bb54e7db0f20"",
-                    ""path"": ""<Keyboard>/d"",
+                    ""id"": ""fcb5d999-966f-4b7f-a4c1-4765b0075c4b"",
+                    ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""00d2a1fa-68b7-4894-92d9-3552e01e13a9"",
-                    ""path"": ""<Gamepad>/rightStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -183,6 +192,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""ToggleEscapeMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f0dffed4-284b-4b12-b41b-cbba66d0eb62"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -195,6 +215,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_defaultMap_Brake = m_defaultMap.FindAction("Brake", throwIfNotFound: true);
         m_defaultMap_UseBlitz = m_defaultMap.FindAction("UseBlitz", throwIfNotFound: true);
         m_defaultMap_Respawn = m_defaultMap.FindAction("Respawn", throwIfNotFound: true);
+        m_defaultMap_Restart = m_defaultMap.FindAction("Restart", throwIfNotFound: true);
         m_defaultMap_ToggleEscapeMenu = m_defaultMap.FindAction("ToggleEscapeMenu", throwIfNotFound: true);
     }
 
@@ -261,6 +282,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_defaultMap_Brake;
     private readonly InputAction m_defaultMap_UseBlitz;
     private readonly InputAction m_defaultMap_Respawn;
+    private readonly InputAction m_defaultMap_Restart;
     private readonly InputAction m_defaultMap_ToggleEscapeMenu;
     public struct DefaultMapActions
     {
@@ -270,6 +292,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Brake => m_Wrapper.m_defaultMap_Brake;
         public InputAction @UseBlitz => m_Wrapper.m_defaultMap_UseBlitz;
         public InputAction @Respawn => m_Wrapper.m_defaultMap_Respawn;
+        public InputAction @Restart => m_Wrapper.m_defaultMap_Restart;
         public InputAction @ToggleEscapeMenu => m_Wrapper.m_defaultMap_ToggleEscapeMenu;
         public InputActionMap Get() { return m_Wrapper.m_defaultMap; }
         public void Enable() { Get().Enable(); }
@@ -292,6 +315,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Respawn.started += instance.OnRespawn;
             @Respawn.performed += instance.OnRespawn;
             @Respawn.canceled += instance.OnRespawn;
+            @Restart.started += instance.OnRestart;
+            @Restart.performed += instance.OnRestart;
+            @Restart.canceled += instance.OnRestart;
             @ToggleEscapeMenu.started += instance.OnToggleEscapeMenu;
             @ToggleEscapeMenu.performed += instance.OnToggleEscapeMenu;
             @ToggleEscapeMenu.canceled += instance.OnToggleEscapeMenu;
@@ -311,6 +337,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Respawn.started -= instance.OnRespawn;
             @Respawn.performed -= instance.OnRespawn;
             @Respawn.canceled -= instance.OnRespawn;
+            @Restart.started -= instance.OnRestart;
+            @Restart.performed -= instance.OnRestart;
+            @Restart.canceled -= instance.OnRestart;
             @ToggleEscapeMenu.started -= instance.OnToggleEscapeMenu;
             @ToggleEscapeMenu.performed -= instance.OnToggleEscapeMenu;
             @ToggleEscapeMenu.canceled -= instance.OnToggleEscapeMenu;
@@ -337,6 +366,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnBrake(InputAction.CallbackContext context);
         void OnUseBlitz(InputAction.CallbackContext context);
         void OnRespawn(InputAction.CallbackContext context);
+        void OnRestart(InputAction.CallbackContext context);
         void OnToggleEscapeMenu(InputAction.CallbackContext context);
     }
 }

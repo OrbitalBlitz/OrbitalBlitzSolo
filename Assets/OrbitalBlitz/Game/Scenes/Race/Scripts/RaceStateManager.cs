@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
 using OrbitalBlitz.Game.Scenes.Race.UI.EndMenu;
 using OrbitalBlitz.Game.Scenes.Race.UI.EscapeMenu;
-using OrbitalBlitz.Game.Scenes.SelectCircuit.UI;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
@@ -25,6 +26,8 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         [SerializeField] public EscapeMenuController EscapeMenuController;
         [SerializeField] public Transform PlayerPrefab;
         [SerializeField] public Transform ShipPrefab;
+        
+        [SerializeField] public int CountDownSeconds = 0;
         
         public CircuitData m_circuit_data;
 

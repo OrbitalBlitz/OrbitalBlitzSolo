@@ -494,7 +494,7 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration
                 {
                     m_InstancesRoot = new GameObject( customRootName ?? k_InstancesRootName+GetInstanceID());
                     // m_InstancesRoot.hideFlags |= HideFlags.HideAndDontSave;
-                    m_InstancesRoot.transform.parent = transform;
+                    // m_InstancesRoot.transform.parent = transform;
                     m_InstancesRoot.transform.localPosition = Vector3.zero;
                     m_InstancesRoot.transform.localRotation = Quaternion.identity;
                 }

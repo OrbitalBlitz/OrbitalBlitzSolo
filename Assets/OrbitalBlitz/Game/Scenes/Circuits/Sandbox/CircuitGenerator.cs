@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
 using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
 using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Splines;
 

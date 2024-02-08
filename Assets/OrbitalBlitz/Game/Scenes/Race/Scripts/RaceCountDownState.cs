@@ -2,18 +2,19 @@ using UnityEngine;
 
 namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
     public class RaceCountDownState : RaceBaseState {
-        private float _initialTime = 3f;
         private float _timeRemaining;
         private float _acc;
         private int _countDown;
 
         public override void UpdateState(RaceStateManager context) {
-            if (isTimeOut(context))
+            if (isTimeOut(context)) {
                 context.SwitchState(RaceStateManager.RaceState.RacePlaying);
+                Player.Singleton.RaceInfo.Reset();
+            }
         }
 
         public override void EnterState(RaceStateManager context) {
-            _timeRemaining = _initialTime;
+            _timeRemaining = context.CountDownSeconds;
         }
 
         private bool isTimeOut(RaceStateManager context) {

@@ -5,12 +5,11 @@ using System.Linq;
 using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
 using OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration;
 using Unity.Mathematics;
-using Unity.VisualScripting;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Splines;
-using Random = Unity.Mathematics.Random;
 
 [ExecuteInEditMode]
 [AddComponentMenu("OrbitalBlitz/GeneratedCircuit")]
@@ -18,37 +17,38 @@ public class GeneratedCircuit : MonoBehaviour {
     [SerializeField] private GameObject checkpointPrefab;
     [SerializeField] private GameObject spawnpointPrefab;
 
-    
-    [HideInInspector][SerializeField]
-    public GridSplineGenerator m_path_generator;
-    [Header("Path Generation")] 
-    [SerializeField]
+    [HideInInspector] [SerializeField] public GridSplineGenerator m_path_generator;
+
+    [Header("Path Generation")] [SerializeField]
     private GridSplineGenerator.GenerationMode m_generationMode = GridSplineGenerator.GenerationMode.Backtracking;
+
     [SerializeField] private int m_seed = 40;
     [SerializeField] private int m_circuitGridMaxSize = 40;
     [SerializeField] private int m_gridCellSize = 10;
 
-    [Header("Circuit Parameters")]
-    [SerializeField] private int m_circuit_laps = 2;
+    [Header("Circuit Parameters")] [SerializeField]
+    private int m_circuit_laps = 2;
+
     const string k_spawnpoints_root = "spawnpoints";
     const string k_checkpoints_root = "checkpoints";
-    
-    [Header("Mesh Extruding")] 
-    [SerializeField] private float m_roadWidth = 4f;
+
+    [Header("Mesh Extruding")] private const float DEFAULT_ROAD_WIDTH = 4f;
+    [SerializeField] private float m_roadWidth = DEFAULT_ROAD_WIDTH;
     [SerializeField] private Material m_roadMaterial;
-    [HideInInspector][SerializeField] private SplineExtrude m_extruder;
-    [HideInInspector][SerializeField] private MeshFilter m_mesh_filter;
-    [HideInInspector][SerializeField] private MeshRenderer m_mesh_renderer;
-    [HideInInspector][SerializeField] private MeshCollider m_mesh_collider;
+    [HideInInspector] [SerializeField] private SplineExtrude m_extruder;
+    [HideInInspector] [SerializeField] private MeshFilter m_mesh_filter;
+    [HideInInspector] [SerializeField] private MeshRenderer m_mesh_renderer;
+    [HideInInspector] [SerializeField] private MeshCollider m_mesh_collider;
+    [HideInInspector] [SerializeField] private GameObject m_fall_catcher;
 
 
-    [HideInInspector][SerializeField] private SplineContainer m_container;
+    [HideInInspector] [SerializeField] private SplineContainer m_container;
 
-    [HideInInspector][SerializeField] private Spline m_spline;
+    [HideInInspector] [SerializeField] private Spline m_spline;
 
-    [HideInInspector][SerializeField] private CustomSplineInstantiate m_checkpoint_instantiator;
-    [HideInInspector][SerializeField] private int m_numberOfCheckpoints = 10;
-    [HideInInspector][SerializeField] private CircuitData m_circuit_data;
+    [HideInInspector] [SerializeField] private CustomSplineInstantiate m_checkpoint_instantiator;
+    [HideInInspector] [SerializeField] private int m_numberOfCheckpoints = 10;
+    [HideInInspector] [SerializeField] private CircuitData m_circuit_data;
     [SerializeField] public bool m_generated { get; private set; }
 
     private void Awake() {
@@ -66,8 +66,28 @@ public class GeneratedCircuit : MonoBehaviour {
         m_container = gameObject.AddComponent<SplineContainer>();
         generateSpline();
         extrudeMesh();
+        initFallCatcher();
         createCircuitData();
         m_generated = true;
+    }
+
+    private void initFallCatcher() {
+        m_fall_catcher = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        int plane_side = 2 * m_circuitGridMaxSize * m_gridCellSize;
+        m_fall_catcher.transform.position = new Vector3(0, -1, 0);
+        m_fall_catcher.transform.localScale = new Vector3(plane_side, 0.1f, plane_side); 
+
+        Collider planeCollider = m_fall_catcher.GetComponent<Collider>();
+        if (planeCollider != null) {
+            planeCollider.isTrigger = true;
+        }
+        else {
+            planeCollider = m_fall_catcher.AddComponent<MeshCollider>();
+            planeCollider.isTrigger = true;
+        }
+
+        m_fall_catcher.AddComponent<FallCatcher>();
+        DestroyImmediate(m_fall_catcher.GetComponent<MeshRenderer>());
     }
 
     public void Clear() {
@@ -79,12 +99,14 @@ public class GeneratedCircuit : MonoBehaviour {
         DestroyImmediate(m_mesh_collider);
         DestroyImmediate(m_container);
         DestroyImmediate(m_circuit_data);
+        DestroyImmediate(m_fall_catcher);
 
         DestroyImmediate(GameObject.Find(k_spawnpoints_root));
         DestroyImmediate(GameObject.Find(k_checkpoints_root));
-        
+
         m_generated = false;
     }
+
     private void createCircuitData() {
         m_circuit_data = gameObject.AddComponent<CircuitData>();
         placeSpawnpoints();
@@ -105,7 +127,7 @@ public class GeneratedCircuit : MonoBehaviour {
             rotation,
             spawnpointsContainer.transform
         );
-        m_circuit_data.Spawnpoints = new () { spawnpoint.GetComponent<Spawnpoint>() };
+        m_circuit_data.Spawnpoints = new() { spawnpoint.GetComponent<Spawnpoint>() };
     }
 
     private void placeCheckpoints() {
@@ -121,7 +143,8 @@ public class GeneratedCircuit : MonoBehaviour {
 
         m_checkpoint_instantiator.MinSpacing = (int)(m_spline.Knots.Count() / 2);
         m_checkpoint_instantiator.MinPositionOffset = new Vector3(0f, 1f, 0f);
-        m_checkpoint_instantiator.MinScaleOffset = new Vector3(5f, 2f, 2f);
+        float scale_factor = m_roadWidth / DEFAULT_ROAD_WIDTH;
+        m_checkpoint_instantiator.MinScaleOffset = new Vector3(scale_factor - 1, scale_factor - 1, scale_factor - 1);
         m_checkpoint_instantiator.UpdateInstances();
 
         List<Checkpoint> checkpoints = FindObjectsOfType<Checkpoint>().ToList();
@@ -168,19 +191,28 @@ public class GeneratedCircuit : MonoBehaviour {
         m_mesh_collider = gameObject.AddComponent<MeshCollider>();
         m_extruder.Radius = m_roadWidth;
         m_extruder.Rebuild();
-        
+
         m_mesh_renderer = GetComponent<MeshRenderer>();
         if (m_roadMaterial != null) {
-            m_mesh_renderer.SetMaterials(new List<Material>() {m_roadMaterial});
+            // m_mesh_renderer.SetMaterials(new List<Material>() {m_roadMaterial});
+            m_mesh_renderer.materials = new[] { m_roadMaterial };
         }
-            
+
         m_mesh_filter = GetComponent<MeshFilter>();
+    }
+
+    public void ReadyForProduction() {
+        DestroyImmediate(m_path_generator);
+        DestroyImmediate(m_extruder);
+        DestroyImmediate(m_container);
+
+        DestroyImmediate(gameObject.GetComponent<GeneratedCircuit>());
     }
 
 
     // void Update() { }
 }
-
+#if UNITY_EDITOR
 [CustomEditor(typeof(GeneratedCircuit))]
 public class GeneratedCircuitEditor : Editor {
     public override void OnInspectorGUI() {
@@ -188,8 +220,7 @@ public class GeneratedCircuitEditor : Editor {
 
         GeneratedCircuit generated_circuit = (GeneratedCircuit)target;
 
-        if (generated_circuit.m_path_generator != null)
-        {
+        if (generated_circuit.m_path_generator != null) {
             // Create a foldout or some kind of label to separate properties
             EditorGUILayout.LabelField("GridPathGenerator Properties", EditorStyles.boldLabel);
 
@@ -199,17 +230,18 @@ public class GeneratedCircuitEditor : Editor {
             // Draw the GridPathGenerator editor
             pathGeneratorEditor.OnInspectorGUI();
         }
-        
+
         if (GUILayout.Button("Generate")) {
             generated_circuit.Generate();
         }
+
         if (GUILayout.Button("Clear")) {
             generated_circuit.Clear();
         }
-
-
-        // if (GUILayout.Button("Count Checkpoints")) {
-        //     generated_circuit.CountCheckpoints();
-        // }
+        
+        if (GUILayout.Button("Ready for Production")) {
+            generated_circuit.ReadyForProduction();
+        }
     }
 }
+#endif

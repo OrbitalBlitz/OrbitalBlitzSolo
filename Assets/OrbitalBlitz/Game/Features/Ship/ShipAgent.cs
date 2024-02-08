@@ -33,7 +33,8 @@ namespace OrbitalBlitz.Game.Features.Ship {
             _shipController.Accelerate(actions.ContinuousActions[0]);
             _shipController.Steer(actions.ContinuousActions[1]);
 
-            if (Convert.ToBoolean(actions.DiscreteActions[0])) _shipController.Respawn();
+            if (Convert.ToBoolean(actions.DiscreteActions[0])) _shipController.RespawnToLastCheckpoint();
+            if (Convert.ToBoolean(actions.DiscreteActions[3])) _shipController.Respawn();
             _shipController.Brake(actions.DiscreteActions[1]);
             if (Convert.ToBoolean(actions.DiscreteActions[2])) _shipController.ActivateBlitz();
         }
@@ -47,6 +48,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
             float brakeInput = player.Input.defaultMap.Brake.ReadValue<float>();
             float blitzInput = player.Input.defaultMap.UseBlitz.ReadValue<float>();
             float respawnInput = player.Input.defaultMap.Respawn.ReadValue<float>();
+            float restartInput = player.Input.defaultMap.Restart.ReadValue<float>();
 
             var continuousActionsOut = actionsOut.ContinuousActions;
             continuousActionsOut[0] = inputVector.y;
@@ -56,6 +58,8 @@ namespace OrbitalBlitz.Game.Features.Ship {
             discreteActionsOut[0] = respawnInput > 0 ? 1 : 0;
             discreteActionsOut[1] = brakeInput > 0 ? 1 : 0;
             discreteActionsOut[2] = blitzInput > 0 ? 1 : 0;
+            discreteActionsOut[3] = restartInput > 0 ? 1 : 0;
+
         }
 
         private void OnTriggerEnter(Collider other) {

@@ -1,3 +1,4 @@
+using Cinemachine;
 using OrbitalBlitz.Game.Features.Ship;
 using OrbitalBlitz.Game.Features.Ship.Controllers;
 using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
@@ -32,45 +33,40 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         }
 
         private void RaceSetup() {
-            Debug.Log("RaceManager RaceSetup");
+            Debug.Log("RaceManager/Setup : RaceSetup beginning...");
             AddCallbacksToCheckpoints();
             SpawnPlayer();
             Player.Singleton.ShipController.SetIsKinematic(true);
-            // SpawnBots();
-            // StartRaceCountdown();
             _setupFinished = true;
+            Debug.Log("RaceManager/Setup : RaceSetup finished !");
         }
 
         public void SpawnPlayer() {
+            Debug.Log("\tRaceManager/Setup : SpqwnPlayer beginning...");
             int spawnpointsCount = _stateManager.m_circuit_data.Spawnpoints.Count;
             int i = (_lastUsedSpawnPoint + 1) % spawnpointsCount;
             Transform spTransform = _stateManager.m_circuit_data.Spawnpoints[i].gameObject.transform;
 
             var spPosition = spTransform.position;
             var spRotation = spTransform.rotation;
-            // Transform player = Object.Instantiate(_stateManager.PlayerPrefab, spPosition, spRotation);
-            // player.gameObject.name = $"player";
 
             Transform ship = Object.Instantiate(_stateManager.ShipPrefab, spPosition, spRotation);
             ship.gameObject.name = $"ship";
-
-            // player.gameObject
-            //     .GetComponent<PlayerAgent>()
-            //     .LinkToShip(
-            //         ship.gameObject
-            //     );
-            // Debug.Log($"Linked PlayerAgent to its Ship.");
+            
             _lastUsedSpawnPoint = i;
+            Debug.Log("\tRaceManager/Setup : SpqwnPlayer finished !");
         }
 
         public void toggleEscapeMenuCallback(InputAction.CallbackContext callbackContext) {
             RaceStateManager.Instance.EscapeMenuController.Toggle();
         }
         public void AddCallbacksToCheckpoints() {
+            Debug.Log("\tRaceManager/Setup : AddCallbacksToCheckpoint beginning...");
             _stateManager.m_circuit_data.Checkpoints.ForEach(delegate(Checkpoint cp) {
                 Debug.Log($"Added OnShipEnter callback on {cp.name}");
                 cp.onShipEnter += Checkpoint_OnShipEnter;
             });
+            Debug.Log("\tRaceManager/Setup : AddCallbacksToCheckpoint finished !");
         }
 
         public void Checkpoint_OnShipEnter(Checkpoint checkpoint, GameObject ship) {

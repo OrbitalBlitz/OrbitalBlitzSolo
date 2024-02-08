@@ -76,3 +76,7 @@ crashlytics-build.properties
 /Assets/Plugins/Sirenix/Assemblies/AOT/*
 /Assets/Plugins/Sirenix/Demos/*
 !/Assets/Plugins/Sirenix/Demos/*.unitypackage 
+
+# Build folders
+**/Build/
+**/BuildDev/

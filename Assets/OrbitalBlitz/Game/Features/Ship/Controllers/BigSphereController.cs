@@ -1,7 +1,10 @@
 using System.Collections;
 using System.ComponentModel;
-using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace OrbitalBlitz.Game.Features.Ship.Controllers {
     public class BigSphereController : MonoBehaviour, IShipController {
@@ -160,6 +163,10 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             }
         }
 
+        public float GetSpeed() {
+            return sphere.velocity.magnitude;
+        }
+
         public void Accelerate(float input) {
             if (input > 0)
                 isAccelerating = true; // speed increases only when there is positive input
@@ -251,6 +258,7 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         }
     }
 
+    #if UNITY_EDITOR
     [CustomEditor(typeof(BigSphereController))]
     [CanEditMultipleObjects]
     class BigSphereControllerEditor : Editor {
@@ -297,6 +305,7 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             // EditorGUILayout.EndHorizontal();
         }
     }
+    #endif
 }
 
 //TODO: Faire une marche arrière ?

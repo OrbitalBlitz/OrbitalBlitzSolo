@@ -1,5 +1,4 @@
 using OrbitalBlitz.Game.Scenes.Race.Scripts;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -27,9 +26,11 @@ namespace OrbitalBlitz.Game.Scenes.Race.UI.EscapeMenu {
             Debug.Log($"_isViewHidden = {_isViewHidden}");
             if (_isViewHidden) {
                 _view.Show();
+                FindObjectOfType<HudView>().Hide();
                 return;
             }
             _view.Hide();
+            FindObjectOfType<HudView>().Show();
         }
 
         public void Hide() {

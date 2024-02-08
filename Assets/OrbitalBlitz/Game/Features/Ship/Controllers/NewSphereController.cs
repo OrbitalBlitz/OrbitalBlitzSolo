@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 #if UNITY_EDITOR
 #endif
 
@@ -44,7 +47,7 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         private Quaternion initialRotation;
 
         private ShipPhysicsState initialPhysicsState;
-        private ShipPhysicsState lastCheckpointPhysicsState;    
+        private List<ShipPhysicsState> lastCheckpointPhysicsStates;    
 
         bool isForward;
         bool timerOn = false;
@@ -57,6 +60,15 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
                 Velocity = new(0f,0f,0f),
                 AngularVelocity = new(0f,0f,0f),
             };
+
+            initLastCheckpointPhysicsStates();
+        }
+
+        private void initLastCheckpointPhysicsStates() {
+            // 2 times because respawn uses second to last physical state
+            lastCheckpointPhysicsStates = new List<ShipPhysicsState>();
+            lastCheckpointPhysicsStates.Add(initialPhysicsState);
+            lastCheckpointPhysicsStates.Add(initialPhysicsState);
         }
 
         void Update() {
@@ -202,11 +214,24 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         public void Respawn()
         {
             ResetShipToPhysicsState(initialPhysicsState);
-            setLastCheckpointPhysicsState(initialPhysicsState);
+            initLastCheckpointPhysicsStates();
+            Player.Singleton.RaceInfo.Reset();
+        }
+
+        private void printLastStates() {
+            List<String> states = new List<string>();
+            foreach (var state in lastCheckpointPhysicsStates) {
+                states.Add(state.Position.ToString());
+            }
+            print(string.Join("->",states));
         }
 
         public void RespawnToLastCheckpoint() {
-            ResetShipToPhysicsState(lastCheckpointPhysicsState);
+            if (lastCheckpointPhysicsStates.Count > 2) {
+                lastCheckpointPhysicsStates.RemoveAt(lastCheckpointPhysicsStates.Count - 1);
+            }
+            ResetShipToPhysicsState(lastCheckpointPhysicsStates[^1]);
+            printLastStates();
         }
 
         public ShipPhysicsState GetCurrentPhysicsState() {
@@ -219,7 +244,14 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         }
 
         public void setLastCheckpointPhysicsState(ShipPhysicsState state) {
-            lastCheckpointPhysicsState = state;
+            float tolerance = 1f; 
+            if (Vector3.Distance(
+                    lastCheckpointPhysicsStates[^1].Position,
+                    state.Position) < tolerance
+                ) return;
+            lastCheckpointPhysicsStates.Add(state);
+            printLastStates();
+
         }
     
         private void ResetShipToPhysicsState(ShipPhysicsState state) {
@@ -233,6 +265,10 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
 
         public void SetIsKinematic(bool toggle) {
             sphere.isKinematic = toggle;;
+        }
+        
+        public float GetSpeed() {
+            return sphere.velocity.magnitude;
         }
 
         public void UpdateParticles()

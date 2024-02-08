@@ -27,6 +27,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
 
         public override void EnterState(RaceStateManager context) {
             base.EnterState(context);
+            isRaceOver = false;
             _context = context;
             Player.Singleton.ShipController.SetIsKinematic(false);
         }
