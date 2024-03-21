@@ -17,10 +17,10 @@ public class GeneratedCircuit : MonoBehaviour {
     [SerializeField] private GameObject checkpointPrefab;
     [SerializeField] private GameObject spawnpointPrefab;
 
-    [HideInInspector] [SerializeField] public GridSplineGenerator m_path_generator;
+    [HideInInspector] [SerializeField] public GridPathGenerator m_path_generator;
 
     [Header("Path Generation")] [SerializeField]
-    private GridSplineGenerator.GenerationMode m_generationMode = GridSplineGenerator.GenerationMode.Backtracking;
+    private GridPathGenerator.GenerationMode m_generationMode = GridPathGenerator.GenerationMode.Backtracking;
 
     [SerializeField] private int m_seed = 40;
     [SerializeField] private int m_circuitGridMaxSize = 40;
@@ -165,7 +165,7 @@ public class GeneratedCircuit : MonoBehaviour {
 
     private void generateSpline() {
         m_spline = m_container.Spline;
-        m_path_generator = new GridSplineGenerator(new int2(m_circuitGridMaxSize, m_circuitGridMaxSize), m_seed);
+        m_path_generator = new GridPathGenerator(new int2(m_circuitGridMaxSize, m_circuitGridMaxSize), m_seed);
         var path = m_path_generator.Generate();
 
         Debug.Log($"Generated path {string.Join("->", path.Select(i => $"({i.x},{i.y})"))}");
