@@ -23,8 +23,9 @@ public class GeneratedCircuit : MonoBehaviour {
     private GridSplineGenerator.GenerationMode m_generationMode = GridSplineGenerator.GenerationMode.Backtracking;
 
     [SerializeField] private int m_seed = 40;
-    [SerializeField] private int m_circuitGridMaxSize = 40;
-    [SerializeField] private int m_gridCellSize = 10;
+    [SerializeField] private int m_circuitGridXSize = 5; // 40x40 grid size
+    [SerializeField] private int m_circuitGridYSize = 5; // 40x40 grid size
+    [SerializeField] private int m_gridCellSize = 10; // Scaling
 
     [Header("Circuit Parameters")] [SerializeField]
     private int m_circuit_laps = 2;
@@ -71,21 +72,29 @@ public class GeneratedCircuit : MonoBehaviour {
         m_generated = true;
     }
 
+    /* Threshold to prevent the player falling from the circuit */
     private void initFallCatcher() {
+        // Create a cube to act as the fall catcher
         m_fall_catcher = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        int plane_side = 2 * m_circuitGridMaxSize * m_gridCellSize;
+    
+        // Compute the size of the plane based on the circuit's grid size and cell size
+        int plane_side_x = 2 * m_circuitGridXSize * m_gridCellSize;
+        int plane_side_y = 2 * m_circuitGridYSize * m_gridCellSize;
+        
+        // Set the position and scale of the fall catcher
         m_fall_catcher.transform.position = new Vector3(0, -1, 0);
-        m_fall_catcher.transform.localScale = new Vector3(plane_side, 0.1f, plane_side); 
+        m_fall_catcher.transform.localScale = new Vector3(plane_side_x, 0.1f, plane_side_y); 
 
+        // Get the Collider component, set it as a trigger, or add one if it doesn't exist
         Collider planeCollider = m_fall_catcher.GetComponent<Collider>();
         if (planeCollider != null) {
             planeCollider.isTrigger = true;
-        }
-        else {
+        } else {
             planeCollider = m_fall_catcher.AddComponent<MeshCollider>();
             planeCollider.isTrigger = true;
         }
 
+        // Add the FallCatcher script and remove the MeshRenderer for invisibility
         m_fall_catcher.AddComponent<FallCatcher>();
         DestroyImmediate(m_fall_catcher.GetComponent<MeshRenderer>());
     }
@@ -165,7 +174,7 @@ public class GeneratedCircuit : MonoBehaviour {
 
     private void generateSpline() {
         m_spline = m_container.Spline;
-        m_path_generator = new GridSplineGenerator(new int2(m_circuitGridMaxSize, m_circuitGridMaxSize), m_seed);
+        m_path_generator = new GridSplineGenerator(new int2(m_circuitGridXSize, m_circuitGridYSize), m_seed);
         var path = m_path_generator.Generate();
 
         Debug.Log($"Generated path {string.Join("->", path.Select(i => $"({i.x},{i.y})"))}");
