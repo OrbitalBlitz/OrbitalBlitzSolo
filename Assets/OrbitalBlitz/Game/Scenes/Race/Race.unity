@@ -212,7 +212,7 @@ PrefabInstance:
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: ShipPrefab
       value: 
-      objectReference: {fileID: 1512421324690336505, guid: 42cf719211603bd4b9246063488757fb, type: 3}
+      objectReference: {fileID: 1512421324690336505, guid: 22ed2d0d8bbfc70468bc1d9694e4855f, type: 3}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: PlayerPrefab
       value: 
