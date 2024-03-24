@@ -1,4 +1,5 @@
 using Cinemachine;
+using OrbitalBlitz.Game.Features.Player;
 using OrbitalBlitz.Game.Features.Ship;
 using OrbitalBlitz.Game.Features.Ship.Controllers;
 using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
@@ -24,7 +25,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         public override void EnterState(RaceStateManager context) {
             base.EnterState(context);
             _stateManager = context;
-            Player.Singleton.Input.defaultMap.ToggleEscapeMenu.started += toggleEscapeMenuCallback;
+            PlayerSingleton.Singleton.Input.defaultMap.ToggleEscapeMenu.started += toggleEscapeMenuCallback;
             RaceSetup();
         }
 
@@ -36,7 +37,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             Debug.Log("RaceManager/Setup : RaceSetup beginning...");
             AddCallbacksToCheckpoints();
             SpawnPlayer();
-            Player.Singleton.ShipController.SetIsKinematic(true);
+            PlayerSingleton.Singleton.ShipController.SetIsKinematic(true);
             _setupFinished = true;
             Debug.Log("RaceManager/Setup : RaceSetup finished !");
         }

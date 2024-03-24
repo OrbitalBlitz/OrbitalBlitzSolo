@@ -1,3 +1,4 @@
+using OrbitalBlitz.Game.Features.Player;
 using OrbitalBlitz.Game.Scenes.Race.Scripts;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -10,11 +11,11 @@ namespace OrbitalBlitz.Game.Scenes.Race.UI.EscapeMenu {
             _view.OnQuitClicked += () => { Loader.LoadScene(Loader.Scene.MainMenu); };
             _view.OnResumeClicked += () => { Hide(); };
             _view.OnRestartClicked += () => {
-                Player.Singleton.RaceInfo.Reset();
+                PlayerSingleton.Singleton.RaceInfo.Reset();
                 RaceStateManager.Instance.SwitchState(RaceStateManager.RaceState.RaceCountDown);
-                Player.Singleton.ShipController.Respawn();
+                PlayerSingleton.Singleton.ShipController.Respawn();
             };
-            _view.OnRespawnClicked += () => { Player.Singleton.ShipController.RespawnToLastCheckpoint(); };
+            _view.OnRespawnClicked += () => { PlayerSingleton.Singleton.ShipController.RespawnToLastCheckpoint(); };
             
             Hide();
         }

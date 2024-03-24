@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OrbitalBlitz.Game.Features.Player;
 using UnityEngine;
 using UnityEngine.UIElements;
 #if UNITY_EDITOR
@@ -215,7 +216,7 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         {
             ResetShipToPhysicsState(initialPhysicsState);
             initLastCheckpointPhysicsStates();
-            Player.Singleton.RaceInfo.Reset();
+            PlayerSingleton.Singleton.RaceInfo.Reset();
         }
 
         private void printLastStates() {

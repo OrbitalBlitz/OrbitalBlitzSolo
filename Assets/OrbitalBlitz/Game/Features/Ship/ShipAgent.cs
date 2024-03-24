@@ -1,21 +1,23 @@
 using System;
+using OrbitalBlitz.Game.Features.Player;
 using OrbitalBlitz.Game.Features.Ship.Controllers;
 using Unity.Barracuda;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace OrbitalBlitz.Game.Features.Ship {
     public class ShipAgent : Agent {
         [SerializeField] private IShipController _shipController;
-        [SerializeField] private Player player;
+        [FormerlySerializedAs("player")] [SerializeField] private PlayerSingleton playerSingleton;
 
         private void Awake() {
-            player = Player.Singleton;
+            playerSingleton = PlayerSingleton.Singleton;
             _shipController = gameObject.GetComponentInChildren<IShipController>();
-            player.ShipController = _shipController;
-            player.RaceInfo = gameObject.GetComponentInChildren<ShipRaceInfo>();
+            playerSingleton.ShipController = _shipController;
+            playerSingleton.RaceInfo = gameObject.GetComponentInChildren<ShipRaceInfo>();
         }
 
         public override void OnEpisodeBegin() {
@@ -44,11 +46,11 @@ namespace OrbitalBlitz.Game.Features.Ship {
         }
 
         public override void Heuristic(in ActionBuffers actionsOut) {
-            Vector2 inputVector = player.Input.defaultMap.Move.ReadValue<Vector2>();
-            float brakeInput = player.Input.defaultMap.Brake.ReadValue<float>();
-            float blitzInput = player.Input.defaultMap.UseBlitz.ReadValue<float>();
-            float respawnInput = player.Input.defaultMap.Respawn.ReadValue<float>();
-            float restartInput = player.Input.defaultMap.Restart.ReadValue<float>();
+            Vector2 inputVector = playerSingleton.Input.defaultMap.Move.ReadValue<Vector2>();
+            float brakeInput = playerSingleton.Input.defaultMap.Brake.ReadValue<float>();
+            float blitzInput = playerSingleton.Input.defaultMap.UseBlitz.ReadValue<float>();
+            float respawnInput = playerSingleton.Input.defaultMap.Respawn.ReadValue<float>();
+            float restartInput = playerSingleton.Input.defaultMap.Restart.ReadValue<float>();
 
             var continuousActionsOut = actionsOut.ContinuousActions;
             continuousActionsOut[0] = inputVector.y;

@@ -1,4 +1,5 @@
 using System;
+using OrbitalBlitz.Game.Features.Player;
 using OrbitalBlitz.Game.Scenes.Race.Scripts;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -11,7 +12,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.UI.EndMenu {
             _view.OnQuitClicked += () => { Loader.LoadScene(Loader.Scene.MainMenu); };
             _view.OnRestartClicked += () => {
                 Hide();
-                Player.Singleton.ShipController.Respawn(); 
+                PlayerSingleton.Singleton.ShipController.Respawn(); 
                 RaceStateManager.Instance.SwitchState(RaceStateManager.RaceState.RacePlaying);
             };
             
@@ -20,7 +21,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.UI.EndMenu {
         
         public void Show() {
             FindObjectOfType<HudView>().Hide();
-            var timespan = TimeSpan.FromSeconds(Player.Singleton.RaceInfo.timer);            
+            var timespan = TimeSpan.FromSeconds(PlayerSingleton.Singleton.RaceInfo.timer);            
             _view.time.text = timespan.ToString(@"mm\'ss\'\'ff\'\'\'");
             _view.Show();
         }
