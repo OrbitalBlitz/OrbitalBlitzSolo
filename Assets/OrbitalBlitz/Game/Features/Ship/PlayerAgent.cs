@@ -26,9 +26,10 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
         private void Awake() {
             // collision handling examples :
-            player.Info.onHasFinished += f => { AddReward(0f); };
-            player.Info.onCorrectCheckpointCrossed += (cp, f) => { AddReward(1f); };
-            player.Info.onWrongCheckpointCrossed += (cp, f) => { AddReward(-10f); };
+            player.Info.onHasFinished += timer => { AddReward(0f); };
+            player.Info.onCorrectCheckpointCrossed += (cp, timer) => { AddReward(1f); };
+            player.Info.onWrongCheckpointCrossed += (cp, timer) => { AddReward(-10f); };
+            player.Info.onFall += ( timer) => { AddReward(-10f); };
         }
 
         public override void OnEpisodeBegin() {

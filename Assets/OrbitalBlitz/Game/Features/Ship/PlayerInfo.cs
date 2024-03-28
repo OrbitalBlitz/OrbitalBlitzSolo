@@ -18,6 +18,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
         public event Action<Checkpoint, float> onWrongCheckpointCrossed;
         public event Action<Checkpoint, float> onCorrectCheckpointCrossed;
+        public event Action<float> onFall;
         public event Action<float> onHasFinished;
 
         public Collider collider;
@@ -50,6 +51,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
         
         public void FallCatcherCallback(Collider other) {
             if (other.gameObject.TryGetComponent<FallCatcher>(out var fall_catcher)) {
+                onFall?.Invoke(timer);
                 Debug.Log($"{gameObject.name} fell !");
                 player.RespawnToLastCheckpoint();
             }
