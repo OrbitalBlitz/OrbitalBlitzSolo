@@ -86,8 +86,8 @@ public class CircuitGenerator : MonoBehaviour
         createFinishLine(knot, i);
 
         // Add checkpoints to circuitSData
-        CircuitData circuitData = circuitParent.GetComponent<CircuitData>();
-        circuitData.Checkpoints = checkpoints;
+        Circuit circuit = circuitParent.GetComponent<Circuit>();
+        circuit.Checkpoints = checkpoints;
         
         // Create spline using the knots
         spline.Knots = knots;   

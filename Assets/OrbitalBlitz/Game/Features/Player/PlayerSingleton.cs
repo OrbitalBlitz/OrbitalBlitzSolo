@@ -6,8 +6,8 @@ namespace OrbitalBlitz.Game.Features.Player {
     public class PlayerSingleton : MonoBehaviour {
         public static PlayerSingleton Singleton;
         public PlayerInputActions Input;
-        public IShipController ShipController;
-        public ShipRaceInfo RaceInfo;
+        public BaseShipController BaseShipController;
+        public PlayerInfo RaceInfo;
 
         private void Awake() {
             Singleton = this;

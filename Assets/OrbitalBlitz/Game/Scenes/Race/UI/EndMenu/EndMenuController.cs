@@ -7,12 +7,12 @@ using UnityEngine.UIElements;
 namespace OrbitalBlitz.Game.Scenes.Race.UI.EndMenu {
     public class EndMenuController : MonoBehaviour, IHideableView {
         [SerializeField] private EndMenuView _view;
-    
-        private void Start() {
+
+        public void Start() {
             _view.OnQuitClicked += () => { Loader.LoadScene(Loader.Scene.MainMenu); };
             _view.OnRestartClicked += () => {
                 Hide();
-                PlayerSingleton.Singleton.ShipController.Respawn(); 
+                RaceStateManager.Instance.HumanPlayer.Respawn(); 
                 RaceStateManager.Instance.SwitchState(RaceStateManager.RaceState.RacePlaying);
             };
             

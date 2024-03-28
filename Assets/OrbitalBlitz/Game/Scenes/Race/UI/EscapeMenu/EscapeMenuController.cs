@@ -1,3 +1,4 @@
+using System;
 using OrbitalBlitz.Game.Features.Player;
 using OrbitalBlitz.Game.Scenes.Race.Scripts;
 using UnityEngine;
@@ -5,23 +6,22 @@ using UnityEngine.UIElements;
 
 namespace OrbitalBlitz.Game.Scenes.Race.UI.EscapeMenu {
     public class EscapeMenuController : MonoBehaviour {
-        [SerializeField] private EscapeMenuView _view;
 
-        private void Start() {
+        [SerializeField] private EscapeMenuView _view;
+        private OrbitalBlitzPlayer _player;
+
+        public void Start() {
             _view.OnQuitClicked += () => { Loader.LoadScene(Loader.Scene.MainMenu); };
             _view.OnResumeClicked += () => { Hide(); };
             _view.OnRestartClicked += () => {
-                PlayerSingleton.Singleton.RaceInfo.Reset();
+                RaceStateManager.Instance.HumanPlayer.Respawn();
                 RaceStateManager.Instance.SwitchState(RaceStateManager.RaceState.RaceCountDown);
-                PlayerSingleton.Singleton.ShipController.Respawn();
             };
-            _view.OnRespawnClicked += () => { PlayerSingleton.Singleton.ShipController.RespawnToLastCheckpoint(); };
+            _view.OnRespawnClicked += () => { RaceStateManager.Instance.HumanPlayer.RespawnToLastCheckpoint(); };
             
             Hide();
         }
-        private void OnDestroy() {  
-        }
-        
+
         public void Toggle() {
             bool _isViewHidden = GetComponent<UIDocument>().rootVisualElement.style.display == DisplayStyle.None;
             Debug.Log($"_isViewHidden = {_isViewHidden}");

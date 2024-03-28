@@ -10,7 +10,6 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         public override void UpdateState(RaceStateManager context) {
             if (isTimeOut(context)) {
                 context.SwitchState(RaceStateManager.RaceState.RacePlaying);
-                PlayerSingleton.Singleton.RaceInfo.Reset();
             }
         }
 

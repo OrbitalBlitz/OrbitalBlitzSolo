@@ -12,7 +12,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
 
         private List<Action<RaceStateManager, RacePlayingState>> RaceEndConditions = new() {
             ((context, state) => {
-                if (PlayerSingleton.Singleton.RaceInfo.hasFinished)
+                if (RaceStateManager.Instance.HumanPlayer.Info.hasFinished)
                     state.isRaceOver = true;
             })
         };
@@ -30,7 +30,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             base.EnterState(context);
             isRaceOver = false;
             _context = context;
-            PlayerSingleton.Singleton.ShipController.SetIsKinematic(false);
+            // PlayerSingleton.Singleton.ShipController.SetIsKinematic(false);
         }
 
         public override void ExitState(RaceStateManager context) {

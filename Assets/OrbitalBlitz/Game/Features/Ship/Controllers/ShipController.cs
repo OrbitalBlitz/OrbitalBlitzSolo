@@ -5,7 +5,7 @@ using UnityEngine;
 #endif
 
 namespace OrbitalBlitz.Game.Features.Ship.Controllers {
-    public class ShipController : MonoBehaviour, IShipController {
+    public class BaseShipController : AbstractShipController {
 
         [Header("Debug")]
         [SerializeField] public Logger Logger;
@@ -62,19 +62,21 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             _isBreaking = isBraking;
 
         }
-        public void Steer( float input ) {
+        public override void Steer( float input ) {
             _steering = input;
         }
-
-        public void Brake(int input) {
+        public override void Reset() {
+            _steering = _acceleration = 0;
+        }
+        public override void Brake(int input) {
             // throw new NotImplementedException();
         }
 
-        public void Accelerate( float input ) {
+        public override void Accelerate( float input ) {
             _acceleration = input;
         }
 
-        public float GetSpeed() {
+        public override float GetSpeed() {
             return _rb.velocity.magnitude;
         }
 
@@ -203,24 +205,13 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
 
         }
 
-        public void Respawn() { }
-        public void RespawnToLastCheckpoint() {
+        public override void ActivateBlitz() {
             throw new NotImplementedException();
         }
 
-        public void ActivateBlitz() {
-            throw new NotImplementedException();
-        }
+        public override event Action<Collider> onTriggerEnter;
 
-        public ShipPhysicsState GetCurrentPhysicsState() {
-            throw new NotImplementedException();
-        }
-
-        public void setLastCheckpointPhysicsState(ShipPhysicsState state) {
-            throw new NotImplementedException();
-        }
-
-        public void SetIsKinematic(bool toggle) {
+        public override void SetIsKinematic(bool toggle) {
             _rb.isKinematic = toggle;
         }
     }

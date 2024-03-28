@@ -6,6 +6,7 @@ using OrbitalBlitz.Game.Scenes.Race.UI.EscapeMenu;
 using UnityEditor;
 #endif
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
     public class RaceStateManager : MonoBehaviour {
@@ -17,10 +18,16 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             RacePlaying,
             RaceEnded,
         }
-
         public Dictionary<RaceState, RaceBaseState> States;
         public RaceState currentState;
         public RaceBaseState currentRaceState;
+        
+        public enum RaceMode {
+            Clock,
+            Classic
+        }
+        public RaceMode raceMode = RaceMode.Clock; //TODO base this value on player input
+
         
         [SerializeField] public EndMenuController EndMenuController;
         [SerializeField] public EscapeMenuController EscapeMenuController;
@@ -29,8 +36,12 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         
         [SerializeField] public int CountDownSeconds = 0;
         
-        public CircuitData m_circuit_data;
-
+        [Header("Training")]
+        [SerializeField] public bool TrainingMode = false;
+        [SerializeField] public int NumberOfAgents = 10;
+        
+        [FormerlySerializedAs("CircuitData")] [FormerlySerializedAs("m_circuit_data")] public Circuit circuit;
+        public OrbitalBlitzPlayer HumanPlayer;
         void Start() {
             Instance = this;
             States =
@@ -40,7 +51,8 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
                     { RaceState.RacePlaying, new RacePlayingState() },
                     { RaceState.RaceEnded, new RaceEndedState() },
                 };
-            m_circuit_data = FindObjectOfType<CircuitData>();
+            circuit = FindObjectOfType<Circuit>();
+
             SwitchState(RaceState.RaceSetup);
         }
 

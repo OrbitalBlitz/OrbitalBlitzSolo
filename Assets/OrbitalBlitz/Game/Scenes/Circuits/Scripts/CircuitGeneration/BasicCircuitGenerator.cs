@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
 using Unity.Splines.Examples;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Splines;
 
 namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
@@ -44,7 +46,7 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
 
         [HideInInspector] [SerializeField] protected CustomSplineInstantiate m_checkpoint_instantiator;
         [HideInInspector] [SerializeField] protected int m_numberOfCheckpoints = 10;
-        [HideInInspector] [SerializeField] protected CircuitData m_circuit_data;
+        [FormerlySerializedAs("m_circuit_data")] [HideInInspector] [SerializeField] protected Circuit mCircuit;
         [SerializeField] public bool m_generated { get; protected set; }
 
         protected void Awake() {
@@ -53,7 +55,7 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
             m_mesh_renderer = gameObject.GetComponent<MeshRenderer>();
             m_mesh_collider = gameObject.GetComponent<MeshCollider>();
             m_container = gameObject.GetComponent<SplineContainer>();
-            m_circuit_data = gameObject.GetComponent<CircuitData>();
+            mCircuit = gameObject.GetComponent<Circuit>();
         }
 
         public void Generate() {
@@ -94,7 +96,7 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
             DestroyImmediate(m_mesh_filter);
             DestroyImmediate(m_mesh_collider);
             DestroyImmediate(m_container);
-            DestroyImmediate(m_circuit_data);
+            DestroyImmediate(mCircuit);
             DestroyImmediate(m_fall_catcher);
 
             DestroyImmediate(GameObject.Find(k_spawnpoints_root));
@@ -104,11 +106,16 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
         }
 
         protected void createCircuitData() {
-            m_circuit_data = gameObject.AddComponent<CircuitData>();
+            mCircuit = gameObject.AddComponent<Circuit>();
             placeSpawnpoints();
             placeCheckpoints();
 
-            m_circuit_data.Laps = m_circuit_laps;
+            mCircuit.Laps = m_circuit_laps;
+            
+            DateTime current_time = DateTime.UtcNow;
+            long unix_time = ((DateTimeOffset)current_time).ToUnixTimeSeconds();
+            
+            mCircuit.Id = unix_time;
         }
 
         protected void placeSpawnpoints() {
@@ -123,7 +130,7 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
                 rotation,
                 spawnpointsContainer.transform
             );
-            m_circuit_data.Spawnpoints = new() { spawnpoint.GetComponent<Spawnpoint>() };
+            mCircuit.Spawnpoints = new() { spawnpoint.GetComponent<Spawnpoint>() };
         }
 
         protected void placeCheckpoints() {
@@ -150,7 +157,7 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
             DestroyImmediate(checkpoints.Last().gameObject);
             checkpoints.RemoveAt(checkpoints.Count - 1);
 
-            m_circuit_data.Checkpoints = checkpoints;
+            mCircuit.Checkpoints = checkpoints;
             DestroyImmediate(m_checkpoint_instantiator);
         }
 
