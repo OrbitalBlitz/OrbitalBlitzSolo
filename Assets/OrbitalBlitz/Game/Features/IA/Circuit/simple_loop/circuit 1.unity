@@ -3307,7 +3307,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742268677}
   m_LocalRotation: {x: 0.08884804, y: 0.000000004284584, z: -3.8218834e-10, w: 0.99604523}
-  m_LocalPosition: {x: 23.938171, y: 1.5005264, z: -5.143265}
+  m_LocalPosition: {x: 0, y: 1.5, z: -3.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5190,11 +5190,15 @@ PrefabInstance:
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: ShipPrefab
       value: 
-      objectReference: {fileID: 1512421324690336505, guid: 22ed2d0d8bbfc70468bc1d9694e4855f, type: 3}
+      objectReference: {fileID: 1512421324690336505, guid: 1c407118c009694468f1106662ae99bb, type: 3}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: PlayerPrefab
       value: 
       objectReference: {fileID: 1022548929976373488, guid: 0b4006fc43490cc46a7fd3b4c9557599, type: 3}
+    - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
+      propertyPath: TrainingMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: EndMenuController
       value: 
