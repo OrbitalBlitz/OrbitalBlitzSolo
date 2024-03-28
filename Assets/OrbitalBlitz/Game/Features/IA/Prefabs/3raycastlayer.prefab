@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 941313073042833485}
   - component: {fileID: 3197073942644172492}
   m_Layer: 0
-  m_Name: LowPolyShipIA1
+  m_Name: 3raycastlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
