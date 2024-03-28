@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1590
+  m_Name: pb_Mesh-1704
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -3028,7 +3028,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1614
+  m_Name: pb_Mesh-1680
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -3307,7 +3307,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742268677}
   m_LocalRotation: {x: 0.08884804, y: 0.000000004284584, z: -3.8218834e-10, w: 0.99604523}
-  m_LocalPosition: {x: 0, y: 2.5, z: -3.5}
+  m_LocalPosition: {x: 23.938171, y: 1.5005264, z: -5.143265}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4117,7 +4117,7 @@ MonoBehaviour:
   - {fileID: 945704104}
   Spawnpoints:
   - {fileID: 849449372}
-  Models: []
+  Phantoms: []
   Laps: 1
   Id: 0
 --- !u!64 &1612422760
@@ -5020,7 +5020,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1566
+  m_Name: pb_Mesh-1642
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -5190,7 +5190,7 @@ PrefabInstance:
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: ShipPrefab
       value: 
-      objectReference: {fileID: 1512421324690336505, guid: 426cde519d9edea499f9fd81904e737e, type: 3}
+      objectReference: {fileID: 1512421324690336505, guid: 22ed2d0d8bbfc70468bc1d9694e4855f, type: 3}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: PlayerPrefab
       value: 
