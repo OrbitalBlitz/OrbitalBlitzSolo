@@ -91,7 +91,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4590112334354658253}
-  m_LocalRotation: {x: 0.08884804, y: -0.000000004284584, z: 3.8218834e-10, w: 0.99604523}
+  m_LocalRotation: {x: 0.08884804, y: 0.000000004284584, z: -3.8218834e-10, w: 0.99604523}
   m_LocalPosition: {x: 0, y: 1.5, z: -3.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -450,6 +450,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3368916564331560363, guid: b3c0a61dfe701344d819eb701e83f4b7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8848566385011067764}
+    - targetCorrespondingSourceObject: {fileID: 3368916564331560363, guid: b3c0a61dfe701344d819eb701e83f4b7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8476397101996340131}
   m_SourcePrefab: {fileID: 100100000, guid: b3c0a61dfe701344d819eb701e83f4b7, type: 3}
 --- !u!4 &3770298624031328665 stripped
 Transform:
@@ -475,6 +478,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverHeight: 0.05
   hoverSpeed: 3
+--- !u!114 &8476397101996340131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4546694109384430371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e621a12d26d73964db1debea080f2c62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skin: {fileID: 4546694109384430371}
 --- !u!1001 &3924401768965694096
 PrefabInstance:
   m_ObjectHideFlags: 0
