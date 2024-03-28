@@ -21,7 +21,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.UI.EndMenu {
         
         public void Show() {
             FindObjectOfType<HudView>().Hide();
-            var timespan = TimeSpan.FromSeconds(PlayerSingleton.Singleton.RaceInfo.timer);            
+            var timespan = TimeSpan.FromSeconds(RaceStateManager.Instance.HumanPlayer.Info.timer);            
             _view.time.text = timespan.ToString(@"mm\'ss\'\'ff\'\'\'");
             _view.Show();
         }

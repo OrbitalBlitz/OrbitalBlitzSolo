@@ -1,3 +1,4 @@
+using OrbitalBlitz.Game.Scenes.Race.Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,7 +23,8 @@ namespace OrbitalBlitz.Game.Scenes.SelectCircuit.UI {
             _selectedCircuit = circuit;
         }
 
-        private void loadSelectedCircuit() {
+        private void loadSelectedCircuit(RaceStateManager.RaceMode mode) {
+            PlayerPrefs.SetString("RaceMode", mode.ToString());
             Loader.LoadScene(_selectedCircuit.Scene);
             Loader.LoadScene(Loader.Scene.Race, LoadSceneMode.Additive);
         }

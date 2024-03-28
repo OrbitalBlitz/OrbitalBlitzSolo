@@ -1180,14 +1180,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742268677}
-  m_LocalRotation: {x: 0.31657213, y: 0.31013826, z: -0.11036346, w: 0.88961583}
-  m_LocalPosition: {x: -31.02, y: 68.41, z: -13.03}
+  m_LocalRotation: {x: 0.40336794, y: -0.000000003936123, z: 0.0000000017351259, w: 0.9150379}
+  m_LocalPosition: {x: 46, y: 69, z: -31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 39.176, y: 38.439, z: 0}
+  m_LocalEulerAnglesHint: {x: 47.578, y: 0, z: 0}
 --- !u!43 &743332222
 Mesh:
   m_ObjectHideFlags: 0
@@ -2216,7 +2216,15 @@ MonoBehaviour:
   - {fileID: 1110674153}
   Spawnpoints:
   - {fileID: 951563567}
+  Phantoms:
+  - Model: {fileID: 5022602860645237092, guid: 15b18ded04ebf80409ae0803707d1467, type: 3}
+    Medal: 0
+  - Model: {fileID: 5022602860645237092, guid: 15b18ded04ebf80409ae0803707d1467, type: 3}
+    Medal: 1
+  - Model: {fileID: 5022602860645237092, guid: 15b18ded04ebf80409ae0803707d1467, type: 3}
+    Medal: 2
   Laps: 1
+  Id: 0
 --- !u!64 &1548378993
 MeshCollider:
   m_ObjectHideFlags: 0

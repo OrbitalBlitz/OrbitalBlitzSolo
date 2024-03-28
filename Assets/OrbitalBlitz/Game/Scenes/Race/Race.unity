@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -210,6 +210,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
+      propertyPath: raceMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: ShipPrefab
       value: 
       objectReference: {fileID: 1512421324690336505, guid: 426cde519d9edea499f9fd81904e737e, type: 3}
@@ -218,9 +222,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1022548929976373488, guid: 0b4006fc43490cc46a7fd3b4c9557599, type: 3}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
+      propertyPath: TrainingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
+      propertyPath: GoldBotMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: cc3938fd3d828f64dab8f3de24a95301, type: 2}
+    - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
+      propertyPath: BronzeBotMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 71abc3782198c3345a76028376a45e1f, type: 2}
+    - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: EndMenuController
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
+      propertyPath: SilverBotMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 9136f6124a7785f478ee915dd2af91d4, type: 2}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: EscapeMenuController
       value: 

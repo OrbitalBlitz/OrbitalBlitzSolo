@@ -45,5 +45,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  raceMode: 0
+  EndMenuController: {fileID: 0}
+  EscapeMenuController: {fileID: 0}
   PlayerPrefab: {fileID: 0}
   ShipPrefab: {fileID: 0}
+  CountDownSeconds: 0
+  BotAlpha: 0.3
+  GoldBotMaterial: {fileID: 2100000, guid: cc3938fd3d828f64dab8f3de24a95301, type: 2}
+  SilverBotMaterial: {fileID: 2100000, guid: 9136f6124a7785f478ee915dd2af91d4, type: 2}
+  BronzeBotMaterial: {fileID: 2100000, guid: 71abc3782198c3345a76028376a45e1f, type: 2}
+  TrainingMode: 0
+  NumberOfAgents: 10
+  circuit: {fileID: 0}
+  HumanPlayer: {fileID: 0}

@@ -15,10 +15,16 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts {
             Bronze,
             NoMedal
         }
+        
+        [Serializable]
+        public struct Phantom {
+            public NNModel Model;
+            public MedalType Medal;
+        }
 
         public List<Checkpoint> Checkpoints;
         public List<Spawnpoint> Spawnpoints;
-        public List<TrainedModelSO> Models;
+        [SerializeField] public List<Phantom> Phantoms;
         public int Laps;
         public long Id; // unix timestamp of creation time
         
