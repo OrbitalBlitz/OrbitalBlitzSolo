@@ -1,9 +1,17 @@
+using System;
 using Cinemachine;
+using JetBrains.Annotations;
+using OrbitalBlitz.Game.Features.Player;
 using OrbitalBlitz.Game.Features.Ship;
 using OrbitalBlitz.Game.Features.Ship.Controllers;
 using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
+using OrbitalBlitz.Game.Scenes.Race.UI.EndMenu;
+using OrbitalBlitz.Game.Scenes.Race.UI.EscapeMenu;
+using Unity.Barracuda;
+using Unity.MLAgents.Policies;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Object = UnityEngine.Object;
 
 namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
     public class RaceSetupState : RaceBaseState {
@@ -12,6 +20,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         private bool _hasCountdownStarted;
         private bool _setupFinished;
         private RaceStateManager _stateManager;
+        private int _spawnedPlayer = 0;
 
         [SerializeField] private const float CountdownLength = 3f;
 
@@ -24,124 +33,76 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         public override void EnterState(RaceStateManager context) {
             base.EnterState(context);
             _stateManager = context;
-            Player.Singleton.Input.defaultMap.ToggleEscapeMenu.started += toggleEscapeMenuCallback;
-            RaceSetup();
-        }
-
-        public override void ExitState(RaceStateManager context) {
-            base.ExitState(context);
-        }
-
-        private void RaceSetup() {
+            
             Debug.Log("RaceManager/Setup : RaceSetup beginning...");
-            AddCallbacksToCheckpoints();
-            SpawnPlayer();
-            Player.Singleton.ShipController.SetIsKinematic(true);
+
+            if (_stateManager.TrainingMode) {
+                TrainingSetup();
+                return;
+            }
+
+            PlayingSetup();
             _setupFinished = true;
+            
             Debug.Log("RaceManager/Setup : RaceSetup finished !");
         }
 
-        public void SpawnPlayer() {
-            Debug.Log("\tRaceManager/Setup : SpqwnPlayer beginning...");
-            int spawnpointsCount = _stateManager.m_circuit_data.Spawnpoints.Count;
+        private void PlayingSetup() {
+            OrbitalBlitzPlayer human_player = spawnPlayer();
+            human_player.Input.defaultMap.ToggleEscapeMenu.started += toggleEscapeMenuCallback;
+            _stateManager.HumanPlayer = human_player;
+
+            if (_stateManager.raceMode == RaceStateManager.RaceMode.Classic) {
+                foreach (var model in _stateManager.circuit.Models) {
+                    // SpawnPlayer(); // TODO spawn ai
+                }
+            }
+        }
+
+        private void TrainingSetup() {
+            for (var i = 0; i < _stateManager.NumberOfAgents; i++) {
+                spawnPlayer(isHuman: false);
+            }
+        }
+
+        private OrbitalBlitzPlayer spawnPlayer(
+            bool isHuman = true
+            ) {
+            
+            Debug.Log("\tRaceManager/Setup : SpawnPlayer beginning...");
+            int spawnpointsCount = _stateManager.circuit.Spawnpoints.Count;
             int i = (_lastUsedSpawnPoint + 1) % spawnpointsCount;
-            Transform spTransform = _stateManager.m_circuit_data.Spawnpoints[i].gameObject.transform;
+            Transform spTransform = _stateManager.circuit.Spawnpoints[i].gameObject.transform;
 
             var spPosition = spTransform.position;
             var spRotation = spTransform.rotation;
 
-            Transform ship = Object.Instantiate(_stateManager.ShipPrefab, spPosition, spRotation);
-            ship.gameObject.name = $"ship";
+            Transform player_tf = Object.Instantiate(_stateManager.PlayerPrefab);
+            player_tf.gameObject.name = $"player_{_spawnedPlayer}";
             
+            Transform ship_tf = Object.Instantiate(_stateManager.ShipPrefab, spPosition, spRotation);
+            ship_tf.gameObject.name = $"ship_{_spawnedPlayer}";
+            // ship_tf.GetComponent<IShipController>().SetIsKinematic(true);
+
+            _spawnedPlayer++;
             _lastUsedSpawnPoint = i;
-            Debug.Log("\tRaceManager/Setup : SpqwnPlayer finished !");
+
+            var player = player_tf.GetComponent<OrbitalBlitzPlayer>();
+            player.SetShip(ship_tf.gameObject);
+            
+            if (!isHuman) {
+                var behaviour = player_tf.GetComponent<BehaviorParameters>();
+                // behaviour.BehaviorType = BehaviorType.InferenceOnly;
+            }
+            
+            Debug.Log("\tRaceManager/Setup : SpawnPlayer finished !");
+            return player;
         }
 
         public void toggleEscapeMenuCallback(InputAction.CallbackContext callbackContext) {
             RaceStateManager.Instance.EscapeMenuController.Toggle();
         }
-        public void AddCallbacksToCheckpoints() {
-            Debug.Log("\tRaceManager/Setup : AddCallbacksToCheckpoint beginning...");
-            _stateManager.m_circuit_data.Checkpoints.ForEach(delegate(Checkpoint cp) {
-                Debug.Log($"Added OnShipEnter callback on {cp.name}");
-                cp.onShipEnter += Checkpoint_OnShipEnter;
-            });
-            Debug.Log("\tRaceManager/Setup : AddCallbacksToCheckpoint finished !");
-        }
-
-        public void Checkpoint_OnShipEnter(Checkpoint checkpoint, GameObject ship) {
-            Debug.Log($"{ship.name} passed {checkpoint.name}");
-            UpdateShipCheckpointAndLap(checkpoint, ship);
-            UpdateShipHasFinished(ship);
-            UpdateShipLastCheckpointPositionAndVelocity(ship);
-        }
-
-        private void UpdateShipLastCheckpointPositionAndVelocity(GameObject ship) {
-            var _controller = ship.GetComponentInChildren<IShipController>();
-            _controller.setLastCheckpointPhysicsState(_controller.GetCurrentPhysicsState());
-        }
-
-        private void UpdateShipCheckpointAndLap(Checkpoint crossed_checkpoint, GameObject ship) {
-            //Debug.Log("updatePlayerCheckpointAndLap called.");
-            int numberOfCheckpoints = _stateManager.m_circuit_data.Checkpoints.Count;
-            int passed_cp = _stateManager.m_circuit_data.Checkpoints.IndexOf(crossed_checkpoint);
-
-            int playerLastCp = ship.GetComponent<ShipRaceInfo>().lastCheckpoint;
-            int playerLap = ship.GetComponent<ShipRaceInfo>().lap;
-
-            // special cases 
-            bool passedLastCp = passed_cp == numberOfCheckpoints - 1;
-            if (passedLastCp) {
-                //Debug.Log("going through last checkpoint...");
-
-                if (playerLastCp == 0) { // ... backwards
-                    //Debug.Log("... backwards");
-
-                    ship.GetComponent<ShipRaceInfo>().lastCheckpoint = passed_cp;
-                    ship.GetComponent<ShipRaceInfo>().lap = playerLap - 1;
-                    return;
-                }
-
-                if (playerLastCp == numberOfCheckpoints - 2) { // ... forwards
-                    //Debug.Log("... forwards");
-
-                    ship.GetComponent<ShipRaceInfo>().lastCheckpoint = passed_cp;
-                    return;
-                }
-            }
-            else if (passed_cp == 0) { // going through first checkpoint
-                //Debug.Log("going through first checkpoint...");
-                if (playerLastCp == numberOfCheckpoints - 1) { // ... forwards
-                    //Debug.Log("... forwards");
-
-                    ship.GetComponent<ShipRaceInfo>().lastCheckpoint = passed_cp;
-                    ship.GetComponent<ShipRaceInfo>().lap = playerLap + 1;
-                    return;
-                }
-
-                if (playerLastCp == 1) // ... backwards
-                {
-                    //Debug.Log("... backwards");
-                    ship.GetComponent<ShipRaceInfo>().lastCheckpoint = passed_cp;
-                }
-            }
-            else { // General case
-                //Debug.Log("General case.");
-                if (passed_cp == playerLastCp + 1 || passed_cp == playerLastCp - 1) {
-                    ship.GetComponent<ShipRaceInfo>().lastCheckpoint = passed_cp;
-                    return;
-                }
-            }
-            //Debug.Log("Ship " + player.name + " induly passed checkpoint " + crossed_checkpoint.gameObject.name);
-        }
-
-        private void UpdateShipHasFinished(GameObject player) {
-            //Debug.Log("updatePlayerHasFinished called.");
-
-            if (player.GetComponent<ShipRaceInfo>().lap == _stateManager.m_circuit_data.Laps + 1) {
-                player.GetComponent<ShipRaceInfo>().hasFinished = true;
-            }
-        }
+        
 
         private void StartRaceCountdown() {
             _hasCountdownStarted = true;

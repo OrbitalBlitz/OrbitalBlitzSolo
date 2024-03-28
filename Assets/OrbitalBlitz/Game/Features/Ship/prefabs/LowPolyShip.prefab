@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6087141043076831821}
   - component: {fileID: 7049236803265872723}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Kart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1259372241722839123}
   - component: {fileID: 441479639222644534}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Virtual Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 6159959460610067845}
   - component: {fileID: 2664740429486674379}
   - component: {fileID: 941313073042833485}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LowPolyShip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,6 +254,8 @@ MonoBehaviour:
   timer: 0
   lap: 1
   hasFinished: 0
+  player: {fileID: 0}
+  collider: {fileID: 0}
 --- !u!1 &5717108083450338355
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +268,7 @@ GameObject:
   - component: {fileID: 7178309888128831819}
   - component: {fileID: 2104241502799541557}
   - component: {fileID: 3867825701263704446}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -360,7 +362,7 @@ GameObject:
   - component: {fileID: 9098102288554424907}
   - component: {fileID: 1654668410895547217}
   - component: {fileID: 483839381264333700}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -502,6 +504,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spaceship
       objectReference: {fileID: 0}
+    - target: {fileID: 3368916564331560363, guid: b3c0a61dfe701344d819eb701e83f4b7, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 9144030251778499809, guid: b3c0a61dfe701344d819eb701e83f4b7, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -553,6 +559,10 @@ PrefabInstance:
     - target: {fileID: 9055405109483703647, guid: bd9cfb068629eca4c9008508325cd5b3, type: 3}
       propertyPath: m_Name
       value: SpeedEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 9055405109483703647, guid: bd9cfb068629eca4c9008508325cd5b3, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9072468485638137190, guid: bd9cfb068629eca4c9008508325cd5b3, type: 3}
       propertyPath: m_RootOrder

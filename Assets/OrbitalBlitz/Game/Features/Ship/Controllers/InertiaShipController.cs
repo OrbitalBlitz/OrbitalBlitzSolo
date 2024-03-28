@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.ComponentModel;
 #if UNITY_EDITOR
@@ -6,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 
 namespace OrbitalBlitz.Game.Features.Ship.Controllers {
-    public class InertiaShipController : MonoBehaviour, IShipController {
+    public class InertiaShipController : AbstractShipController {
         [SerializeField] private Rigidbody sphere;
 
         /* SPEED CONTROL*/
@@ -47,19 +48,9 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         public float rotate, currentRotate;
         
 
-        private ShipPhysicsState initialPhysicsState;
-        private ShipPhysicsState lastCheckpointPhysicsState;
 
         private const float ZeroSpeedThreshold = 0.01f; // avoid having a direct comparison of float numbers to zero
 
-        void Start() {
-            initialPhysicsState = new() {
-                Position = sphere.transform.position,
-                Rotation = transform.rotation,
-                Velocity = new(0f,0f,0f),
-                AngularVelocity = new(0f,0f,0f),
-            };
-        }
 
         void Update() {
             //Follow Collider
@@ -74,24 +65,14 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             AlignWithGround(); 
         }
 
-        public void ActivateBlitz() {
+        public override void ActivateBlitz() {
             if (canBoost) StartCoroutine(Turbo());
         }
 
-        public ShipPhysicsState GetCurrentPhysicsState() {
-            return new() {
-                Position = sphere.transform.position,
-                Rotation = transform.rotation,
-                Velocity = sphere.velocity,
-                AngularVelocity = sphere.angularVelocity,
-            };
-        }
+        public override event Action<Collider> onTriggerEnter;
 
-        public void setLastCheckpointPhysicsState(ShipPhysicsState state) {
-            lastCheckpointPhysicsState = state;
-        }
 
-        public void SetIsKinematic(bool toggle) {
+        public override void SetIsKinematic(bool toggle) {
             sphere.isKinematic = toggle;
         }
 
@@ -126,14 +107,14 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             }
         }
 
-        public void Accelerate(float input) {
+        public override void Accelerate(float input) {
             if (input > 0)
                 isAccelerating = true; // speed increases only when there is positive input
             else
                 isAccelerating = false;
         }
 
-        public void Steer(float input) {
+        public override void Steer(float input) {
             inputSteering = input;
         }
 
@@ -154,7 +135,7 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             //rotate = steering * input;
         }
 
-        public void Brake(int input) {
+        public override void Brake(int input) {
             inputBraking = input > 0;
         }
 
@@ -165,26 +146,12 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             }
         }
         
-        public float GetSpeed() {
+        public override float GetSpeed() {
             return sphere.velocity.magnitude;
         }
 
-        public void Respawn() {
-            ResetShipToPhysicsState(initialPhysicsState);
-            setLastCheckpointPhysicsState(initialPhysicsState);
-        }
-        
-        public void RespawnToLastCheckpoint() {
-            ResetShipToPhysicsState(lastCheckpointPhysicsState);
-        }
-
-        private void ResetShipToPhysicsState(ShipPhysicsState state) {
-            sphere.transform.position = state.Position;
-            transform.rotation  = state.Rotation;
-            sphere.velocity = state.Velocity;
-            sphere.angularVelocity = state.AngularVelocity;
-            currentSpeed = 0;
-            currentRotate = 0;
+        public override void Reset() {
+            currentRotate = currentSpeed = 0;
         }
 
         /// <summary>

@@ -1,1 +1,81 @@
-{"count":1,"self":160.6187008,"total":160.6620821,"children":{"InitializeActuators":{"count":1,"self":0.0019995,"total":0.0019995,"children":null},"InitializeSensors":{"count":1,"self":0.0010004,"total":0.0010004,"children":null},"AgentSendState":{"count":304,"self":0.0025149,"total":0.0311708,"children":{"CollectObservations":{"count":61,"self":0,"total":0,"children":null},"WriteActionMask":{"count":61,"self":0,"total":0,"children":null},"RequestDecision":{"count":61,"self":0.028655899999999998,"total":0.028655899999999998,"children":null}}},"DecideAction":{"count":304,"self":0.0061693,"total":0.0061693,"children":null},"AgentAct":{"count":304,"self":0.0030361999999999997,"total":0.0030361999999999997,"children":null}},"gauges":{},"metadata":{"timer_format_version":"0.1.0","start_time_seconds":"1711012812","unity_version":"2022.3.1f1","command_line_arguments":"C:\\Program Files\\Unity\\Hub\\Editor\\2022.3.1f1\\Editor\\Unity.exe -projectpath C:\\Users\\loannmr\\Documents\\DEV\\Epitech\\OrbitalBlitzSolo -useHub -hubIPC -cloudEnvironment production -licensingIpc LicenseClient-loannmr -hubSessionId f60f026a-8eec-4580-8bb2-0f0bcee897de -accessToken 84MTcdyx8-gjLG__43Vob7kAtWtjgvXwWhmK8U1cnQc012f","communication_protocol_version":"1.5.0","com.unity.ml-agents_version":"2.0.1","scene_name":"TestCircuitGen","end_time_seconds":"1711012973"}}
+{
+  "count": 1,
+  "self": 6.5110876,
+  "total": 25.3066908,
+  "children": {
+    "InitializeActuators": {
+      "count": 10,
+      "self": 0.0020241,
+      "total": 0.0020241,
+      "children": null
+    },
+    "InitializeSensors": {
+      "count": 10,
+      "self": 0.0015153999999999999,
+      "total": 0.0015153999999999999,
+      "children": null
+    },
+    "AgentSendState": {
+      "count": 5167,
+      "self": 0.0381018,
+      "total": 1.8493202999999998,
+      "children": {
+        "CollectObservations": {
+          "count": 10340,
+          "self": 0.0024494,
+          "total": 0.0024494,
+          "children": null
+        },
+        "WriteActionMask": {
+          "count": 10340,
+          "self": 0.0047691,
+          "total": 0.0047691,
+          "children": null
+        },
+        "RequestDecision": {
+          "count": 10340,
+          "self": 0.027392299999999998,
+          "total": 1.8039999999999998,
+          "children": {
+            "AgentInfo.ToProto": {
+              "count": 10340,
+              "self": 0.0372843,
+              "total": 1.7766077,
+              "children": {
+                "GenerateSensorData": {
+                  "count": 10340,
+                  "self": 1.7393234,
+                  "total": 1.7393234,
+                  "children": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "DecideAction": {
+      "count": 5167,
+      "self": 16.900472,
+      "total": 16.900472699999998,
+      "children": null
+    },
+    "AgentAct": {
+      "count": 5167,
+      "self": 0.0412584,
+      "total": 0.0412584,
+      "children": null
+    }
+  },
+  "gauges": {},
+  "metadata": {
+    "timer_format_version": "0.1.0",
+    "start_time_seconds": "1711621110",
+    "unity_version": "2022.3.1f1",
+    "command_line_arguments": "C:\\Program Files\\Unity\\Hub\\Editor\\2022.3.1f1\\Editor\\Unity.exe -projectpath C:\\Users\\nivle\\Documents\\Ecole\\Epitech\\_ESP\\Examples\\OrbitalBlitzSolo -useHub -hubIPC -cloudEnvironment production -licensingIpc LicenseClient-nivle -hubSessionId 507dae2d-9092-4761-b19e-b44b28fccfd1 -accessToken TRNdDYBIsjeMOH62mdS6I_0BfCkRmEuYLrSk3WOfKas001f",
+    "communication_protocol_version": "1.5.0",
+    "com.unity.ml-agents_version": "2.0.1",
+    "scene_name": "TestCircuitGen",
+    "end_time_seconds": "1711621136"
+  }
+}

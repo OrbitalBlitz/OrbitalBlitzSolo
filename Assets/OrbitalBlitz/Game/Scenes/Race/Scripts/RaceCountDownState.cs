@@ -1,3 +1,4 @@
+using OrbitalBlitz.Game.Features.Player;
 using UnityEngine;
 
 namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
@@ -9,7 +10,6 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         public override void UpdateState(RaceStateManager context) {
             if (isTimeOut(context)) {
                 context.SwitchState(RaceStateManager.RaceState.RacePlaying);
-                Player.Singleton.RaceInfo.Reset();
             }
         }
 

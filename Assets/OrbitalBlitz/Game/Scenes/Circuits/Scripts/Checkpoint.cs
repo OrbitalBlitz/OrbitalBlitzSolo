@@ -7,11 +7,11 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts {
         public delegate void OnShipEnter(Checkpoint checkpoint, GameObject go);
 
         public event OnShipEnter onShipEnter;
-        [FormerlySerializedAs("circuitManager")] [SerializeField] CircuitData circuitData;
+        [FormerlySerializedAs("circuitData")] [FormerlySerializedAs("circuitManager")] [SerializeField] Circuit circuit;
 
         private void OnTriggerEnter(Collider other) {
-            IShipController shipController = other.transform.parent.GetComponentInChildren<IShipController>();
-            if (shipController == null) {
+            BaseShipController base_ship_controller = other.transform.parent.GetComponentInChildren<BaseShipController>();
+            if (base_ship_controller == null) {
                 return;
             }
             onShipEnter?.Invoke(this, other.transform.parent.gameObject);

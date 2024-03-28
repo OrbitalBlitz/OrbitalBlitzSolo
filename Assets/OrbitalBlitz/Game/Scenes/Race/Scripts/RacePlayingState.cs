@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using OrbitalBlitz.Game.Features.Player;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
 
         private List<Action<RaceStateManager, RacePlayingState>> RaceEndConditions = new() {
             ((context, state) => {
-                if (Player.Singleton.RaceInfo.hasFinished)
+                if (RaceStateManager.Instance.HumanPlayer.Info.hasFinished)
                     state.isRaceOver = true;
             })
         };
@@ -29,7 +30,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             base.EnterState(context);
             isRaceOver = false;
             _context = context;
-            Player.Singleton.ShipController.SetIsKinematic(false);
+            // PlayerSingleton.Singleton.ShipController.SetIsKinematic(false);
         }
 
         public override void ExitState(RaceStateManager context) {
