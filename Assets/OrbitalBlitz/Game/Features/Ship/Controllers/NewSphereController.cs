@@ -179,9 +179,8 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         }
 
         private void UpdateSpeed() {
-            if (acceleration_input > 0 )
-                if (blitzTimer > 0) RB.AddForce(transform.forward * acceleration_input * boost_power, ForceMode.Acceleration);
-                else RB.AddForce(transform.forward * acceleration_input * acceleration_stat, ForceMode.Acceleration);
+            if (blitzTimer > 0) RB.AddForce(transform.forward * acceleration_input * boost_power, ForceMode.Acceleration);
+            else if (acceleration_input > 0 ) RB.AddForce(transform.forward * acceleration_input * acceleration_stat, ForceMode.Acceleration);
             
             applyBraking();
             
@@ -314,15 +313,15 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
 
         public void UpdateAccelerationParticles() {
             ParticleSystem.EmissionModule acceleration_emission = acceleration_particles.emission;
-            float max_speed_division = max_speed_forward / 2;
+            float max_speed_division = max_speed_forward / 10;
 
             if (blitzTimer > 0) {
                 acceleration_emission.rateOverTime = 100;
             }
-            else if (RB.velocity.magnitude >= max_speed_forward - 5) {
+            else if (RB.velocity.magnitude >= max_speed_division*4) {
                 acceleration_emission.rateOverTime = 20;
             }
-            else if (RB.velocity.magnitude >= max_speed_division) {
+            else if (RB.velocity.magnitude >= max_speed_division*2) {
                 acceleration_emission.rateOverTime = 5;
             }
             else {
