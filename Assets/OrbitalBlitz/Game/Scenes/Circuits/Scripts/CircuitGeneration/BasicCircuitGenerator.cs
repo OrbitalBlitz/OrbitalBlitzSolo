@@ -80,7 +80,7 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
             m_fall_catcher = GameObject.CreatePrimitive(PrimitiveType.Cube);
             // m_fall_catcher.name = k_fallcatcher_root;
             int plane_side = 2 * m_circuitGridMaxSize * m_gridCellSize;
-            m_fall_catcher.transform.position = new Vector3(0, -0.5f, 0);
+            m_fall_catcher.transform.position = new Vector3(0, -1f, 0);
             m_fall_catcher.transform.localScale = new Vector3(plane_side, .01f, plane_side); 
 
             Collider planeCollider = m_fall_catcher.GetComponent<Collider>();
