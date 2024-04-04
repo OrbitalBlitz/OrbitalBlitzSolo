@@ -1,0 +1,47 @@
+{
+    "PlayerBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 499989,
+                "file_path": "results\\2024.04.04_LookingToInertia_3\\PlayerBehaviour\\PlayerBehaviour-499989.onnx",
+                "reward": -0.3598562027007517,
+                "creation_time": 1712241038.1542268,
+                "auxillary_file_paths": [
+                    "results\\2024.04.04_LookingToInertia_3\\PlayerBehaviour\\PlayerBehaviour-499989.pt"
+                ]
+            },
+            {
+                "steps": 999825,
+                "file_path": "results\\2024.04.04_LookingToInertia_3\\PlayerBehaviour\\PlayerBehaviour-999825.onnx",
+                "reward": 6.44517492746052,
+                "creation_time": 1712241479.9894269,
+                "auxillary_file_paths": [
+                    "results\\2024.04.04_LookingToInertia_3\\PlayerBehaviour\\PlayerBehaviour-999825.pt"
+                ]
+            },
+            {
+                "steps": 1151828,
+                "file_path": "results\\2024.04.04_LookingToInertia_3\\PlayerBehaviour\\PlayerBehaviour-1151828.onnx",
+                "reward": 10.499999046325684,
+                "creation_time": 1712241697.425475,
+                "auxillary_file_paths": [
+                    "results\\2024.04.04_LookingToInertia_3\\PlayerBehaviour\\PlayerBehaviour-1151828.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1151828,
+            "file_path": "results\\2024.04.04_LookingToInertia_3\\PlayerBehaviour.onnx",
+            "reward": 10.499999046325684,
+            "creation_time": 1712241697.425475,
+            "auxillary_file_paths": [
+                "results\\2024.04.04_LookingToInertia_3\\PlayerBehaviour\\PlayerBehaviour-1151828.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

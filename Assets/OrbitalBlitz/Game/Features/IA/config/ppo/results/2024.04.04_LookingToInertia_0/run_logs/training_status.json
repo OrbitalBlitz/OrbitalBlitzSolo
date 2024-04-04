@@ -1,0 +1,29 @@
+{
+    "PlayerBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 47653,
+                "file_path": "results\\2024.04.04_LookingToInertia_0\\PlayerBehaviour\\PlayerBehaviour-47653.onnx",
+                "reward": -7.158447078492684,
+                "creation_time": 1712240277.6925058,
+                "auxillary_file_paths": [
+                    "results\\2024.04.04_LookingToInertia_0\\PlayerBehaviour\\PlayerBehaviour-47653.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 47653,
+            "file_path": "results\\2024.04.04_LookingToInertia_0\\PlayerBehaviour.onnx",
+            "reward": -7.158447078492684,
+            "creation_time": 1712240277.6925058,
+            "auxillary_file_paths": [
+                "results\\2024.04.04_LookingToInertia_0\\PlayerBehaviour\\PlayerBehaviour-47653.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

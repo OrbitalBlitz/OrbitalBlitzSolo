@@ -294,6 +294,7 @@ GameObject:
   - component: {fileID: 1493624398073096732}
   - component: {fileID: 3289601916274336400}
   - component: {fileID: 3212833013494145144}
+  - component: {fileID: 1652174419713654557}
   m_Layer: 6
   m_Name: Sensors
   m_TagString: Untagged
@@ -394,6 +395,19 @@ MonoBehaviour:
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
   m_StartVerticalOffset: 1.2
   m_EndVerticalOffset: -5
+--- !u!114 &1652174419713654557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5785770919007805327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4d04f85678071d49a5b837aac0c12d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 483839381264333700}
 --- !u!1 &8934441390693939133
 GameObject:
   m_ObjectHideFlags: 0
