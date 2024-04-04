@@ -1,0 +1,65 @@
+{
+    "PlayerBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 9499835,
+                "file_path": "results\\2024.04.04_NoImitationCompare_2\\PlayerBehaviour\\PlayerBehaviour-9499835.onnx",
+                "reward": 23.54263469784759,
+                "creation_time": 1712233066.2977967,
+                "auxillary_file_paths": [
+                    "results\\2024.04.04_NoImitationCompare_2\\PlayerBehaviour\\PlayerBehaviour-9499835.pt"
+                ]
+            },
+            {
+                "steps": 9999923,
+                "file_path": "results\\2024.04.04_NoImitationCompare_2\\PlayerBehaviour\\PlayerBehaviour-9999923.onnx",
+                "reward": 24.294175682297674,
+                "creation_time": 1712233434.3640358,
+                "auxillary_file_paths": [
+                    "results\\2024.04.04_NoImitationCompare_2\\PlayerBehaviour\\PlayerBehaviour-9999923.pt"
+                ]
+            },
+            {
+                "steps": 10499950,
+                "file_path": "results\\2024.04.04_NoImitationCompare_2\\PlayerBehaviour\\PlayerBehaviour-10499950.onnx",
+                "reward": 24.279165548086166,
+                "creation_time": 1712233794.1914868,
+                "auxillary_file_paths": [
+                    "results\\2024.04.04_NoImitationCompare_2\\PlayerBehaviour\\PlayerBehaviour-10499950.pt"
+                ]
+            },
+            {
+                "steps": 10999994,
+                "file_path": "results\\2024.04.04_NoImitationCompare_2\\PlayerBehaviour\\PlayerBehaviour-10999994.onnx",
+                "reward": 24.629272497617283,
+                "creation_time": 1712234178.6837008,
+                "auxillary_file_paths": [
+                    "results\\2024.04.04_NoImitationCompare_2\\PlayerBehaviour\\PlayerBehaviour-10999994.pt"
+                ]
+            },
+            {
+                "steps": 11072104,
+                "file_path": "results\\2024.04.04_NoImitationCompare_2\\PlayerBehaviour\\PlayerBehaviour-11072104.onnx",
+                "reward": 24.549998664855956,
+                "creation_time": 1712234312.3429177,
+                "auxillary_file_paths": [
+                    "results\\2024.04.04_NoImitationCompare_2\\PlayerBehaviour\\PlayerBehaviour-11072104.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 11072104,
+            "file_path": "results\\2024.04.04_NoImitationCompare_2\\PlayerBehaviour.onnx",
+            "reward": 24.549998664855956,
+            "creation_time": 1712234312.3429177,
+            "auxillary_file_paths": [
+                "results\\2024.04.04_NoImitationCompare_2\\PlayerBehaviour\\PlayerBehaviour-11072104.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

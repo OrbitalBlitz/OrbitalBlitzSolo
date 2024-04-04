@@ -179,8 +179,9 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         }
 
         private void UpdateSpeed() {
-            if (acceleration_input > 0 ) 
-                RB.AddForce(transform.forward * acceleration_input * acceleration_stat, ForceMode.Acceleration);
+            if (acceleration_input > 0 )
+                if (blitzTimer > 0) RB.AddForce(transform.forward * acceleration_input * boost_power, ForceMode.Acceleration);
+                else RB.AddForce(transform.forward * acceleration_input * acceleration_stat, ForceMode.Acceleration);
             
             applyBraking();
             
@@ -318,10 +319,10 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
             if (blitzTimer > 0) {
                 acceleration_emission.rateOverTime = 100;
             }
-            else if (currentSpeed >= max_speed_forward - 5) {
+            else if (RB.velocity.magnitude >= max_speed_forward - 5) {
                 acceleration_emission.rateOverTime = 20;
             }
-            else if (currentSpeed >= max_speed_division) {
+            else if (RB.velocity.magnitude >= max_speed_division) {
                 acceleration_emission.rateOverTime = 5;
             }
             else {
