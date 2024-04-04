@@ -116,28 +116,29 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
         public override void OnActionReceived(ActionBuffers actions) {
             if (player.AbstractShipController == null) return;
-
+            
             player.AbstractShipController.Accelerate(actions.ContinuousActions[0]);
             player.AbstractShipController.Steer(actions.ContinuousActions[1]);
 
-            // if (Convert.ToBoolean(actions.DiscreteActions[0]))
-            //     if (respawn_timer == 0) {
-            //         AddReward(-5f);
-            //         player.RespawnToLastCheckpoint();
-            //         respawn_timer = base_respawn_timer;
-            //     }
-
-
-            // if (Convert.ToBoolean(actions.DiscreteActions[3]))
-            //     if (respawn_timer == 0) { 
-            //         AddReward(-1f);
-            //         EndEpisode();
-            //         // player.Respawn();
-            //         respawn_timer = base_respawn_timer;
-            //     }
-
             player.AbstractShipController.Brake(actions.DiscreteActions[1]);
             if (Convert.ToBoolean(actions.DiscreteActions[2])) player.AbstractShipController.ActivateBlitz();
+            
+            if (!IsHuman) return;
+            
+            if (Convert.ToBoolean(actions.DiscreteActions[0]))
+                if (respawn_timer == 0) {
+                    AddReward(-5f);
+                    player.RespawnToLastCheckpoint();
+                    respawn_timer = base_respawn_timer;
+                }
+
+            if (Convert.ToBoolean(actions.DiscreteActions[3]))
+                if (respawn_timer == 0) { 
+                    AddReward(-1f);
+                    EndEpisode();
+                    // player.Respawn();
+                    respawn_timer = base_respawn_timer;
+                }
         }
 
         private void LateUpdate() {

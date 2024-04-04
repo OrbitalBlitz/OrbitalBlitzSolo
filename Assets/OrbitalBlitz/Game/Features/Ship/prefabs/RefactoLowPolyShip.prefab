@@ -49,12 +49,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RB: {fileID: 483839381264333700}
-  RB: {fileID: 483839381264333700}
+  max_speed_forward: 20
+  is_drifting: 0
+  is_braking: 0
   acceleration_particles: {fileID: 1949597724411394629}
   layerMask:
     serializedVersion: 2
     m_Bits: 0
-  max_speed_forward: 20
   max_speed_backward: 10
   acceleration_stat: 20
   deceleration_stat: 100
@@ -71,16 +72,14 @@ MonoBehaviour:
   stopSteeringLerpFactor: 5
   delay_normal: 0.1
   drift_force: 0.2
-  min_angle_to_toggle_drift: 15
-  max_angle_to_toggle_drift: 80
+  min_angle_to_toggle_drift: 20
+  max_angle_to_toggle_drift: 45
   min_angle_to_keep_drifting: 10
   max_angle_to_keep_drifting: 80
   exhaust_particles: {fileID: 6864918746317099001}
   full_acceleration_emission_over_time: 500
   zero_acceleration_emission_over_time: 100
   skin: {fileID: 0}
-  is_drifting: 0
-  is_braking: 0
   active_particle_system: {fileID: 0}
 --- !u!1 &4590112334354658253
 GameObject:
