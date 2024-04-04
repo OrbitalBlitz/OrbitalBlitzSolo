@@ -227,7 +227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: TrainingMode
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: NumberOfAgents
@@ -237,6 +237,10 @@ PrefabInstance:
       propertyPath: GoldBotMaterial
       value: 
       objectReference: {fileID: 2100000, guid: cc3938fd3d828f64dab8f3de24a95301, type: 2}
+    - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
+      propertyPath: CountDownSeconds
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: BronzeBotMaterial
       value: 
