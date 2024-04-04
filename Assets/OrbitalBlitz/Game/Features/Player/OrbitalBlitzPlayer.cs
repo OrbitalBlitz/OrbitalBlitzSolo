@@ -19,6 +19,13 @@ public class OrbitalBlitzPlayer : MonoBehaviour {
         Input.defaultMap.Enable();
     }
 
+    // private void Update() {
+    //     if (AbstractShipController != null) {
+    //         transform.position = AbstractShipController.transform.position;
+    //         transform.rotation = AbstractShipController.transform.rotation;
+    //     }
+    // }
+
 
     public void SetShip(GameObject ship) {
         Ship = ship;

@@ -1,0 +1,29 @@
+{
+    "PlayerBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 483646,
+                "file_path": "results\\normalized3\\PlayerBehaviour\\PlayerBehaviour-483646.onnx",
+                "reward": -5.7,
+                "creation_time": 1711878625.9151025,
+                "auxillary_file_paths": [
+                    "results\\normalized3\\PlayerBehaviour\\PlayerBehaviour-483646.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 483646,
+            "file_path": "results\\normalized3\\PlayerBehaviour.onnx",
+            "reward": -5.7,
+            "creation_time": 1711878625.9151025,
+            "auxillary_file_paths": [
+                "results\\normalized3\\PlayerBehaviour\\PlayerBehaviour-483646.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

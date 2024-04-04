@@ -23,6 +23,7 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts {
         }
 
         public List<Checkpoint> Checkpoints;
+        public List<RewardCheckpoint> RewardCheckpoints;
         public List<Spawnpoint> Spawnpoints;
         [SerializeField] public List<Phantom> Phantoms;
         public int Laps;
@@ -33,6 +34,21 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts {
             Instance = this;
         }
 
+        public Checkpoint NthNextCheckpoint(int current_index, int n) {
+            return Checkpoints[(current_index + n) % Checkpoints.Count];
+        }
+
+        public Checkpoint NthNextCheckpoint(Checkpoint current_cp, int n) {
+            return NthNextCheckpoint(Checkpoints.IndexOf(current_cp), n);
+        }
+
+        public RewardCheckpoint NthNextRewardCheckpoint(int current_index, int n) {
+            return RewardCheckpoints[(current_index + n) % RewardCheckpoints.Count];
+        }
+
+        public RewardCheckpoint NthNextRewardCheckpoint(RewardCheckpoint current_cp, int n) {
+            return NthNextRewardCheckpoint(RewardCheckpoints.IndexOf(current_cp), n);
+        }
         
     }
 }

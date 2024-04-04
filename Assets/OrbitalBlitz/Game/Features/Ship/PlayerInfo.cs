@@ -10,6 +10,7 @@ using UnityEngine;
 namespace OrbitalBlitz.Game.Features.Ship {
     public class PlayerInfo : MonoBehaviour {
         public int lastCheckpoint;
+        public int lastRewardCheckpoint;
         public float timer;
         public int lap;
         public bool hasFinished = false;
@@ -18,14 +19,19 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
         public event Action<Checkpoint, float> onWrongCheckpointCrossed;
         public event Action<Checkpoint, float> onCorrectCheckpointCrossed;
+        public event Action<PenaltyTrigger, float> onPenaltyTrigger;
+        public event Action<RewardCheckpoint, float> onWrongRewardCheckpointCrossed;
+        public event Action<RewardCheckpoint, float> onCorrectRewardCheckpointCrossed;
         public event Action<float> onFall;
         public event Action<float> onHasFinished;
+
 
         public Collider collider;
 
         public void Reset() {
             timer = 0f;
             lastCheckpoint = 0;
+            lastRewardCheckpoint = 0;
             lap = 1;
             hasFinished = false;
         }
@@ -36,29 +42,114 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
         public void SetShipCollider(ShipCollider collider) {
             Debug.Log($"setting callback");
-            collider.onTrigger += CheckpointCallback;
-            collider.onTrigger += FallCatcherCallback;
+            collider.onTrigger += reactToCollision;
         }
-        
-        public void CheckpointCallback(Collider other) {
+
+        private void reactToCollision(Collider other) {
+            Debug.Log($"{gameObject.name} collided with {other.gameObject.name}");
             if (other.gameObject.TryGetComponent<Checkpoint>(out var checkpoint)) {
-                Debug.Log($"{gameObject.name} passed {other.gameObject.name}");
-                UpdateShipCheckpointAndLap(checkpoint);
-                UpdateHasFinished();
-                UpdateShipLastCheckpointPositionAndVelocity();
+                CheckpointCallback(checkpoint);
+                return;
+            }
+
+            if (other.gameObject.TryGetComponent<RewardCheckpoint>(out var reward_checkpoint)) {
+                RewardCheckpointCallback(reward_checkpoint);
+                return;
+            }
+            
+            if (other.gameObject.TryGetComponent<PenaltyTrigger>(out var penalty_trigger)) {
+                onPenaltyTrigger?.Invoke(penalty_trigger, timer);
+                return;
+            }
+
+            if (other.gameObject.TryGetComponent<FallCatcher>(out var fall_catcher)) {
+                FallCatcherCallback(fall_catcher);
+                return;
             }
         }
-        
-        public void FallCatcherCallback(Collider other) {
-            if (other.gameObject.TryGetComponent<FallCatcher>(out var fall_catcher)) {
-                onFall?.Invoke(timer);
-                Debug.Log($"{gameObject.name} fell !");
-                player.RespawnToLastCheckpoint();
-            }
+
+        public void CheckpointCallback(Checkpoint checkpoint) {
+            UpdateShipCheckpointAndLap(checkpoint);
+            UpdateHasFinished();
+            UpdateShipLastCheckpointPositionAndVelocity();
+        }
+
+        public void RewardCheckpointCallback(RewardCheckpoint checkpoint) {
+            UpdateRewardCheckpoint(checkpoint);
+        }
+
+        public void FallCatcherCallback(FallCatcher fall_catcher) {
+            Debug.Log($"{gameObject.name} fell !");
+            onFall?.Invoke(timer);
         }
 
         private void UpdateShipLastCheckpointPositionAndVelocity() {
             player.SaveCheckpoint();
+        }
+
+        private void UpdateRewardCheckpoint(RewardCheckpoint crossedCheckpoint) {
+            int number_of_checkpoints = RaceStateManager.Instance.circuit.RewardCheckpoints.Count;
+            int passed_cp = RaceStateManager.Instance.circuit.RewardCheckpoints.IndexOf(crossedCheckpoint);
+
+            // special cases 
+            bool passed_last_cp = (passed_cp == number_of_checkpoints - 1);
+            if (passed_last_cp) {
+                Debug.Log("going through last checkpoint...");
+
+                if (lastRewardCheckpoint == 0) {
+                    Debug.Log("... backward");
+
+                    lastRewardCheckpoint = passed_cp;
+                    lap -= 1;
+
+                    onWrongRewardCheckpointCrossed?.Invoke(crossedCheckpoint, timer);
+
+                    return;
+                }
+
+                if (lastRewardCheckpoint == number_of_checkpoints - 2) {
+                    Debug.Log("... forward");
+
+                    lastRewardCheckpoint = passed_cp;
+
+                    onCorrectRewardCheckpointCrossed?.Invoke(crossedCheckpoint, timer);
+
+                    return;
+                }
+            }
+            else if (passed_cp == 0) {
+                Debug.Log("going through first checkpoint...");
+                if (lastRewardCheckpoint == number_of_checkpoints - 1) {
+                    Debug.Log("... forwards");
+
+                    lastRewardCheckpoint = passed_cp;
+                    lap += 1;
+
+                    onCorrectRewardCheckpointCrossed?.Invoke(crossedCheckpoint, timer);
+
+                    return;
+                }
+
+                if (lastRewardCheckpoint == 1) {
+                    Debug.Log("... backward");
+                    lastRewardCheckpoint = passed_cp;
+                    onWrongRewardCheckpointCrossed?.Invoke(crossedCheckpoint, timer);
+                }
+            }
+
+            // General case
+            else {
+                Debug.Log("General case.");
+                if (passed_cp == lastRewardCheckpoint + 1) {
+                    lastRewardCheckpoint = passed_cp;
+                    onCorrectRewardCheckpointCrossed?.Invoke(crossedCheckpoint, timer);
+
+                    return;
+                }
+
+                lastRewardCheckpoint = passed_cp;
+                onWrongRewardCheckpointCrossed?.Invoke(crossedCheckpoint, timer);
+            }
         }
 
         private void UpdateShipCheckpointAndLap(Checkpoint crossedCheckpoint) {
@@ -82,7 +173,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
                     return;
                 }
 
-                if (lastCheckpoint == number_of_checkpoints - 2) { 
+                if (lastCheckpoint == number_of_checkpoints - 2) {
                     //Debug.Log("... forward");
 
                     lastCheckpoint = passed_cp;
@@ -99,7 +190,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
                     lastCheckpoint = passed_cp;
                     lap += 1;
-                    
+
                     onCorrectCheckpointCrossed?.Invoke(crossedCheckpoint, timer);
 
                     return;
@@ -111,7 +202,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
                     onWrongCheckpointCrossed?.Invoke(crossedCheckpoint, timer);
                 }
             }
-            
+
             // General case
             else {
                 //Debug.Log("General case.");
@@ -121,8 +212,8 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
                     return;
                 }
-                onWrongCheckpointCrossed?.Invoke(crossedCheckpoint, timer);
 
+                onWrongCheckpointCrossed?.Invoke(crossedCheckpoint, timer);
             }
             //Debug.Log("Ship " + player.name + " induly passed checkpoint " + crossed_checkpoint.gameObject.name);
         }

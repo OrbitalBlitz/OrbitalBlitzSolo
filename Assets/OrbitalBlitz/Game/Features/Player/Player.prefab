@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3082070101487189030}
   - component: {fileID: -5284675656068984480}
   - component: {fileID: 732712726253233841}
+  - component: {fileID: 6606664654289926466}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -66,6 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastCheckpoint: 0
+  lastRewardCheckpoint: 0
   timer: 0
   lap: 1
   hasFinished: 0
@@ -84,7 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 1
+    VectorObservationSize: 4
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 2
@@ -118,6 +120,7 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
   player: {fileID: 5737305181451363839}
+  IsHuman: 0
 --- !u!114 &-5284675656068984480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,3 +156,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6606664654289926466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2484572043759264863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Record: 0
+  NumStepsToRecord: 0
+  DemonstrationName: 
+  DemonstrationDirectory: 

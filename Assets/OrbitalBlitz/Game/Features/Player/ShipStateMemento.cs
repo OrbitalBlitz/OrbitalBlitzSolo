@@ -39,20 +39,20 @@ namespace OrbitalBlitz.Game.Features.Player {
         }
 
         public void Rollback(int number) {
-            Debug.Log($"Memento.Rollback({number}):");
+            // Debug.Log($"Memento.Rollback({number}):");
             var rollbacks = number;
         
             var state = stateStack.Peek();
-            Debug.Log($"\tPeeked {state.Position.ToString()}");
+            // Debug.Log($"\tPeeked {state.Position.ToString()}");
             while (rollbacks > 0 && stateStack.Count - rollbacks > 2) {
                 state = stateStack.Pop();
                 rollbacks--;
-                Debug.Log($"\tPoped {state.Position.ToString()} (rollbacks = {rollbacks})");
+                // Debug.Log($"\tPoped {state.Position.ToString()} (rollbacks = {rollbacks})");
             }
             
             restore(state);
             // printLastStates();
-            Debug.Log($"Memento.Rollback() : Stack size = {stateStack.Count}");
+            // Debug.Log($"Memento.Rollback() : Stack size = {stateStack.Count}");
 
             // printLastStates();
         }
@@ -60,13 +60,13 @@ namespace OrbitalBlitz.Game.Features.Player {
         public void SaveState(float? tolerance = null) {
             var current_state = getCurrentPhysicsState();
             if (tolerance != null && Vector3.Distance(stateStack.Peek().Position,current_state.Position) < tolerance) {
-                Debug.Log($"Memento.SaveState({current_state.Position.ToString()}) skipped.");
+                // Debug.Log($"Memento.SaveState({current_state.Position.ToString()}) skipped.");
                 return;
             }
             
-            Debug.Log($"Memento.SaveState({current_state.Position.ToString()})");
+            // Debug.Log($"Memento.SaveState({current_state.Position.ToString()})");
             stateStack.Push(getCurrentPhysicsState());
-            Debug.Log($"Memento.SaveState() : Stack size = {stateStack.Count}");
+            // Debug.Log($"Memento.SaveState() : Stack size = {stateStack.Count}");
 
         }
     
@@ -80,7 +80,7 @@ namespace OrbitalBlitz.Game.Features.Player {
         }
 
         private void restore(ShipPhysicsState state) {
-            Debug.Log($"Memento.Restore({state.Position.ToString()})");
+            // Debug.Log($"Memento.Restore({state.Position.ToString()})");
 
             _rb.transform.position = state.Position;
             _controller.transform.rotation  = state.Rotation;
@@ -95,7 +95,7 @@ namespace OrbitalBlitz.Game.Features.Player {
             stateStack = new Stack<ShipPhysicsState>();
             stateStack.Push(initialPhysicsState);
             stateStack.Push(initialPhysicsState);
-            Debug.Log($"Memento.initStateStack() : Stack size = {stateStack.Count}");
+            // Debug.Log($"Memento.initStateStack() : Stack size = {stateStack.Count}");
 
         }
 

@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace OrbitalBlitz.Game.Features.Ship.Controllers {
     public abstract class AbstractShipController : MonoBehaviour {
+        public Rigidbody RB;
+        public float max_speed_forward;
+        public bool is_drifting;
+        public bool is_braking;
         public abstract float GetSpeed();
         public abstract void Accelerate(float input);
         public abstract void Steer(float input);

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -216,14 +216,22 @@ PrefabInstance:
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: ShipPrefab
       value: 
-      objectReference: {fileID: 1512421324690336505, guid: 426cde519d9edea499f9fd81904e737e, type: 3}
+      objectReference: {fileID: 8212190420022695465, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: PlayerPrefab
       value: 
       objectReference: {fileID: 1022548929976373488, guid: 0b4006fc43490cc46a7fd3b4c9557599, type: 3}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
-      propertyPath: TrainingMode
+      propertyPath: RenderAgents
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
+      propertyPath: TrainingMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
+      propertyPath: NumberOfAgents
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: GoldBotMaterial
@@ -236,7 +244,7 @@ PrefabInstance:
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: EndMenuController
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4523290435788535412}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: SilverBotMaterial
       value: 
@@ -244,7 +252,7 @@ PrefabInstance:
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: EscapeMenuController
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6876160911951935236}
     - target: {fileID: 2714178795508397851, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -373,6 +381,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c44540c871e9fc446820867cc44253db, type: 3}
+--- !u!114 &4523290435788535412 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8286050943594160043, guid: c44540c871e9fc446820867cc44253db, type: 3}
+  m_PrefabInstance: {fileID: 4523290435788535411}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a6fd5abada502144ab1dae9b18e5d2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6635090881043201312
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -515,3 +534,14 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1821bc468bb23f41937dfbefb02dfc3, type: 3}
+--- !u!114 &6876160911951935236 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3179372242094645260, guid: a1821bc468bb23f41937dfbefb02dfc3, type: 3}
+  m_PrefabInstance: {fileID: 6876160911951935235}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f20e17f60db42b74fb6818252e358c05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,0 +1,65 @@
+{
+    "PlayerBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 499844,
+                "file_path": "results\\2024.04.03_epsilon0.4_run2\\PlayerBehaviour\\PlayerBehaviour-499844.onnx",
+                "reward": 0.21490330800800742,
+                "creation_time": 1712163061.5696054,
+                "auxillary_file_paths": [
+                    "results\\2024.04.03_epsilon0.4_run2\\PlayerBehaviour\\PlayerBehaviour-499844.pt"
+                ]
+            },
+            {
+                "steps": 999966,
+                "file_path": "results\\2024.04.03_epsilon0.4_run2\\PlayerBehaviour\\PlayerBehaviour-999966.onnx",
+                "reward": 6.185865594768057,
+                "creation_time": 1712163709.7688885,
+                "auxillary_file_paths": [
+                    "results\\2024.04.03_epsilon0.4_run2\\PlayerBehaviour\\PlayerBehaviour-999966.pt"
+                ]
+            },
+            {
+                "steps": 1499851,
+                "file_path": "results\\2024.04.03_epsilon0.4_run2\\PlayerBehaviour\\PlayerBehaviour-1499851.onnx",
+                "reward": 10.35962232663518,
+                "creation_time": 1712164367.5262108,
+                "auxillary_file_paths": [
+                    "results\\2024.04.03_epsilon0.4_run2\\PlayerBehaviour\\PlayerBehaviour-1499851.pt"
+                ]
+            },
+            {
+                "steps": 1502648,
+                "file_path": "results\\2024.04.03_epsilon0.4_run2\\PlayerBehaviour\\PlayerBehaviour-1502648.onnx",
+                "reward": 13.166666030883789,
+                "creation_time": 1712164475.420354,
+                "auxillary_file_paths": [
+                    "results\\2024.04.03_epsilon0.4_run2\\PlayerBehaviour\\PlayerBehaviour-1502648.pt"
+                ]
+            },
+            {
+                "steps": 1515894,
+                "file_path": "results\\2024.04.03_epsilon0.4_run2\\PlayerBehaviour\\PlayerBehaviour-1515894.onnx",
+                "reward": 10.741051631224783,
+                "creation_time": 1712217364.3003564,
+                "auxillary_file_paths": [
+                    "results\\2024.04.03_epsilon0.4_run2\\PlayerBehaviour\\PlayerBehaviour-1515894.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1515894,
+            "file_path": "results\\2024.04.03_epsilon0.4_run2\\PlayerBehaviour.onnx",
+            "reward": 10.741051631224783,
+            "creation_time": 1712217364.3003564,
+            "auxillary_file_paths": [
+                "results\\2024.04.03_epsilon0.4_run2\\PlayerBehaviour\\PlayerBehaviour-1515894.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

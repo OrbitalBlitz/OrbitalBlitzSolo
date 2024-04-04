@@ -8,9 +8,12 @@ using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
 using OrbitalBlitz.Game.Scenes.Race.UI.EndMenu;
 using OrbitalBlitz.Game.Scenes.Race.UI.EscapeMenu;
 using Unity.Barracuda;
+using Unity.MLAgents.Demonstrations;
 using Unity.MLAgents.Policies;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Profiling;
 using Object = UnityEngine.Object;
 
 namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
@@ -36,7 +39,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             
             Debug.Log("RaceManager/Setup : RaceSetup beginning...");
 
-            if (_stateManager.TrainingMode) {
+            if (_stateManager.TrainingMode != RaceStateManager.TrainingModeTypes.Disabled) {
                 TrainingSetup();
                 return;
             }
@@ -49,10 +52,6 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
 
         private void PlayingSetup() {
             var ( human_player,  human_player_ship) = spawnPlayer();
-            human_player.Input.defaultMap.ToggleEscapeMenu.started += toggleEscapeMenuCallback;
-            _stateManager.HumanPlayer = human_player;
-
-            var camera = human_player_ship.GetComponentInChildren<CinemachineVirtualCamera>().Priority = 100; 
 
             if (_stateManager.raceMode == RaceStateManager.RaceMode.Classic) {
                 foreach (var phantom in _stateManager.circuit.Phantoms) {
@@ -73,14 +72,43 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         }
 
         private void TrainingSetup() {
-            for (var i = 0; i < _stateManager.NumberOfAgents; i++) {
-                spawnPlayer(isHuman: false, alpha: _stateManager.BotAlpha);
+            OrbitalBlitzPlayer human_player;
+            GameObject human_player_ship;
+            
+            switch (_stateManager.TrainingMode) {
+                
+                case RaceStateManager.TrainingModeTypes.Recording:
+                    ( human_player,  human_player_ship) = spawnPlayer();
+                    var recorder = human_player.gameObject.GetComponent<DemonstrationRecorder>();
+
+                    recorder.DemonstrationDirectory = "Assets/OrbitalBlitz/Game/Features/IA/config/ppo/demos";
+                    
+                    DateTime current_time = DateTime.UtcNow;
+                    long unix_time = ((DateTimeOffset)current_time).ToUnixTimeSeconds();
+                    recorder.DemonstrationName = $"demo-{unix_time}";
+                    
+                    recorder.Record = true;
+                    break;
+                
+                case RaceStateManager.TrainingModeTypes.Testing:
+                    ( human_player,  human_player_ship) = spawnPlayer();
+                    break;
+                
+                case RaceStateManager.TrainingModeTypes.Training:
+                    for (var i = 0; i < _stateManager.NumberOfAgents; i++) {
+                        spawnPlayer(
+                            isHuman: false, 
+                            alpha: _stateManager.BotAlpha, 
+                            render: _stateManager.RenderAgents);
+                    }
+                    break;
             }
         }
 
         private (OrbitalBlitzPlayer player, GameObject ship) spawnPlayer(
             bool isHuman = true,
             float? alpha = null,
+            bool render = true,
             [CanBeNull] Material material = null,
             [CanBeNull] NNModel model = null
             ) {
@@ -96,20 +124,43 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             Transform player_tf = Object.Instantiate(_stateManager.PlayerPrefab);
             player_tf.gameObject.name = $"player_{_spawnedPlayer}";
             
-            Transform ship_tf = Object.Instantiate(_stateManager.ShipPrefab, spPosition, spRotation);
+            Transform ship_tf = Object.Instantiate(_stateManager.ShipPrefab, spPosition, spRotation, player_tf);
             ship_tf.gameObject.name = $"ship_{_spawnedPlayer}";
             var skin = ship_tf.gameObject.GetComponentInChildren<ShipSkin>();
             
+            var player = player_tf.GetComponent<OrbitalBlitzPlayer>();
+            player.SetShip(ship_tf.gameObject);
+            
             if (material != null) skin.SetMaterial(material);
             if (alpha.HasValue) skin.SetAlpha(alpha.Value);
+            if (!render) skin.gameObject.GetComponent<MeshRenderer>().enabled = false;
+
+            var agent = player_tf.GetComponent<PlayerAgent>();
+            if (!isHuman) {
+                var systems = ship_tf.gameObject.GetComponentsInChildren<ParticleSystem>();
+                foreach (var sys in systems) {
+                    sys.Stop();
+                }
+                var exhaust = ship_tf.gameObject.GetComponentInChildren<ExhaustParticlesController>();
+                Object.DestroyImmediate(exhaust);
+                var virtual_camera = ship_tf.GetComponentInChildren<CinemachineVirtualCamera>();
+                Object.DestroyImmediate(virtual_camera.gameObject);
+            }
+            else {
+                _stateManager.HumanPlayer = player;
+                agent.IsHuman = true;
+                player.Input.defaultMap.ToggleEscapeMenu.started += toggleEscapeMenuCallback;
+                ship_tf.GetComponentInChildren<CinemachineVirtualCamera>().Priority = 100; 
+            }
             
+            agent.Init();
+
             // ship_tf.GetComponent<IShipController>().SetIsKinematic(true);
 
             _spawnedPlayer++;
             _lastUsedSpawnPoint = i;
 
-            var player = player_tf.GetComponent<OrbitalBlitzPlayer>();
-            player.SetShip(ship_tf.gameObject);
+            
             
             if (model != null) {
                 var behaviour = player_tf.GetComponent<BehaviorParameters>();

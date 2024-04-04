@@ -29,6 +29,12 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             Clock,
             Classic
         }
+        public enum TrainingModeTypes {
+            Disabled,
+            Training,
+            Recording,
+            Testing
+        }
 
         public RaceMode raceMode = RaceMode.Classic; //TODO base this value on player input
 
@@ -47,7 +53,9 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         [SerializeField] private Material BronzeBotMaterial;
         public Dictionary<Circuit.MedalType, Material> MedalMaterials;
 
-        [Header("Training")] [SerializeField] public bool TrainingMode = false;
+        [Header("Training")]
+        [SerializeField] public TrainingModeTypes TrainingMode = TrainingModeTypes.Disabled;
+        [SerializeField] public bool RenderAgents = true;
         [SerializeField] public int NumberOfAgents = 10;
 
         [Header("Debug")] [FormerlySerializedAs("CircuitData")] [FormerlySerializedAs("m_circuit_data")]

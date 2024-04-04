@@ -13,6 +13,7 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
     [AddComponentMenu("OrbitalBlitz/GeneratedCircuit")]
     public class BasicCircuitGenerator : MonoBehaviour {
         [SerializeField] protected GameObject checkpointPrefab;
+        [SerializeField] protected GameObject rewardCheckpointPrefab;
         [SerializeField] protected GameObject spawnpointPrefab;
 
         [HideInInspector] [SerializeField] public GridPathGenerator m_path_generator;
@@ -27,8 +28,13 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
         [Header("Circuit Parameters")] [SerializeField]
         protected int m_circuit_laps = 2;
 
+        [SerializeField] protected float m_cp_every_n_node = 2;
+        [SerializeField] protected float m_reward_cp_every_n_node = 0.3f;
+
         const string k_spawnpoints_root = "spawnpoints";
+        const string k_fallcatcher_root = "fallcatcher";
         const string k_checkpoints_root = "checkpoints";
+        const string k_reward_checkpoints_root = "reward_checkpoints";
 
         [Header("Mesh Extruding")] protected const float DEFAULT_ROAD_WIDTH = 4f;
         [SerializeField] protected float m_roadWidth = DEFAULT_ROAD_WIDTH;
@@ -45,7 +51,7 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
         [HideInInspector] [SerializeField] protected Spline m_spline;
 
         [HideInInspector] [SerializeField] protected CustomSplineInstantiate m_checkpoint_instantiator;
-        [HideInInspector] [SerializeField] protected int m_numberOfCheckpoints = 10;
+        [HideInInspector] [SerializeField] protected CustomSplineInstantiate m_reward_checkpoint_instantiator;
         [FormerlySerializedAs("m_circuit_data")] [HideInInspector] [SerializeField] protected Circuit mCircuit;
         [SerializeField] public bool m_generated { get; protected set; }
 
@@ -64,16 +70,19 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
             m_container = gameObject.AddComponent<SplineContainer>();
             generateSpline();
             extrudeMesh();
+            m_mesh_collider.gameObject.layer = 3;
             initFallCatcher();
             createCircuitData();
             m_generated = true;
         }
 
         protected void initFallCatcher() {
-            m_fall_catcher = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            m_fall_catcher = GameObject.CreatePrimitive(PrimitiveType.Plane);
+            m_fall_catcher.name = k_fallcatcher_root;
+            m_fall_catcher.transform.SetParent(transform, false);
             int plane_side = 2 * m_circuitGridMaxSize * m_gridCellSize;
-            m_fall_catcher.transform.position = new Vector3(0, -2, 0);
-            m_fall_catcher.transform.localScale = new Vector3(plane_side, 0.1f, plane_side); 
+            m_fall_catcher.transform.position = new Vector3(0, -0.2f, 0);
+            m_fall_catcher.transform.localScale = new Vector3(plane_side, 1, plane_side); 
 
             Collider planeCollider = m_fall_catcher.GetComponent<Collider>();
             if (planeCollider != null) {
@@ -97,10 +106,11 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
             DestroyImmediate(m_mesh_collider);
             DestroyImmediate(m_container);
             DestroyImmediate(mCircuit);
-            DestroyImmediate(m_fall_catcher);
 
             DestroyImmediate(GameObject.Find(k_spawnpoints_root));
             DestroyImmediate(GameObject.Find(k_checkpoints_root));
+            DestroyImmediate(GameObject.Find(k_reward_checkpoints_root));
+            DestroyImmediate(GameObject.Find(k_fallcatcher_root));
 
             m_generated = false;
         }
@@ -109,6 +119,7 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
             mCircuit = gameObject.AddComponent<Circuit>();
             placeSpawnpoints();
             placeCheckpoints();
+            placeRewardCheckpoints();
 
             mCircuit.Laps = m_circuit_laps;
             
@@ -144,7 +155,7 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
             };
             m_checkpoint_instantiator.InstantiateMethod = CustomSplineInstantiate.Method.InstanceCount;
 
-            m_checkpoint_instantiator.MinSpacing = (int)(m_spline.Knots.Count() / 2);
+            m_checkpoint_instantiator.MinSpacing = (int)(m_spline.Knots.Count() / m_cp_every_n_node);
             m_checkpoint_instantiator.MinPositionOffset = new Vector3(0f, 1f, 0f);
             float scale_factor = m_roadWidth / DEFAULT_ROAD_WIDTH;
             m_checkpoint_instantiator.MinScaleOffset = new Vector3(scale_factor - 1, scale_factor - 1, scale_factor - 1);
@@ -159,6 +170,34 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
 
             mCircuit.Checkpoints = checkpoints;
             DestroyImmediate(m_checkpoint_instantiator);
+        }
+        
+        protected void placeRewardCheckpoints() {
+            m_reward_checkpoint_instantiator = gameObject.AddComponent<CustomSplineInstantiate>();
+            m_reward_checkpoint_instantiator.setRootName(k_reward_checkpoints_root);
+            m_reward_checkpoint_instantiator.itemsToInstantiate = new[] {
+                new CustomSplineInstantiate.InstantiableItem() {
+                    Prefab = rewardCheckpointPrefab,
+                    Probability = 0f
+                }
+            };
+            m_reward_checkpoint_instantiator.InstantiateMethod = CustomSplineInstantiate.Method.InstanceCount;
+
+            m_reward_checkpoint_instantiator.MinSpacing = (int)(m_spline.Knots.Count() / m_reward_cp_every_n_node);
+            m_reward_checkpoint_instantiator.MinPositionOffset = new Vector3(0f, 1f, 0f);
+            float scale_factor = m_roadWidth / DEFAULT_ROAD_WIDTH;
+            m_reward_checkpoint_instantiator.MinScaleOffset = new Vector3(scale_factor - 1, scale_factor - 1, scale_factor - 1);
+            m_reward_checkpoint_instantiator.UpdateInstances();
+
+            List<RewardCheckpoint> reward_checkpoints = FindObjectsOfType<RewardCheckpoint>().ToList();
+            reward_checkpoints.Reverse(); // Checkpoints are instantiated from last to first, so we need to reverse them
+
+            // last cp collides with first, so we destroy it
+            DestroyImmediate(reward_checkpoints.Last().gameObject);
+            reward_checkpoints.RemoveAt(reward_checkpoints.Count - 1);
+
+            mCircuit.RewardCheckpoints = reward_checkpoints;
+            DestroyImmediate(m_reward_checkpoint_instantiator);
         }
 
         public void CountCheckpoints() {
