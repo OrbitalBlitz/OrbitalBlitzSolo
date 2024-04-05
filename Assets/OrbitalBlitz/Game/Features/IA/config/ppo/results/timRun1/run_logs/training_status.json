@@ -1,0 +1,65 @@
+{
+    "PlayerBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 999993,
+                "file_path": "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-999993.onnx",
+                "reward": 8.28597420291171,
+                "creation_time": 1712307571.9789784,
+                "auxillary_file_paths": [
+                    "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-999993.pt"
+                ]
+            },
+            {
+                "steps": 1499968,
+                "file_path": "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-1499968.onnx",
+                "reward": 8.801642891386864,
+                "creation_time": 1712307971.5674167,
+                "auxillary_file_paths": [
+                    "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-1499968.pt"
+                ]
+            },
+            {
+                "steps": 1999950,
+                "file_path": "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-1999950.onnx",
+                "reward": 9.501893796704032,
+                "creation_time": 1712308370.699618,
+                "auxillary_file_paths": [
+                    "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-1999950.pt"
+                ]
+            },
+            {
+                "steps": 2499971,
+                "file_path": "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-2499971.onnx",
+                "reward": 9.146341161030096,
+                "creation_time": 1712308767.6784189,
+                "auxillary_file_paths": [
+                    "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-2499971.pt"
+                ]
+            },
+            {
+                "steps": 2828787,
+                "file_path": "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-2828787.onnx",
+                "reward": 10.000925691922506,
+                "creation_time": 1712309079.0638504,
+                "auxillary_file_paths": [
+                    "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-2828787.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2828787,
+            "file_path": "results\\timRun1\\PlayerBehaviour.onnx",
+            "reward": 10.000925691922506,
+            "creation_time": 1712309079.0638504,
+            "auxillary_file_paths": [
+                "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-2828787.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.2.1+cpu"
+    }
+}

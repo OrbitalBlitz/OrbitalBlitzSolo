@@ -49,12 +49,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cbf27ac6d2eaa24fb9fdfbdb60c3d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sphere: {fileID: 483839381264333700}
+  RB: {fileID: 483839381264333700}
+  max_speed_forward: 30
+  is_drifting: 0
+  is_braking: 0
   acceleration_particles: {fileID: 1949597724411394629}
   layerMask:
     serializedVersion: 2
     m_Bits: 0
-  max_speed_forward: 30
   max_speed_backward: 10
   acceleration_stat: 20
   deceleration_stat: 100
@@ -62,6 +64,7 @@ MonoBehaviour:
   boost_power: 60
   boost_duration: 5
   steering: 5
+  brake_steer_factor: 1.2
   currentSpeed: 0
   targetSpeed: 0
   sphere_velocity: {x: 0, y: 0, z: 0}
@@ -69,7 +72,16 @@ MonoBehaviour:
   steeringLerpFactor: 2
   stopSteeringLerpFactor: 5
   delay_normal: 0.1
-  isDrifting: 1
+  drift_force: 1
+  min_angle_to_toggle_drift: 10
+  max_angle_to_toggle_drift: 80
+  min_angle_to_keep_drifting: 10
+  max_angle_to_keep_drifting: 45
+  exhaust_particles: {fileID: 0}
+  full_acceleration_emission_over_time: 0
+  zero_acceleration_emission_over_time: 0
+  skin: {fileID: 0}
+  active_particle_system: {fileID: 0}
 --- !u!114 &617401341150388369
 MonoBehaviour:
   m_ObjectHideFlags: 0
