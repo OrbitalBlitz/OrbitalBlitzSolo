@@ -26,8 +26,8 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
         private void Update() {
             respawn_timer = Math.Max(0, respawn_timer - Time.deltaTime);
-            AddReward(-Time.deltaTime / 2);
-            if (player.AbstractShipController.is_drifting) AddReward(Time.deltaTime / 2); 
+            AddReward(-Time.deltaTime / 2); // penalise l'ia au court du temps, favorise la vitesse
+            // if (player.AbstractShipController.is_drifting) AddReward(Time.deltaTime / 2); // récompense l'ia pour le drift
         }
 
         #if UNITY_EDITOR
@@ -35,8 +35,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
             var total_reward = GetCumulativeReward();
             var style = new GUIStyle();
             style.normal.textColor = total_reward > 0 ? UnityEngine.Color.green : UnityEngine.Color.red;
-            Handles.Label(player.AbstractShipController.transform.position + Vector3.up * 2, $"{total_reward:F}",
-                style);
+            Handles.Label(player.AbstractShipController.transform.position + Vector3.up * 2, $"{total_reward:F}", style);
         }
         #endif
         public void Init() {
@@ -49,23 +48,24 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
             player.Info.onHasFinished += timer => {
                 Debug.Log($"{gameObject.name} finsihed");
-                AddReward(10f);
+                AddReward(10f); // récompense l'ia pour avoir finis la course
+                EndEpisode();
             };
             // player.Info.onCorrectCheckpointCrossed += (cp, timer) => {
             //     Debug.Log($"{gameObject.name} crossed correct CheckPoint");
-            //     AddReward(1f);
+            //     AddReward(1f); // récompense l'ia pour avoir franchis un checkpoint
             // };
             player.Info.onCorrectRewardCheckpointCrossed += (cp, timer) => {
                 Debug.Log($"{gameObject.name} crossed correct reward CP");
-                AddReward(cp.Reward);
+                AddReward(cp.Reward); // récompense l'ia pour avoir franchis un rewardCheckpoint
             };
             player.Info.onWrongRewardCheckpointCrossed += (cp, timer) => {
                 Debug.Log($"{gameObject.name} crossed wrong reward CP");
-                AddReward(-cp.PenaltyForWrongOrder);
+                AddReward(-cp.PenaltyForWrongOrder); // pénalise l'ia pour avoir franchis un mauvais reward CP (marche arrière)
             };
             player.Info.onPenaltyTrigger += (trigger, timer) => {
                 Debug.Log($"{gameObject.name} crossed penalty trigger {trigger.gameObject.name}");
-                AddReward(-trigger.Penalty);
+                AddReward(-trigger.Penalty); // pénalise l'ia pour avoir franchis le PenaltyCP
             };
             // player.Info.onWrongCheckpointCrossed += (cp, timer) => {
             //     Debug.Log($"{gameObject.name} crossed wrong Checkpoint");
@@ -74,7 +74,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
             // };
             player.Info.onFall += (timer) => {
                 Debug.Log($"{gameObject.name} fell");
-                AddReward(-5f);
+                AddReward(-5f); // pénalise l'ia si elle chute du circuit
                 EndEpisode();
             };
         }

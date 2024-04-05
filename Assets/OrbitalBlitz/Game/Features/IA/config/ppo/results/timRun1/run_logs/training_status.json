@@ -2,58 +2,58 @@
     "PlayerBehaviour": {
         "checkpoints": [
             {
-                "steps": 999993,
-                "file_path": "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-999993.onnx",
-                "reward": 8.28597420291171,
-                "creation_time": 1712307571.9789784,
+                "steps": 10999952,
+                "file_path": "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-10999952.onnx",
+                "reward": -1.4871799395634577,
+                "creation_time": 1712318213.136411,
                 "auxillary_file_paths": [
-                    "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-999993.pt"
+                    "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-10999952.pt"
                 ]
             },
             {
-                "steps": 1499968,
-                "file_path": "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-1499968.onnx",
-                "reward": 8.801642891386864,
-                "creation_time": 1712307971.5674167,
+                "steps": 11499964,
+                "file_path": "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-11499964.onnx",
+                "reward": -1.632075957532199,
+                "creation_time": 1712318625.4591408,
                 "auxillary_file_paths": [
-                    "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-1499968.pt"
+                    "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-11499964.pt"
                 ]
             },
             {
-                "steps": 1999950,
-                "file_path": "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-1999950.onnx",
-                "reward": 9.501893796704032,
-                "creation_time": 1712308370.699618,
+                "steps": 11999869,
+                "file_path": "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-11999869.onnx",
+                "reward": -1.5000004801951663,
+                "creation_time": 1712319089.538525,
                 "auxillary_file_paths": [
-                    "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-1999950.pt"
+                    "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-11999869.pt"
                 ]
             },
             {
-                "steps": 2499971,
-                "file_path": "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-2499971.onnx",
-                "reward": 9.146341161030096,
-                "creation_time": 1712308767.6784189,
+                "steps": 12499927,
+                "file_path": "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-12499927.onnx",
+                "reward": -1.4615389475455651,
+                "creation_time": 1712319525.9470491,
                 "auxillary_file_paths": [
-                    "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-2499971.pt"
+                    "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-12499927.pt"
                 ]
             },
             {
-                "steps": 2828787,
-                "file_path": "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-2828787.onnx",
-                "reward": 10.000925691922506,
-                "creation_time": 1712309079.0638504,
+                "steps": 12516317,
+                "file_path": "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-12516317.onnx",
+                "reward": -1.83333420753479,
+                "creation_time": 1712319554.4510436,
                 "auxillary_file_paths": [
-                    "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-2828787.pt"
+                    "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-12516317.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 2828787,
+            "steps": 12516317,
             "file_path": "results\\timRun1\\PlayerBehaviour.onnx",
-            "reward": 10.000925691922506,
-            "creation_time": 1712309079.0638504,
+            "reward": -1.83333420753479,
+            "creation_time": 1712319554.4510436,
             "auxillary_file_paths": [
-                "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-2828787.pt"
+                "results\\timRun1\\PlayerBehaviour\\PlayerBehaviour-12516317.pt"
             ]
         }
     },
