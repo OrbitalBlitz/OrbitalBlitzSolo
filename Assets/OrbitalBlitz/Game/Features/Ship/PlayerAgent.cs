@@ -26,8 +26,12 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
         private void Update() {
             respawn_timer = Math.Max(0, respawn_timer - Time.deltaTime);
-            AddReward(-Time.deltaTime / 2); // penalise l'ia au court du temps, favorise la vitesse
+            // AddReward(-Time.deltaTime / 2); // penalise l'ia au court du temps, favorise la vitesse
             // if (player.AbstractShipController.is_drifting) AddReward(Time.deltaTime / 2); // récompense l'ia pour le drift
+        }
+
+        private void FixedUpdate() {
+            AddReward(-0.01f);
         }
 
         #if UNITY_EDITOR
@@ -51,34 +55,35 @@ namespace OrbitalBlitz.Game.Features.Ship {
                 AddReward(10f); // récompense l'ia pour avoir finis la course
                 EndEpisode();
             };
-            // player.Info.onCorrectCheckpointCrossed += (cp, timer) => {
-            //     Debug.Log($"{gameObject.name} crossed correct CheckPoint");
-            //     AddReward(1f); // récompense l'ia pour avoir franchis un checkpoint
-            // };
+            player.Info.onCorrectCheckpointCrossed += (cp, timer) => {
+                Debug.Log($"{gameObject.name} crossed correct CheckPoint");
+                AddReward(5f); // récompense l'ia pour avoir franchis un checkpoint
+            };
             player.Info.onCorrectRewardCheckpointCrossed += (cp, timer) => {
                 Debug.Log($"{gameObject.name} crossed correct reward CP");
-                AddReward(cp.Reward); // récompense l'ia pour avoir franchis un rewardCheckpoint
+                // AddReward(cp.Reward); // récompense l'ia pour avoir franchis un rewardCheckpoint
+                AddReward(0.5f); // récompense l'ia pour avoir franchis un rewardCheckpoint
             };
             player.Info.onWrongRewardCheckpointCrossed += (cp, timer) => {
                 Debug.Log($"{gameObject.name} crossed wrong reward CP");
-                AddReward(-cp.PenaltyForWrongOrder); // pénalise l'ia pour avoir franchis un mauvais reward CP (marche arrière)
+                // AddReward(-cp.PenaltyForWrongOrder); // pénalise l'ia pour avoir franchis un mauvais reward CP (marche arrière)
+                AddReward(-1f); // pénalise l'ia pour avoir franchis un mauvais reward CP (marche arrière)
             };
             player.Info.onPenaltyTrigger += (trigger, timer) => {
                 Debug.Log($"{gameObject.name} crossed penalty trigger {trigger.gameObject.name}");
                 AddReward(-trigger.Penalty); // pénalise l'ia pour avoir franchis le PenaltyCP
             };
-            // player.Info.onWrongCheckpointCrossed += (cp, timer) => {
-            //     Debug.Log($"{gameObject.name} crossed wrong Checkpoint");
-            //     AddReward(-5f);
-            //     EndEpisode();
-            // };
+            player.Info.onWrongCheckpointCrossed += (cp, timer) => {
+                Debug.Log($"{gameObject.name} crossed wrong Checkpoint");
+                AddReward(-5f);
+                EndEpisode();
+            };
             player.Info.onFall += (timer) => {
                 Debug.Log($"{gameObject.name} fell");
-                AddReward(-5f); // pénalise l'ia si elle chute du circuit
+                AddReward(-10f); // pénalise l'ia si elle chute du circuit
                 EndEpisode();
             };
         }
-
 
         public override void OnEpisodeBegin() {
             Debug.Log($"{gameObject.name} : OnEpisodeBegin (reward is {GetCumulativeReward()})!");
@@ -86,12 +91,9 @@ namespace OrbitalBlitz.Game.Features.Ship {
         }
 
         public override void CollectObservations(VectorSensor sensor) {
-            // sensor.AddObservation(player.AbstractShipController.transform.position); // 3 floats
-            // sensor.AddObservation(player.AbstractShipController.transform.rotation); // 1 floats
-
             sensor.AddObservation(
                 player.AbstractShipController.RB.velocity.magnitude / player.AbstractShipController.max_speed_forward
-                ); // 1 float
+            ); // 1 float
             
             var inertia_angle = Vector3.Angle(
                 player.AbstractShipController.RB.velocity,
@@ -111,7 +113,9 @@ namespace OrbitalBlitz.Game.Features.Ship {
             sensor.AddObservation(AlgebraUtils.normalizeAngle(angle_to_next_cp)); // 1 float
             sensor.AddObservation(AlgebraUtils.normalizeAngle(angle_to_second_next_cp)); // 1 float
 
-            // total = 4 floats
+            sensor.AddObservation(player.AbstractShipController.RB.transform) // 1 vector3 = 3 floats
+
+            // total = 7 floats
         }
 
         public override void OnActionReceived(ActionBuffers actions) {
