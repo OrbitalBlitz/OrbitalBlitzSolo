@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Test;
-using Controllers;
+using OrbitalBlitz.Game.Features.Ship;
+using OrbitalBlitz.Game.Features.Ship.Controllers;
+using Tests.BaseShipControllerTests;
 
 [TestFixture]
 public class BaseShipControllerTests : MonoBehaviour
