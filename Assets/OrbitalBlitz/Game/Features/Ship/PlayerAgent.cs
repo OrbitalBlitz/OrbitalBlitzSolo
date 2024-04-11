@@ -113,7 +113,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
             sensor.AddObservation(AlgebraUtils.normalizeAngle(angle_to_next_cp)); // 1 float
             sensor.AddObservation(AlgebraUtils.normalizeAngle(angle_to_second_next_cp)); // 1 float
 
-            sensor.AddObservation(player.AbstractShipController.RB.transform) // 1 vector3 = 3 floats
+            sensor.AddObservation(player.AbstractShipController.RB.transform); // 1 vector3 = 3 floats
 
             // total = 7 floats
         }
