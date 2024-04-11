@@ -31,7 +31,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
         }
 
         private void FixedUpdate() {
-            AddReward(-0.01f);
+            AddReward(-0.001f);
         }
 
         #if UNITY_EDITOR
@@ -62,7 +62,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
             player.Info.onCorrectRewardCheckpointCrossed += (cp, timer) => {
                 Debug.Log($"{gameObject.name} crossed correct reward CP");
                 // AddReward(cp.Reward); // récompense l'ia pour avoir franchis un rewardCheckpoint
-                AddReward(0.5f); // récompense l'ia pour avoir franchis un rewardCheckpoint
+                AddReward(2f); // récompense l'ia pour avoir franchis un rewardCheckpoint
             };
             player.Info.onWrongRewardCheckpointCrossed += (cp, timer) => {
                 Debug.Log($"{gameObject.name} crossed wrong reward CP");
