@@ -24,6 +24,8 @@ namespace OrbitalBlitz.Game.Features.Ship {
         private float base_respawn_timer = 1f;
         private float respawn_timer = 1f;
 
+        private Vector3 agent_position, next_reward_cp_position, next_cp_position;
+
         private void Update() {
             respawn_timer = Math.Max(0, respawn_timer - Time.deltaTime);
             // AddReward(-Time.deltaTime / 2); // penalise l'ia au court du temps, favorise la vitesse
@@ -31,7 +33,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
         }
 
         private void FixedUpdate() {
-            AddReward(-0.001f);
+            AddReward(-0.01f);
             if (GetCumulativeReward() < -10) {
                 EndEpisode();
             }
@@ -65,7 +67,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
             player.Info.onCorrectRewardCheckpointCrossed += (cp, timer) => {
                 Debug.Log($"{gameObject.name} crossed correct reward CP");
                 // AddReward(cp.Reward); // récompense l'ia pour avoir franchis un rewardCheckpoint
-                AddReward(2f); // récompense l'ia pour avoir franchis un rewardCheckpoint
+                AddReward(1f); // récompense l'ia pour avoir franchis un rewardCheckpoint
             };
             player.Info.onWrongRewardCheckpointCrossed += (cp, timer) => {
                 Debug.Log($"{gameObject.name} crossed wrong reward CP");
@@ -94,31 +96,25 @@ namespace OrbitalBlitz.Game.Features.Ship {
         }
 
         public override void CollectObservations(VectorSensor sensor) {
-            sensor.AddObservation(
-                player.AbstractShipController.RB.velocity.magnitude / player.AbstractShipController.max_speed_forward
-            ); // 1 float
+            // vitesse actuelle / vitesse max
+            sensor.AddObservation(player.AbstractShipController.RB.velocity.magnitude / player.AbstractShipController.max_speed_forward); // 1 float
             
-            var inertia_angle = Vector3.Angle(
-                player.AbstractShipController.RB.velocity,
-                player.AbstractShipController.transform.forward
-            );
-            sensor.AddObservation(AlgebraUtils.normalizeAngle(inertia_angle)); // 1 float
+            // var inertia_angle = Vector3.Angle(
+            //     player.AbstractShipController.RB.velocity,
+            //     player.AbstractShipController.transform.forward
+            // );
+            // // différences d'angle entre l'inertie et l'avant du ship
+            // sensor.AddObservation(AlgebraUtils.normalizeAngle(inertia_angle)); // 1 float
 
-            var angle_to_next_cp = AlgebraUtils.angleFromObjectToObject(
-                player.AbstractShipController.gameObject,
-                RaceStateManager.Instance.circuit.NthNextRewardCheckpoint(player.Info.lastCheckpoint, 1).gameObject
-            );
+            agent_position = player.AbstractShipController.RB.transform.position; // agent position
+            next_reward_cp_position = RaceStateManager.Instance.circuit.NthNextRewardCheckpoint(player.Info.lastRewardCheckpoint, 1).gameObject.transform.position; // prochain reward checkpoint
+            next_cp_position = RaceStateManager.Instance.circuit.NthNextCheckpoint(player.Info.lastCheckpoint, 1).gameObject.transform.position; // prochain checkpoint
 
-            var angle_to_second_next_cp = AlgebraUtils.angleFromObjectToObject(
-                player.AbstractShipController.gameObject,
-                RaceStateManager.Instance.circuit.NthNextRewardCheckpoint(player.Info.lastCheckpoint, 2).gameObject
-            );
-            sensor.AddObservation(AlgebraUtils.normalizeAngle(angle_to_next_cp)); // 1 float
-            sensor.AddObservation(AlgebraUtils.normalizeAngle(angle_to_second_next_cp)); // 1 float
+            sensor.AddObservation(agent_position); // 1 vector3 = 3 floats
+            sensor.AddObservation(next_reward_cp_position - agent_position); // 1 vector3 = 3 floats
+            sensor.AddObservation(next_cp_position - agent_position); // 1 vector3 = 3 floats
 
-            sensor.AddObservation(player.AbstractShipController.RB.transform.position); // 1 vector3 = 3 floats
-
-            // total = 7 floats
+            // total = 10 floats
         }
 
         public override void OnActionReceived(ActionBuffers actions) {
