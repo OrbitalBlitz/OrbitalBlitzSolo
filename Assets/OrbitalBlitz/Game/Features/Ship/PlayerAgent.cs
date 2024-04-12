@@ -41,10 +41,12 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
         #if UNITY_EDITOR
         private void OnDrawGizmos() {
-            var total_reward = GetCumulativeReward();
-            var style = new GUIStyle();
-            style.normal.textColor = total_reward > 0 ? UnityEngine.Color.green : UnityEngine.Color.red;
-            Handles.Label(player.AbstractShipController.transform.position + Vector3.up * 2, $"{total_reward:F}", style);
+            if (player != null) {
+                var total_reward = GetCumulativeReward();
+                var style = new GUIStyle();
+                style.normal.textColor = total_reward > 0 ? UnityEngine.Color.green : UnityEngine.Color.red;
+                Handles.Label(player.AbstractShipController.transform.position + Vector3.up * 2, $"{total_reward:F}", style);
+            }
         }
         #endif
         public void Init() {
