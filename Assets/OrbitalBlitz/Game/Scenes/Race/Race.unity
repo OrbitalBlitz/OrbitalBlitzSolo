@@ -227,7 +227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: TrainingMode
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: NumberOfAgents
