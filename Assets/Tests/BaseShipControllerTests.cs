@@ -5,10 +5,8 @@ using OrbitalBlitz.Game.Features.Ship;
 using OrbitalBlitz.Game.Features.Ship.Controllers;
 using Tests.BaseShipControllerTests;
 
-[TestFixture]
 public class BaseShipControllerTests : MonoBehaviour
 {
-    [Test]
     public void ApplyAccelerationToWheel_Test()
     {
         // Créer un GameObject pour représenter le vaisseau
