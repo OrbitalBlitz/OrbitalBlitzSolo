@@ -33,7 +33,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
         }
 
         private void FixedUpdate() {
-            AddReward(-0.01f);
+            AddReward(-0.001f);
             if (GetCumulativeReward() < -10) {
                 EndEpisode();
             }
@@ -83,12 +83,13 @@ namespace OrbitalBlitz.Game.Features.Ship {
             player.Info.onWrongCheckpointCrossed += (cp, timer) => {
                 Debug.Log($"{gameObject.name} crossed wrong Checkpoint");
                 AddReward(-5f);
-                EndEpisode();
+                // EndEpisode();
             };
             player.Info.onFall += (timer) => {
                 Debug.Log($"{gameObject.name} fell");
                 AddReward(-10f); // pénalise l'ia si elle chute du circuit
-                EndEpisode();
+                if (GetCumulativeReward() >= -10)
+                    EndEpisode();
             };
         }
 
