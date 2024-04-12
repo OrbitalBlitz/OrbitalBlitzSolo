@@ -11,7 +11,7 @@ behaviors:
       num_epoch: 10
       learning_rate_schedule: linear
     network_settings:
-      normalize: true
+      # normalize: true
       hidden_units: 512
       num_layers: 3
       vis_encode_type: simple
