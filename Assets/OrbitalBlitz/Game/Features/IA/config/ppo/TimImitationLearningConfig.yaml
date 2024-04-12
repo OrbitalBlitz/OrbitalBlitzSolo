@@ -21,7 +21,7 @@ behaviors:
         strength: 1.0
       gail:
         strength: 1.0
-        demo_path: ./demos/demo-tim2.demo
+        demo_path: ./demos/trainable_demos
         network_settings:
           # normalize: true
           hidden_units: 256
@@ -29,7 +29,7 @@ behaviors:
           vis_encode_type: simple
     behavioral_cloning:
       strength: 1.0
-      demo_path: ./demos/demo-tim2.demo
+      demo_path: ./demos/trainable_demos
       samples_per_update: 20480
     keep_checkpoints: 5
     max_steps: 10000000
