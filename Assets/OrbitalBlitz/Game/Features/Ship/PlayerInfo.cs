@@ -100,7 +100,6 @@ namespace OrbitalBlitz.Game.Features.Ship {
                     Debug.Log("... backward");
 
                     lastRewardCheckpoint = passed_cp;
-                    lap -= 1;
 
                     onWrongRewardCheckpointCrossed?.Invoke(crossedCheckpoint, timer);
 
@@ -123,7 +122,6 @@ namespace OrbitalBlitz.Game.Features.Ship {
                     Debug.Log("... forwards");
 
                     lastRewardCheckpoint = passed_cp;
-                    lap += 1;
 
                     onCorrectRewardCheckpointCrossed?.Invoke(crossedCheckpoint, timer);
 
