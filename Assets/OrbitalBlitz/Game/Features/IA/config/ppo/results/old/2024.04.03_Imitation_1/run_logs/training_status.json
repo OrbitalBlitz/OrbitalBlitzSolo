@@ -1,0 +1,29 @@
+{
+    "PlayerBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 33278,
+                "file_path": "results\\2024.04.03_Imitation_1\\PlayerBehaviour\\PlayerBehaviour-33278.onnx",
+                "reward": -6.8966481397049835,
+                "creation_time": 1712167112.006809,
+                "auxillary_file_paths": [
+                    "results\\2024.04.03_Imitation_1\\PlayerBehaviour\\PlayerBehaviour-33278.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 33278,
+            "file_path": "results\\2024.04.03_Imitation_1\\PlayerBehaviour.onnx",
+            "reward": -6.8966481397049835,
+            "creation_time": 1712167112.006809,
+            "auxillary_file_paths": [
+                "results\\2024.04.03_Imitation_1\\PlayerBehaviour\\PlayerBehaviour-33278.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

@@ -1,0 +1,38 @@
+{
+    "PlayerBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 499927,
+                "file_path": "results\\drifting1\\PlayerBehaviour\\PlayerBehaviour-499927.onnx",
+                "reward": 4.4519423180562585,
+                "creation_time": 1711909791.6915483,
+                "auxillary_file_paths": [
+                    "results\\drifting1\\PlayerBehaviour\\PlayerBehaviour-499927.pt"
+                ]
+            },
+            {
+                "steps": 793927,
+                "file_path": "results\\drifting1\\PlayerBehaviour\\PlayerBehaviour-793927.onnx",
+                "reward": null,
+                "creation_time": 1711910273.855819,
+                "auxillary_file_paths": [
+                    "results\\drifting1\\PlayerBehaviour\\PlayerBehaviour-793927.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 793927,
+            "file_path": "results\\drifting1\\PlayerBehaviour.onnx",
+            "reward": null,
+            "creation_time": 1711910273.855819,
+            "auxillary_file_paths": [
+                "results\\drifting1\\PlayerBehaviour\\PlayerBehaviour-793927.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

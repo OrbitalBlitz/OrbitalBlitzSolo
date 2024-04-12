@@ -1,0 +1,38 @@
+{
+    "PlayerBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 499904,
+                "file_path": "results\\01.04.24_ManySensors_1\\PlayerBehaviour\\PlayerBehaviour-499904.onnx",
+                "reward": 0.7186635956783926,
+                "creation_time": 1711968180.3661175,
+                "auxillary_file_paths": [
+                    "results\\01.04.24_ManySensors_1\\PlayerBehaviour\\PlayerBehaviour-499904.pt"
+                ]
+            },
+            {
+                "steps": 852659,
+                "file_path": "results\\01.04.24_ManySensors_1\\PlayerBehaviour\\PlayerBehaviour-852659.onnx",
+                "reward": 1.388888454437256,
+                "creation_time": 1711968685.5684984,
+                "auxillary_file_paths": [
+                    "results\\01.04.24_ManySensors_1\\PlayerBehaviour\\PlayerBehaviour-852659.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 852659,
+            "file_path": "results\\01.04.24_ManySensors_1\\PlayerBehaviour.onnx",
+            "reward": 1.388888454437256,
+            "creation_time": 1711968685.5684984,
+            "auxillary_file_paths": [
+                "results\\01.04.24_ManySensors_1\\PlayerBehaviour\\PlayerBehaviour-852659.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

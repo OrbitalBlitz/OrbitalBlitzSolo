@@ -1,0 +1,65 @@
+{
+    "PlayerBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 500060,
+                "file_path": "results\\4\\PlayerBehaviour\\PlayerBehaviour-500060.onnx",
+                "reward": 13.529411764705882,
+                "creation_time": 1711813857.5819247,
+                "auxillary_file_paths": [
+                    "results\\4\\PlayerBehaviour\\PlayerBehaviour-500060.pt"
+                ]
+            },
+            {
+                "steps": 500060,
+                "file_path": "results\\4\\PlayerBehaviour\\PlayerBehaviour-500060.onnx",
+                "reward": null,
+                "creation_time": 1711818016.33176,
+                "auxillary_file_paths": [
+                    "results\\4\\PlayerBehaviour\\PlayerBehaviour-500060.pt"
+                ]
+            },
+            {
+                "steps": 999929,
+                "file_path": "results\\4\\PlayerBehaviour\\PlayerBehaviour-999929.onnx",
+                "reward": 18.571428571428573,
+                "creation_time": 1711818980.7362583,
+                "auxillary_file_paths": [
+                    "results\\4\\PlayerBehaviour\\PlayerBehaviour-999929.pt"
+                ]
+            },
+            {
+                "steps": 1311473,
+                "file_path": "results\\4\\PlayerBehaviour\\PlayerBehaviour-1311473.onnx",
+                "reward": null,
+                "creation_time": 1711819610.1334126,
+                "auxillary_file_paths": [
+                    "results\\4\\PlayerBehaviour\\PlayerBehaviour-1311473.pt"
+                ]
+            },
+            {
+                "steps": 1341527,
+                "file_path": "results\\4\\PlayerBehaviour\\PlayerBehaviour-1341527.onnx",
+                "reward": 10.872727272727273,
+                "creation_time": 1711819684.9682915,
+                "auxillary_file_paths": [
+                    "results\\4\\PlayerBehaviour\\PlayerBehaviour-1341527.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1341527,
+            "file_path": "results\\4\\PlayerBehaviour.onnx",
+            "reward": 10.872727272727273,
+            "creation_time": 1711819684.9682915,
+            "auxillary_file_paths": [
+                "results\\4\\PlayerBehaviour\\PlayerBehaviour-1341527.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}
