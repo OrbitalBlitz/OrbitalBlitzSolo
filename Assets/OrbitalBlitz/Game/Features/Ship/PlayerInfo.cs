@@ -14,6 +14,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
         public float timer;
         public int lap;
         public bool hasFinished = false;
+        public Circuit.MedalType wonMedal = Circuit.MedalType.NoMedal;
 
         [SerializeField] OrbitalBlitzPlayer player;
 
@@ -37,6 +38,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
         }
 
         private void FixedUpdate() {
+            if (hasFinished) return;
             timer += Time.deltaTime;
         }
 
@@ -52,18 +54,21 @@ namespace OrbitalBlitz.Game.Features.Ship {
                 return;
             }
 
+            if (other.gameObject.TryGetComponent<FallCatcher>(out var fall_catcher)) {
+                FallCatcherCallback(fall_catcher);
+                return;
+            }
+
+            if (RaceStateManager.Instance.TrainingMode == RaceStateManager.TrainingModeTypes.Disabled)
+                return;
+
             if (other.gameObject.TryGetComponent<RewardCheckpoint>(out var reward_checkpoint)) {
                 RewardCheckpointCallback(reward_checkpoint);
                 return;
             }
-            
+
             if (other.gameObject.TryGetComponent<PenaltyTrigger>(out var penalty_trigger)) {
                 onPenaltyTrigger?.Invoke(penalty_trigger, timer);
-                return;
-            }
-
-            if (other.gameObject.TryGetComponent<FallCatcher>(out var fall_catcher)) {
-                FallCatcherCallback(fall_catcher);
                 return;
             }
         }
@@ -100,7 +105,6 @@ namespace OrbitalBlitz.Game.Features.Ship {
                     Debug.Log("... backward");
 
                     lastRewardCheckpoint = passed_cp;
-                    lap -= 1;
 
                     onWrongRewardCheckpointCrossed?.Invoke(crossedCheckpoint, timer);
 
@@ -123,7 +127,6 @@ namespace OrbitalBlitz.Game.Features.Ship {
                     Debug.Log("... forwards");
 
                     lastRewardCheckpoint = passed_cp;
-                    lap += 1;
 
                     onCorrectRewardCheckpointCrossed?.Invoke(crossedCheckpoint, timer);
 
@@ -219,18 +222,35 @@ namespace OrbitalBlitz.Game.Features.Ship {
         }
 
         private void UpdateHasFinished() {
-            if (lap == RaceStateManager.Instance.circuit.Laps + 1) {
+            if (hasFinished == false && lap == RaceStateManager.Instance.circuit.Laps + 1) {
                 hasFinished = true;
+                
+                var final_time = TimeSpan.FromSeconds(timer).TotalMilliseconds;
+                StartCoroutine(UserSession.Instance.SaveRecord(
+                    RaceStateManager.Instance.circuit.Id.ToString(), 
+                    (int)final_time,
+                    m => { Debug.Log(m);},
+                    e => { Debug.Log(e); }
+                ));
+                
+                wonMedal = RaceStateManager.Instance.CurrentWinnableMedal;
+                StartCoroutine(UserSession.Instance.SaveMedal(
+                    RaceStateManager.Instance.circuit.Id.ToString(), 
+                    wonMedal,
+                    m => { Debug.Log(m);},
+                    e => { Debug.Log(e); }
+                ));
+                
                 onHasFinished?.Invoke(timer);
             }
         }
 
         #if UNITY_EDITOR
         private void OnDrawGizmos() {
-            GUIStyle style = new GUIStyle();
-            style.normal.textColor = hasFinished ? UnityEngine.Color.green : UnityEngine.Color.red;
-            Handles.Label(transform.position + Vector3.up * 2,
-                "cp " + lastCheckpoint.ToString() + ",lap " + lap.ToString(), style);
+            // GUIStyle style = new();
+            // style.normal.textColor = hasFinished ? Color.green : Color.yellow;
+            // Handles.Label(player.AbstractShipController.transform.position + Vector3.up * 1.75f,
+            //     "cp " + lastCheckpoint + ",lap " + lap, style);
         }
         #endif
     }

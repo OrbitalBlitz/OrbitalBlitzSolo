@@ -118,3 +118,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4fc63d9bb852b44935bc2610d7bcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Reward: 2.5
+  PenaltyForWrongOrder: 1

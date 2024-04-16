@@ -29,6 +29,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             Clock,
             Classic
         }
+
         public enum TrainingModeTypes {
             Disabled,
             Training,
@@ -53,8 +54,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         [SerializeField] private Material BronzeBotMaterial;
         public Dictionary<Circuit.MedalType, Material> MedalMaterials;
 
-        [Header("Training")]
-        [SerializeField] public TrainingModeTypes TrainingMode = TrainingModeTypes.Disabled;
+        [Header("Training")] [SerializeField] public TrainingModeTypes TrainingMode = TrainingModeTypes.Disabled;
         [SerializeField] public bool RenderAgents = true;
         [SerializeField] public int NumberOfAgents = 10;
 
@@ -87,6 +87,13 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             }
 
             SwitchState(RaceState.RaceSetup);
+
+            if (TrainingMode != TrainingModeTypes.Disabled) {
+                var reward_triggers = FindObjectsOfType<RewardCheckpoint>();
+                foreach (var trigger in reward_triggers) {
+                    trigger.gameObject.GetComponent<MeshRenderer>().enabled = true;
+                }
+            }
         }
 
         void FixedUpdate() {

@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/OrbitalBlitz/Game/Scenes/_USS/main.uss?fileID=7433441132597879392&amp;guid=386a62d47083c3f4bae1a00091ed7d57&amp;type=3#main" />
     <ui:VisualElement name="rootContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; height: 100%; flex-direction: row;">
-        <ui:VisualElement name="card" class="card" style="flex-grow: 0; margin-left: 50px; margin-right: 10px; margin-top: 50px; margin-bottom: 50px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; flex-direction: row; min-width: 0; min-height: 0; width: auto;">
-            <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); width: 20%; align-items: flex-start; justify-content: flex-start;">
+        <ui:VisualElement name="card" class="card" style="flex-grow: 1; margin-left: 50px; margin-right: 10px; margin-top: 50px; margin-bottom: 50px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; flex-direction: row; min-width: 0; min-height: 0; width: 30%; align-items: flex-start;">
+            <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); width: 100%; align-items: flex-start; justify-content: flex-start; height: auto; font-size: 28px;">
                 <ui:Label tabindex="-1" text="HELP" display-tooltip-when-elided="true" class="hint" style="font-size: 10px; margin-bottom: 10px;" />
                 <ui:Label tabindex="-1" text="move: arrows" display-tooltip-when-elided="true" class="hint" />
                 <ui:Label tabindex="-1" text="break: space" display-tooltip-when-elided="true" class="hint" />
@@ -14,7 +14,7 @@
                 <ui:Label tabindex="-1" text="help: Esc" display-tooltip-when-elided="true" class="hint" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="card" class="card" style="flex-grow: 1; margin-left: 10px; margin-right: 50px; margin-top: 50px; margin-bottom: 50px; padding-left: 25px; padding-right: 25px; padding-top: 25px; padding-bottom: 25px; flex-direction: column;">
+        <ui:VisualElement name="card" class="card" style="flex-grow: 1; margin-left: 10px; margin-right: 50px; margin-top: 50px; margin-bottom: 50px; padding-left: 25px; padding-right: 25px; padding-top: 25px; padding-bottom: 25px; flex-direction: column; width: 70%;">
             <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: column; justify-content: center; align-items: center; height: auto; margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0;">
                 <ui:Button text="Restart" display-tooltip-when-elided="true" name="btn_restart" tabindex="0" class="ob-button" style="width: 100%; flex-basis: auto; flex-grow: 1; flex-shrink: 1; flex-direction: column; margin-bottom: 10px;" />
                 <ui:Button text="Respawn" display-tooltip-when-elided="true" name="btn_respawn" class="ob-button" style="width: 100%; flex-basis: auto; flex-shrink: 1; flex-grow: 1;" />

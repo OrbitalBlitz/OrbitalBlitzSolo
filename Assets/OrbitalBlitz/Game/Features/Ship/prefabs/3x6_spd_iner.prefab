@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8636024303648182275
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2353266845961061742, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+      propertyPath: m_Name
+      value: 3x6_spd_iner
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212190420022695465, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212190420022695465, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212190420022695465, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212190420022695465, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212190420022695465, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212190420022695465, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212190420022695465, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212190420022695465, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212190420022695465, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212190420022695465, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212190420022695465, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8529363424777538270, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7858346848248153056}
+    - targetCorrespondingSourceObject: {fileID: 8529363424777538270, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6088311600715509165}
+  m_SourcePrefab: {fileID: 100100000, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+--- !u!1 &110110046981200605 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8529363424777538270, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+  m_PrefabInstance: {fileID: 8636024303648182275}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7858346848248153056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110110046981200605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af905882b9d7f7b4cb38b3786799701b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: inertia_angle_sensor
+  ship_model: {fileID: 2774538726652126538}
+  ship_rigidbody: {fileID: 1469615489762776919}
+  normalize: 1
+--- !u!114 &6088311600715509165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110110046981200605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72fa406d47478904d88584346b59a174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: speed_sensor
+  ship_controller: {fileID: 7256092264274902956}
+  normalize: 1
+--- !u!54 &1469615489762776919 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 7186704701343123284, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+  m_PrefabInstance: {fileID: 8636024303648182275}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2774538726652126538 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5861564780526777673, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+  m_PrefabInstance: {fileID: 8636024303648182275}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7256092264274902956 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1399356288982822831, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+  m_PrefabInstance: {fileID: 8636024303648182275}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110110046981200605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cbf27ac6d2eaa24fb9fdfbdb60c3d08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

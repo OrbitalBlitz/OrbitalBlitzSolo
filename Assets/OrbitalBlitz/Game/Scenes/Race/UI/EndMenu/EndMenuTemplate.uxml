@@ -2,17 +2,23 @@
     <Style src="project://database/Assets/OrbitalBlitz/Game/Scenes/_USS/main.uss?fileID=7433441132597879392&amp;guid=386a62d47083c3f4bae1a00091ed7d57&amp;type=3#main" />
     <ui:VisualElement name="rootContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; height: 100%;">
         <ui:VisualElement name="card" class="card" style="flex-grow: 1; margin-left: 50px; margin-right: 50px; margin-top: 50px; margin-bottom: 50px; padding-left: 25px; padding-right: 25px; padding-top: 25px; padding-bottom: 25px;">
-            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; justify-content: center; align-items: center; height: 100px; margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 25px; -unity-font-style: bold; font-size: 24px;">
+            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; justify-content: flex-start; align-items: center; height: 100px; margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 25px; -unity-font-style: bold; font-size: 24px; align-self: auto;">
+                <ui:VisualElement name="medal" style="flex-grow: 0; background-color: rgb(106, 106, 106); width: 50px; height: 50px; margin-right: 25px; border-top-left-radius: 50px; border-bottom-left-radius: 50px; border-top-right-radius: 50px; border-bottom-right-radius: 50px;" />
                 <ui:Label tabindex="-1" text="0&apos;00&apos;&apos;00&apos;&apos;&apos;" display-tooltip-when-elided="true" enable-rich-text="false" name="time" />
+                <ui:Label tabindex="-1" text="(new record !)" display-tooltip-when-elided="true" name="text_new_record" style="font-size: 18px; -unity-font-style: italic; -unity-text-outline-color: rgb(0, 168, 0); color: rgb(0, 255, 22); display: none;" />
             </ui:VisualElement>
             <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; justify-content: center; align-items: center; height: auto; margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0;">
                 <ui:VisualElement name="personalRecordsVContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: column; justify-content: center; align-items: flex-start; height: auto; margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0;">
                     <ui:Label tabindex="-1" text="Personal Records" display-tooltip-when-elided="true" style="-unity-font-style: bold;" />
-                    <ui:ListView focusable="true" name="PersonalRecordsListView" />
+                    <ui:Label tabindex="-1" text="--&apos;--&apos;&apos;--&apos;&apos;&apos;" display-tooltip-when-elided="true" name="text_pb_1" style="-unity-font-style: bold;" />
+                    <ui:Label tabindex="-1" text="--&apos;--&apos;&apos;--&apos;&apos;&apos;" display-tooltip-when-elided="true" name="text_pb_2" style="-unity-font-style: bold;" />
+                    <ui:Label tabindex="-1" text="--&apos;--&apos;&apos;--&apos;&apos;&apos;" display-tooltip-when-elided="true" name="text_pb_3" style="-unity-font-style: bold;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="worldRecordsVContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: column; justify-content: center; align-items: flex-start; height: auto; margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0;">
                     <ui:Label tabindex="-1" text="World Records" display-tooltip-when-elided="true" style="-unity-font-style: bold;" />
-                    <ui:ListView focusable="true" name="WorldRecordsListView" />
+                    <ui:Label tabindex="-1" text="--&apos;--&apos;&apos;--&apos;&apos;&apos;" display-tooltip-when-elided="true" name="text_wr_1" style="-unity-font-style: bold;" />
+                    <ui:Label tabindex="-1" text="--&apos;--&apos;&apos;--&apos;&apos;&apos;" display-tooltip-when-elided="true" name="text_wr_2" style="-unity-font-style: bold;" />
+                    <ui:Label tabindex="-1" text="--&apos;--&apos;&apos;--&apos;&apos;&apos;" display-tooltip-when-elided="true" name="text_wr_3" style="-unity-font-style: bold;" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; justify-content: center; align-items: center; height: auto; margin-top: 25px; margin-left: 0; margin-right: 0; margin-bottom: 0;">

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Cinemachine;
 using JetBrains.Annotations;
 using OrbitalBlitz.Game.Features.Player;
@@ -41,6 +42,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
 
             if (_stateManager.TrainingMode != RaceStateManager.TrainingModeTypes.Disabled) {
                 TrainingSetup();
+                _setupFinished = true;
                 return;
             }
 

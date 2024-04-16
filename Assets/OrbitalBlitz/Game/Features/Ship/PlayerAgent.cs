@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using OrbitalBlitz.Game.Features.Player;
 using OrbitalBlitz.Game.Features.Ship.Controllers;
@@ -35,21 +36,55 @@ namespace OrbitalBlitz.Game.Features.Ship {
             var total_reward = GetCumulativeReward();
             var style = new GUIStyle();
             style.normal.textColor = total_reward > 0 ? UnityEngine.Color.green : UnityEngine.Color.red;
-            Handles.Label(player.AbstractShipController.transform.position + Vector3.up * 2, $"{total_reward:F}",
+            Handles.Label(
+                player.AbstractShipController.transform.position + Vector3.up * 2, 
+                $"{total_reward:F}",
                 style);
+            
+            style.normal.textColor = Color.yellow;
+
+            /*
+            var inertia_angle = AlgebraUtils.SignedAngleBetween(
+                player.AbstractShipController.transform.forward,
+                player.AbstractShipController.RB.velocity,
+                player.AbstractShipController.transform.up,
+                true
+            );
+            Handles.Label(
+                player.AbstractShipController.transform.position + Vector3.up * 1.5f, 
+                $"inertia_angle: {inertia_angle}) \n", style);
+            */
+            
+            // var angle_to_next_cp = AlgebraUtils.SignedAngleToObject(
+            //     player.AbstractShipController.gameObject,
+            //     RaceStateManager.Instance.circuit.NthNextRewardCheckpoint(player.Info.lastCheckpoint, 1).gameObject,
+            //     true
+            // );
+            // var angle_to_second_next_cp = AlgebraUtils.SignedAngleToObject(
+            //     player.AbstractShipController.gameObject,
+            //     RaceStateManager.Instance.circuit.NthNextRewardCheckpoint(player.Info.lastCheckpoint, 2).gameObject,
+            //     true
+            // );
+            // Handles.Label(
+            //     player.AbstractShipController.transform.position + Vector3.up * 1.5f, 
+            //     $"inertia_angle: {inertia_angle}) \n" +
+            //     $"angle_to_next_cp: {angle_to_next_cp})\n" +
+            //     $"angle_to_second_next_cp: {angle_to_second_next_cp})",
+            //     style);
         }
         #endif
         public void Init() {
             // collision handling examples :
-            // if (IsHuman) {
-            //     player.Info.onHasFinished += timer => { AddReward(10f); };
-            //     player.Info.onFall += (timer) => { player.RespawnToLastCheckpoint(); };
-            //     return;
-            // }
+            if (IsHuman && RaceStateManager.Instance.TrainingMode != RaceStateManager.TrainingModeTypes.Testing) {
+                // player.Info.onHasFinished += timer => { ; };
+                player.Info.onFall += (timer) => { player.RespawnToLastCheckpoint(); };
+                return;
+            }
 
             player.Info.onHasFinished += timer => {
                 Debug.Log($"{gameObject.name} finsihed");
                 AddReward(10f);
+                EndEpisode();
             };
             // player.Info.onCorrectCheckpointCrossed += (cp, timer) => {
             //     Debug.Log($"{gameObject.name} crossed correct CheckPoint");
@@ -81,11 +116,12 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
 
         public override void OnEpisodeBegin() {
-            Debug.Log($"{gameObject.name} : OnEpisodeBegin (reward is {GetCumulativeReward()})!");
+            // Debug.Log($"{gameObject.name} : OnEpisodeBegin (reward is {GetCumulativeReward()})!");
             player.Respawn();
         }
 
         public override void CollectObservations(VectorSensor sensor) {
+            // Debug.Log("Observations size: " + sensor.ObservationSize());
             // sensor.AddObservation(player.AbstractShipController.transform.position); // 3 floats
             // sensor.AddObservation(player.AbstractShipController.transform.rotation); // 1 floats
 
@@ -93,25 +129,26 @@ namespace OrbitalBlitz.Game.Features.Ship {
                 player.AbstractShipController.RB.velocity.magnitude / player.AbstractShipController.max_speed_forward
                 ); // 1 float
             
-            var inertia_angle = Vector3.Angle(
+            var inertia_angle = AlgebraUtils.SignedAngleBetween(
+                player.AbstractShipController.transform.forward,
                 player.AbstractShipController.RB.velocity,
-                player.AbstractShipController.transform.forward
+                player.AbstractShipController.transform.up,
+                true
             );
-            sensor.AddObservation(AlgebraUtils.normalizeAngle(inertia_angle)); // 1 float
+            sensor.AddObservation(inertia_angle); // 1 float
 
-            var angle_to_next_cp = AlgebraUtils.angleFromObjectToObject(
-                player.AbstractShipController.gameObject,
-                RaceStateManager.Instance.circuit.NthNextRewardCheckpoint(player.Info.lastCheckpoint, 1).gameObject
-            );
+            // var angle_to_next_cp = AlgebraUtils.angleFromObjectToObject(
+            //     player.AbstractShipController.gameObject,
+            //     RaceStateManager.Instance.circuit.NthNextRewardCheckpoint(player.Info.lastCheckpoint, 1).gameObject
+            // );
+            //
+            // var angle_to_second_next_cp = AlgebraUtils.angleFromObjectToObject(
+            //     player.AbstractShipController.gameObject,
+            //     RaceStateManager.Instance.circuit.NthNextRewardCheckpoint(player.Info.lastCheckpoint, 2).gameObject
+            // );
+            // sensor.AddObservation(AlgebraUtils.normalizeAngle(angle_to_next_cp)); // 1 float
+            // sensor.AddObservation(AlgebraUtils.normalizeAngle(angle_to_second_next_cp)); // 1 float
 
-            var angle_to_second_next_cp = AlgebraUtils.angleFromObjectToObject(
-                player.AbstractShipController.gameObject,
-                RaceStateManager.Instance.circuit.NthNextRewardCheckpoint(player.Info.lastCheckpoint, 2).gameObject
-            );
-            sensor.AddObservation(AlgebraUtils.normalizeAngle(angle_to_next_cp)); // 1 float
-            sensor.AddObservation(AlgebraUtils.normalizeAngle(angle_to_second_next_cp)); // 1 float
-
-            // total = 4 floats
         }
 
         public override void OnActionReceived(ActionBuffers actions) {

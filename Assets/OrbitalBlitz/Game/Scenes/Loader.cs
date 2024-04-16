@@ -1,73 +1,45 @@
 using System.Collections.Generic;
+using OrbitalBlitz.Game.Features.API.Models;
+using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
 using UnityEngine.SceneManagement;
 
 namespace OrbitalBlitz.Game.Scenes {
     public static class Loader {
-        public struct Record {
-            public string PlayerName;
-            public int TimeInMilliseconds;
-        }
 
         public struct CircuitInfo {
             public string Name;
+            public long Id;
             public Scene Scene;
             public List<Record> PersonalBests;
+            public Circuit.MedalType Medal;
+            public int Rank;
+            public int RecordsCount;
             public List<Record> WorldBests;
         }
-
-        private static List<Record> dummyWorldRecords = new() {
-            new Record { PlayerName = "PlayerX", TimeInMilliseconds = 100000000 },
-            new Record { PlayerName = "PlayerY", TimeInMilliseconds = 200000000 },
-            new Record { PlayerName = "PlayerZ", TimeInMilliseconds = 300000000 },
-        };
-
-        private static List<Record> dummyPersonalRecords = new() {
-            new Record { PlayerName = "PlayerMe", TimeInMilliseconds = 400000000 }
-        };
+        
         
         public static List<CircuitInfo> Circuits = new() {
             new CircuitInfo {
                 Name = "Level1",
+                Id = 1712506995,
                 Scene = Scene.Level1,
-                PersonalBests = dummyPersonalRecords,
-                WorldBests = dummyWorldRecords
+                PersonalBests = new(),
+                WorldBests = new()
             },
             new CircuitInfo {
                 Name = "Level2",
+                Id = 2,
                 Scene = Scene.Level2,
-                PersonalBests = dummyPersonalRecords,
-                WorldBests = dummyWorldRecords
+                PersonalBests = new(),
+                WorldBests = new()
             },
             new CircuitInfo {
                 Name = "Level3",
+                Id = 3,
                 Scene = Scene.Level3,
-                PersonalBests = dummyPersonalRecords,
-                WorldBests = dummyWorldRecords
-            },
-            // new CircuitInfo {
-            //     Name = "TestCircuitGen_Custom",
-            //     Scene = Scene.TestCircuitGen_Custom,
-            //     PersonalBests = dummyPersonalRecords,
-            //     WorldBests = dummyWorldRecords
-            // },
-            // new CircuitInfo {
-            //     Name = "TestCircuit",
-            //     Scene = Scene.TestCircuit_1,
-            //     PersonalBests = dummyPersonalRecords,
-            //     WorldBests = dummyWorldRecords
-            // },
-            // new CircuitInfo {
-            //     Name = "TestCircuit2",
-            //     Scene = Scene.TestCircuit_1,
-            //     PersonalBests = dummyPersonalRecords,
-            //     WorldBests = dummyWorldRecords
-            // },
-            // new CircuitInfo {
-            //     Name = "GeneratedCircuit",
-            //     Scene = Scene.TestCircuitGen,
-            //     PersonalBests = dummyPersonalRecords,
-            //     WorldBests = dummyWorldRecords
-            // }
+                PersonalBests = new(),
+                WorldBests = new()
+            }
         };
 
         public enum Scene {

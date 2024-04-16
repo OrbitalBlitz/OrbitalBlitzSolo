@@ -1,10 +1,12 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/OrbitalBlitz/Game/Scenes/_USS/main.uss?fileID=7433441132597879392&amp;guid=386a62d47083c3f4bae1a00091ed7d57&amp;type=3#main" />
     <ui:VisualElement name="rootContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; height: 100%; flex-direction: row; justify-content: space-between; align-items: center;">
-        <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0.43); height: 100%; width: 40%; align-items: auto; min-width: 0; align-self: center; justify-content: center;">
-            <ui:Label tabindex="-1" text="Levels" display-tooltip-when-elided="true" class="title" style="width: 100%; -unity-text-align: upper-center; margin-bottom: 20px; height: auto;" />
-            <ui:ListView focusable="true" name="ListView" fixed-item-height="1" show-border="true" style="width: 100%; height: auto;" />
-            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-items: center; justify-content: space-around; width: 100%; padding-right: 15px; padding-left: 15px; height: auto;">
+        <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0.43); height: 100%; width: 40%; align-items: center; min-width: auto; align-self: auto; justify-content: space-between; margin-left: 0;">
+            <ui:Label tabindex="-1" text="Levels" display-tooltip-when-elided="true" class="title" style="width: 100%; -unity-text-align: middle-left; margin-bottom: 0; height: 10%; background-color: rgba(0, 0, 0, 0.29); padding-left: 15px;">
+                <ui:Button text="Back" display-tooltip-when-elided="true" name="btn_back" class="ob-button" style="justify-content: flex-end; align-self: flex-end; margin-bottom: 0; margin-right: 0; font-size: 20%; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; margin-left: 0; margin-top: 0;" />
+            </ui:Label>
+            <ui:ListView focusable="false" name="ListView" fixed-item-height="10" show-border="false" virtualization-method="DynamicHeight" reorderable="false" style="width: 100%; height: 70%; justify-content: space-around; align-items: stretch; flex-grow: 1;" />
+            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.29); flex-direction: row; align-items: center; justify-content: space-around; width: 100%; padding-right: 0; padding-left: 0; height: 10%; padding-top: 0; padding-bottom: 0;">
                 <ui:Button text="Classic" display-tooltip-when-elided="true" name="btn_play_classic" class="ob-button" style="justify-content: flex-end; align-self: flex-end; margin-bottom: 10px; margin-right: 10px; font-size: 20%;" />
                 <ui:Button text="Clock" display-tooltip-when-elided="true" name="btn_play_clock" class="ob-button" style="justify-content: flex-end; align-self: flex-end; margin-bottom: 10px; margin-right: 10px; font-size: 20%;" />
             </ui:VisualElement>

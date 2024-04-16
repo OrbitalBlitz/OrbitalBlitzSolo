@@ -1,16 +1,24 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/OrbitalBlitz/Game/Scenes/_USS/main.uss?fileID=7433441132597879392&amp;guid=386a62d47083c3f4bae1a00091ed7d57&amp;type=3#main" />
-    <ui:Button display-tooltip-when-elided="true" name="btn_select" tabindex="148" class="ob-button" style="width: 90%; max-height: 100px; align-self: center;">
-        <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-items: flex-start;">
-            <ui:Label tabindex="-1" text="Circuit Name" display-tooltip-when-elided="true" name="text_name" style="-unity-font-style: bold; font-size: 20px;" />
-            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; padding-left: 50px; font-size: 14px;">
-                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
-                    <ui:Label tabindex="-1" text="Personal Best :" display-tooltip-when-elided="true" />
-                    <ui:Label tabindex="-1" text="--:--:--" display-tooltip-when-elided="true" name="text_pb" style="-unity-font-style: italic;" />
+    <ui:Button display-tooltip-when-elided="true" name="btn_select" tabindex="148" class="ob-button" style="width: 90%; max-height: none; align-self: center; height: auto; overflow: visible; visibility: visible; flex-basis: auto; flex-wrap: nowrap; align-items: flex-start; justify-content: flex-start; -unity-text-align: middle-center; text-overflow: clip; flex-direction: column; margin-bottom: 20px;">
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-items: flex-start; width: 100%; height: auto;">
+            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; height: auto; flex-direction: row; align-items: center; justify-content: flex-start; margin-bottom: 10px;">
+                <ui:VisualElement name="medal" style="flex-grow: 0; background-color: rgb(84, 84, 84); width: 25px; height: 25px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 50px; border-bottom-left-radius: 50px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); margin-right: 10px;" />
+                <ui:Label tabindex="-1" text="Circuit Name" display-tooltip-when-elided="true" name="text_name" style="-unity-font-style: bold; font-size: 20px;" />
+                <ui:Label tabindex="-1" text="rank: 0/0" display-tooltip-when-elided="true" name="text_ranking" style="-unity-font-style: italic; font-size: 20px; align-self: auto; right: 0; position: absolute; display: none;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; padding-left: 0; font-size: 14px; flex-direction: row; padding-right: 0; padding-top: 0; padding-bottom: 0; min-height: auto;">
+                <ui:VisualElement name="div_pbs" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: column;">
+                    <ui:Label tabindex="-1" text="Personal Best" display-tooltip-when-elided="true" />
+                    <ui:Label tabindex="-1" text="--:--:--" display-tooltip-when-elided="true" name="text_pb_1" style="-unity-font-style: italic;" />
+                    <ui:Label tabindex="-1" text="--:--:--" display-tooltip-when-elided="true" name="text_pb_2" style="-unity-font-style: italic;" />
+                    <ui:Label tabindex="-1" text="--:--:--" display-tooltip-when-elided="true" name="text_pb_3" style="-unity-font-style: italic;" />
                 </ui:VisualElement>
-                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
-                    <ui:Label tabindex="-1" text="World Record :" display-tooltip-when-elided="true" />
-                    <ui:Label tabindex="-1" text="--:--:--" display-tooltip-when-elided="true" name="text_wr" style="-unity-font-style: italic;" />
+                <ui:VisualElement name="div_wbs" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: column;">
+                    <ui:Label tabindex="-1" text="World Records" display-tooltip-when-elided="true" />
+                    <ui:Label tabindex="-1" text="--:--:--" display-tooltip-when-elided="true" name="text_wr_1" style="-unity-font-style: italic;" />
+                    <ui:Label tabindex="-1" text="--:--:--" display-tooltip-when-elided="true" name="text_wr_2" style="-unity-font-style: italic;" />
+                    <ui:Label tabindex="-1" text="--:--:--" display-tooltip-when-elided="true" name="text_wr_3" style="-unity-font-style: italic;" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

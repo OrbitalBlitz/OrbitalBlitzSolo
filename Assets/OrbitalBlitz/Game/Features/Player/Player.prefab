@@ -71,6 +71,7 @@ MonoBehaviour:
   timer: 0
   lap: 1
   hasFinished: 0
+  wonMedal: 0
   player: {fileID: 5737305181451363839}
   collider: {fileID: 0}
 --- !u!114 &2237046043004546284
@@ -86,7 +87,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 4
+    VectorObservationSize: 2
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 2
