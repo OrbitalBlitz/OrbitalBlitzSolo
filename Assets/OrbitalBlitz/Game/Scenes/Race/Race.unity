@@ -216,7 +216,7 @@ PrefabInstance:
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: ShipPrefab
       value: 
-      objectReference: {fileID: 8212190420022695465, guid: 6fabf010885a87246a7f2afa65395d7c, type: 3}
+      objectReference: {fileID: 8212190420022695465, guid: 4afc69998164cf144812682c66918ecf, type: 3}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: PlayerPrefab
       value: 
@@ -227,7 +227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: TrainingMode
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 123828801457611411, guid: b048a090d6133c74aa265cc8c35aecb6, type: 3}
       propertyPath: NumberOfAgents
