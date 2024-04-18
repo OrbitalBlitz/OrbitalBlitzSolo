@@ -115,7 +115,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             [CanBeNull] NNModel model = null
             ) {
             
-            Debug.Log("\tRaceManager/Setup : SpawnPlayer beginning...");
+            Debug.Log($"\t[RaceManager/Setup] : SpawnPlayer beginning ({(isHuman ? "Human" : "Bot")})");
             int spawnpointsCount = _stateManager.circuit.Spawnpoints.Count;
             int i = (_lastUsedSpawnPoint + 1) % spawnpointsCount;
             Transform spTransform = _stateManager.circuit.Spawnpoints[i].gameObject.transform;

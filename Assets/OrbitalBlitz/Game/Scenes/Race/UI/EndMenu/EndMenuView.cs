@@ -36,6 +36,10 @@ namespace OrbitalBlitz.Game.Scenes.Race.UI.EndMenu {
 
         public void Show() {
             // TODO move this logic in controller (+ single source of truth for circuit data + API repository)
+            GetComponent<UIDocument>().rootVisualElement.style.display = DisplayStyle.Flex;
+
+            if (UserSession.Instance == null) return;
+            
             StartCoroutine(UserSession.Instance.GetPlayerRecords(
                 RaceStateManager.Instance.circuit.Id.ToString(),
                 personal_records => {
@@ -92,7 +96,6 @@ namespace OrbitalBlitz.Game.Scenes.Race.UI.EndMenu {
                     Medal.style.backgroundColor = medal_color;
                 },
                 e => { Debug.Log(e); }));
-            GetComponent<UIDocument>().rootVisualElement.style.display = DisplayStyle.Flex;
         }
 
         public void Hide() {

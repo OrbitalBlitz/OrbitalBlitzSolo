@@ -59,8 +59,8 @@ namespace OrbitalBlitz.Game.Features.Ship {
                 return;
             }
 
-            if (RaceStateManager.Instance.TrainingMode == RaceStateManager.TrainingModeTypes.Disabled)
-                return;
+            // if (RaceStateManager.Instance.TrainingMode == RaceStateManager.TrainingModeTypes.Disabled)
+            //     return;
 
             if (other.gameObject.TryGetComponent<RewardCheckpoint>(out var reward_checkpoint)) {
                 RewardCheckpointCallback(reward_checkpoint);
@@ -225,6 +225,10 @@ namespace OrbitalBlitz.Game.Features.Ship {
             if (hasFinished == false && lap == RaceStateManager.Instance.circuit.Laps + 1) {
                 hasFinished = true;
                 
+                
+                onHasFinished?.Invoke(timer);
+                if (UserSession.Instance == null) return;
+                
                 var final_time = TimeSpan.FromSeconds(timer).TotalMilliseconds;
                 StartCoroutine(UserSession.Instance.SaveRecord(
                     RaceStateManager.Instance.circuit.Id.ToString(), 
@@ -241,7 +245,6 @@ namespace OrbitalBlitz.Game.Features.Ship {
                     e => { Debug.Log(e); }
                 ));
                 
-                onHasFinished?.Invoke(timer);
             }
         }
 

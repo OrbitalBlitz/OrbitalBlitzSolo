@@ -27,7 +27,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
         private void Update() {
             respawn_timer = Math.Max(0, respawn_timer - Time.deltaTime);
-            AddReward(-Time.deltaTime / 10);
+            AddReward(-Time.deltaTime / 2);
             // if (player.AbstractShipController.is_drifting) AddReward(Time.deltaTime / 2); 
         }
 
@@ -94,7 +94,11 @@ namespace OrbitalBlitz.Game.Features.Ship {
         #endif
         public void Init() {
             // collision handling examples :
-            if (IsHuman && RaceStateManager.Instance.TrainingMode != RaceStateManager.TrainingModeTypes.Testing) {
+            if (IsHuman 
+                && RaceStateManager.Instance.TrainingMode != RaceStateManager.TrainingModeTypes.Testing 
+                && RaceStateManager.Instance.TrainingMode != RaceStateManager.TrainingModeTypes.Recording
+                ) {
+                
                 // player.Info.onHasFinished += timer => { ; };
                 player.Info.onFall += (timer) => { player.RespawnToLastCheckpoint(); };
                 return;
@@ -102,7 +106,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
             player.Info.onHasFinished += timer => {
                 Debug.Log($"{gameObject.name} finsihed");
-                AddReward(10f);
+                // AddReward(10f);
                 EndEpisode();
             };
             // player.Info.onCorrectCheckpointCrossed += (cp, timer) => {
@@ -128,7 +132,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
             // };
             player.Info.onFall += (timer) => {
                 Debug.Log($"{gameObject.name} fell");
-                AddReward(-5f);
+                // AddReward(-5f);
                 EndEpisode();
             };
         }
@@ -164,7 +168,9 @@ namespace OrbitalBlitz.Game.Features.Ship {
                 );  
                 sensor.AddObservation(cp_angle); // 1 float
             }
-
+            
+            // sensor.AddObservation(player.AbstractShipController.transform.position.x); // 1 float
+            // sensor.AddObservation(player.AbstractShipController.transform.position.z); // 1 float
         }
 
         public override void OnActionReceived(ActionBuffers actions) {
