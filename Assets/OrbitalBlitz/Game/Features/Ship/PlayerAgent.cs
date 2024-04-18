@@ -117,11 +117,11 @@ namespace OrbitalBlitz.Game.Features.Ship {
             next_reward_cp_position = RaceStateManager.Instance.circuit.NthNextRewardCheckpoint(player.Info.lastRewardCheckpoint, 1).gameObject.transform.position; // prochain reward checkpoint
             next_cp_position = RaceStateManager.Instance.circuit.NthNextCheckpoint(player.Info.lastCheckpoint, 1).gameObject.transform.position; // prochain checkpoint
 
-            sensor.AddObservation(agent_position); // 1 vector3 = 3 floats
+            // sensor.AddObservation(agent_position); // 1 vector3 = 3 floats
             sensor.AddObservation(next_reward_cp_position - agent_position); // 1 vector3 = 3 floats
             sensor.AddObservation(next_cp_position - agent_position); // 1 vector3 = 3 floats
 
-            // total = 10 floats
+            // total = 7 floats
         }
 
         public override void OnActionReceived(ActionBuffers actions) {
