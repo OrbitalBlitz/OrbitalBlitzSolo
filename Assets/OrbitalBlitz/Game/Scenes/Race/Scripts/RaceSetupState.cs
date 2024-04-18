@@ -157,7 +157,9 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             
             agent.Init();
 
-            // ship_tf.GetComponent<IShipController>().SetIsKinematic(true);
+            if (!isHuman || RaceStateManager.Instance.TrainingMode == RaceStateManager.TrainingModeTypes.Recording) {
+                ship_tf.GetComponentInChildren<AbstractShipController>().IsHuman = false;
+            }
 
             _spawnedPlayer++;
             _lastUsedSpawnPoint = i;

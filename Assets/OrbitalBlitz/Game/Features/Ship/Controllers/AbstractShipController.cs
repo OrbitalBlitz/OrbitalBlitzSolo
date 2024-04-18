@@ -7,6 +7,7 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         public float max_speed_forward;
         public bool is_drifting;
         public bool is_braking;
+        public bool IsHuman = true;
         public abstract float GetSpeed();
         public abstract void Accelerate(float input);
         public abstract void Steer(float input);

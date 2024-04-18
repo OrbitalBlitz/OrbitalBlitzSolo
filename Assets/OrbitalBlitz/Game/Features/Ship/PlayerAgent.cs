@@ -27,8 +27,8 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
         private void Update() {
             respawn_timer = Math.Max(0, respawn_timer - Time.deltaTime);
-            AddReward(-Time.deltaTime / 2);
-            if (player.AbstractShipController.is_drifting) AddReward(Time.deltaTime / 2); 
+            AddReward(-Time.deltaTime / 10);
+            // if (player.AbstractShipController.is_drifting) AddReward(Time.deltaTime / 2); 
         }
 
         #if UNITY_EDITOR
@@ -40,8 +40,27 @@ namespace OrbitalBlitz.Game.Features.Ship {
                 player.AbstractShipController.transform.position + Vector3.up * 2, 
                 $"{total_reward:F}",
                 style);
-            
+
+            if (!IsHuman) return;
             style.normal.textColor = Color.yellow;
+            string cp_angles = "";
+            for (int i = 1; i < 8; i++) {
+
+                var reward_checkpoint =
+                    RaceStateManager.Instance.circuit.NthNextRewardCheckpoint(player.Info.lastRewardCheckpoint, i);
+                var cp_angle = AlgebraUtils.SignedAngleToObject(
+                    player.AbstractShipController.gameObject,
+                    reward_checkpoint.gameObject,
+                    true
+                );
+                var cp_index = RaceStateManager.Instance.circuit.RewardCheckpoints.IndexOf(reward_checkpoint);
+        
+                cp_angles += $"{i}th next = cp {cp_index} ({cp_angle:F3})\n";
+            }
+            Handles.Label(
+                player.AbstractShipController.transform.position + Vector3.up * 1.5f, 
+                $"{cp_angles}",
+                style);
 
             /*
             var inertia_angle = AlgebraUtils.SignedAngleBetween(
@@ -137,17 +156,14 @@ namespace OrbitalBlitz.Game.Features.Ship {
             );
             sensor.AddObservation(inertia_angle); // 1 float
 
-            // var angle_to_next_cp = AlgebraUtils.angleFromObjectToObject(
-            //     player.AbstractShipController.gameObject,
-            //     RaceStateManager.Instance.circuit.NthNextRewardCheckpoint(player.Info.lastCheckpoint, 1).gameObject
-            // );
-            //
-            // var angle_to_second_next_cp = AlgebraUtils.angleFromObjectToObject(
-            //     player.AbstractShipController.gameObject,
-            //     RaceStateManager.Instance.circuit.NthNextRewardCheckpoint(player.Info.lastCheckpoint, 2).gameObject
-            // );
-            // sensor.AddObservation(AlgebraUtils.normalizeAngle(angle_to_next_cp)); // 1 float
-            // sensor.AddObservation(AlgebraUtils.normalizeAngle(angle_to_second_next_cp)); // 1 float
+            for (int i = 1; i < 8; i++) { // 7 floats
+                var cp_angle = AlgebraUtils.SignedAngleToObject(
+                    player.AbstractShipController.gameObject,
+                    RaceStateManager.Instance.circuit.NthNextRewardCheckpoint(player.Info.lastRewardCheckpoint, i).gameObject,
+                    true
+                );  
+                sensor.AddObservation(cp_angle); // 1 float
+            }
 
         }
 

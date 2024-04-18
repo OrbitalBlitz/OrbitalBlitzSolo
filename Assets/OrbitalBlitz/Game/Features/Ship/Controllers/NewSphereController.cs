@@ -191,6 +191,7 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         
 
         private void applyBraking() {
+            
             if (!braking_input) {
                 is_drifting = false;
                 is_braking = false;
@@ -284,6 +285,10 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
         }
 
         public override void Brake(int input) {
+            if (!IsHuman) {
+                braking_input = canDrift();
+                return;
+            }
             braking_input = input > 0;
         }
 

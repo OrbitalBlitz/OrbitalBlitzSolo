@@ -76,6 +76,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2104241502799541557, guid: 426cde519d9edea499f9fd81904e737e, type: 3}
+      propertyPath: m_ZDamping
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3212833013494145144, guid: 426cde519d9edea499f9fd81904e737e, type: 3}
       propertyPath: m_RayLength
       value: 60
@@ -110,7 +114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5017791985197758910, guid: 426cde519d9edea499f9fd81904e737e, type: 3}
       propertyPath: m_Name
-      value: RefactoLowPolyShipManySensors
+      value: TheShip
       objectReference: {fileID: 0}
     - target: {fileID: 8530169137365947263, guid: 426cde519d9edea499f9fd81904e737e, type: 3}
       propertyPath: boost_power
@@ -133,7 +137,8 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5785770919007805327, guid: 426cde519d9edea499f9fd81904e737e, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 426cde519d9edea499f9fd81904e737e, type: 3}
