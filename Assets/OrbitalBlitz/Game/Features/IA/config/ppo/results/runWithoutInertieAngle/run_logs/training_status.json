@@ -1,0 +1,65 @@
+{
+    "PlayerBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 499952,
+                "file_path": "results\\runWithoutInertieAngle\\PlayerBehaviour\\PlayerBehaviour-499952.onnx",
+                "reward": 10.989850092870302,
+                "creation_time": 1713536706.7537005,
+                "auxillary_file_paths": [
+                    "results\\runWithoutInertieAngle\\PlayerBehaviour\\PlayerBehaviour-499952.pt"
+                ]
+            },
+            {
+                "steps": 999635,
+                "file_path": "results\\runWithoutInertieAngle\\PlayerBehaviour\\PlayerBehaviour-999635.onnx",
+                "reward": 97.04954745640626,
+                "creation_time": 1713537410.1735172,
+                "auxillary_file_paths": [
+                    "results\\runWithoutInertieAngle\\PlayerBehaviour\\PlayerBehaviour-999635.pt"
+                ]
+            },
+            {
+                "steps": 1499846,
+                "file_path": "results\\runWithoutInertieAngle\\PlayerBehaviour\\PlayerBehaviour-1499846.onnx",
+                "reward": 103.68518363104926,
+                "creation_time": 1713538088.0527182,
+                "auxillary_file_paths": [
+                    "results\\runWithoutInertieAngle\\PlayerBehaviour\\PlayerBehaviour-1499846.pt"
+                ]
+            },
+            {
+                "steps": 1999984,
+                "file_path": "results\\runWithoutInertieAngle\\PlayerBehaviour\\PlayerBehaviour-1999984.onnx",
+                "reward": 115.10647943326168,
+                "creation_time": 1713538717.3714263,
+                "auxillary_file_paths": [
+                    "results\\runWithoutInertieAngle\\PlayerBehaviour\\PlayerBehaviour-1999984.pt"
+                ]
+            },
+            {
+                "steps": 2217943,
+                "file_path": "results\\runWithoutInertieAngle\\PlayerBehaviour\\PlayerBehaviour-2217943.onnx",
+                "reward": 97.49999915228949,
+                "creation_time": 1713539036.049545,
+                "auxillary_file_paths": [
+                    "results\\runWithoutInertieAngle\\PlayerBehaviour\\PlayerBehaviour-2217943.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2217943,
+            "file_path": "results\\runWithoutInertieAngle\\PlayerBehaviour.onnx",
+            "reward": 97.49999915228949,
+            "creation_time": 1713539036.049545,
+            "auxillary_file_paths": [
+                "results\\runWithoutInertieAngle\\PlayerBehaviour\\PlayerBehaviour-2217943.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.2.1+cpu"
+    }
+}
