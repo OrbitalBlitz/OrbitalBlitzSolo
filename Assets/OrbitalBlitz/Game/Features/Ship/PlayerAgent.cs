@@ -160,7 +160,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
             );
             sensor.AddObservation(inertia_angle); // 1 float
 
-            for (int i = 1; i < 8; i++) { // 7 floats
+            for (int i = 1; i <= 7; i++) { // 7 floats
                 var cp_angle = AlgebraUtils.SignedAngleToObject(
                     player.AbstractShipController.gameObject,
                     RaceStateManager.Instance.circuit.NthNextRewardCheckpoint(player.Info.lastRewardCheckpoint, i).gameObject,
@@ -168,9 +168,6 @@ namespace OrbitalBlitz.Game.Features.Ship {
                 );  
                 sensor.AddObservation(cp_angle); // 1 float
             }
-            
-            // sensor.AddObservation(player.AbstractShipController.transform.position.x); // 1 float
-            // sensor.AddObservation(player.AbstractShipController.transform.position.z); // 1 float
         }
 
         public override void OnActionReceived(ActionBuffers actions) {
