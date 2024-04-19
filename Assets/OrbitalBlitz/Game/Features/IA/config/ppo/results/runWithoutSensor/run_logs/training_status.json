@@ -1,0 +1,47 @@
+{
+    "PlayerBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 499921,
+                "file_path": "results\\runWithoutSensor\\PlayerBehaviour\\PlayerBehaviour-499921.onnx",
+                "reward": 10.80156214046292,
+                "creation_time": 1713534041.7949824,
+                "auxillary_file_paths": [
+                    "results\\runWithoutSensor\\PlayerBehaviour\\PlayerBehaviour-499921.pt"
+                ]
+            },
+            {
+                "steps": 999549,
+                "file_path": "results\\runWithoutSensor\\PlayerBehaviour\\PlayerBehaviour-999549.onnx",
+                "reward": 120.14444084167481,
+                "creation_time": 1713534651.5906916,
+                "auxillary_file_paths": [
+                    "results\\runWithoutSensor\\PlayerBehaviour\\PlayerBehaviour-999549.pt"
+                ]
+            },
+            {
+                "steps": 1350322,
+                "file_path": "results\\runWithoutSensor\\PlayerBehaviour\\PlayerBehaviour-1350322.onnx",
+                "reward": 119.49019339505364,
+                "creation_time": 1713535068.3339934,
+                "auxillary_file_paths": [
+                    "results\\runWithoutSensor\\PlayerBehaviour\\PlayerBehaviour-1350322.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1350322,
+            "file_path": "results\\runWithoutSensor\\PlayerBehaviour.onnx",
+            "reward": 119.49019339505364,
+            "creation_time": 1713535068.3339934,
+            "auxillary_file_paths": [
+                "results\\runWithoutSensor\\PlayerBehaviour\\PlayerBehaviour-1350322.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.2.1+cpu"
+    }
+}
