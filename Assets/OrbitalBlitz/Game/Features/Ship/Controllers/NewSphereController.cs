@@ -1,18 +1,13 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using OrbitalBlitz.Game.Features.Player;
-using OrbitalBlitz.Game.Scenes.Race.Scripts;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UIElements;
+
 #if UNITY_EDITOR
 #endif
 
 namespace OrbitalBlitz.Game.Features.Ship.Controllers {
     public class NewSphereController : AbstractShipController {
         // [FormerlySerializedAs("sphere")] [Header("Objects")] [SerializeField] public Rigidbody RB;
-        [SerializeField] private ParticleSystem acceleration_particles;
+        [SerializeField] public ParticleSystem acceleration_particles;
         [SerializeField] private LayerMask layerMask;
 
         [Header("Stats")] 
@@ -31,7 +26,7 @@ namespace OrbitalBlitz.Game.Features.Ship.Controllers {
 
         [SerializeField] private float targetSpeed = 0f;
         [SerializeField] private Vector3 sphere_velocity;
-        [SerializeField] private float blitzTimer = 0;
+        [SerializeField] public float blitzTimer = 0;
 
         [Header("Lerp & delay")] [SerializeField]
         private float steeringLerpFactor = 2f;
