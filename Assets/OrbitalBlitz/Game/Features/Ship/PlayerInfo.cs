@@ -8,6 +8,10 @@ using OrbitalBlitz.Game.Scenes.Race.Scripts;
 using UnityEngine;
 
 namespace OrbitalBlitz.Game.Features.Ship {
+    
+    /// <summary>
+    /// Stores information about the player in the game.
+    /// </summary>
     public class PlayerInfo : MonoBehaviour {
         public int lastCheckpoint;
         public int lastRewardCheckpoint;
@@ -29,6 +33,9 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
         public Collider collider;
 
+        /// <summary>
+        /// Resets the player's information.
+        /// </summary>
         public void Reset() {
             timer = 0f;
             lastCheckpoint = 0;
@@ -37,11 +44,17 @@ namespace OrbitalBlitz.Game.Features.Ship {
             hasFinished = false;
         }
 
+        /// <summary>
+        /// Updates the timer if the player has not finished the race.
+        /// </summary>
         private void FixedUpdate() {
             if (hasFinished) return;
             timer += Time.deltaTime;
         }
 
+        /// <summary>
+        /// Subscribe collision callback to provided collider.
+        /// </summary>
         public void SetShipCollider(ShipCollider collider) {
             Debug.Log($"setting callback");
             collider.onTrigger += reactToCollision;

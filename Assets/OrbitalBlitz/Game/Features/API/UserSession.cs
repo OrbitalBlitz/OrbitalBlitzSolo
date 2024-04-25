@@ -314,8 +314,16 @@ public class UserSession : MonoBehaviour {
         if (!IsConnected()) onError?.Invoke("Cannot save medal when unauthenticated.");
         if (medal == Circuit.MedalType.NoMedal) onCompleted?.Invoke("No medal to save.");
 
-        var json_data = JsonUtility.ToJson(
-            new MedalToSave(user_id, circuit_id, medal.ToString().ToLower()));
+        string json_data;
+        try {
+            json_data = JsonUtility.ToJson(
+                new MedalToSave(user_id, circuit_id, medal.ToString().ToLower()));
+        }
+        catch {
+            onError?.Invoke("Invalid medal type (or simply no medal to save).");
+            yield break;
+        }
+        
         var values = new Dictionary<string, object> {
             { "userId", user_id },
             { "circuitId", circuit_id },

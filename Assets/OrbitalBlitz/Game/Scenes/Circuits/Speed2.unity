@@ -8114,7 +8114,7 @@ MonoBehaviour:
   Spawnpoints:
   - {fileID: 1197861237}
   Phantoms: []
-  Laps: 2
+  Laps: 1
   Id: 1714047054
 --- !u!114 &186806340
 MonoBehaviour:
