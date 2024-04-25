@@ -12,8 +12,9 @@ namespace OrbitalBlitz.Game.Scenes.Race.UI.EndMenu {
             _view.OnQuitClicked += () => { Loader.LoadScene(Loader.Scene.MainMenu); };
             _view.OnRestartClicked += () => {
                 Hide();
-                RaceStateManager.Instance.HumanPlayer.Respawn(); 
-                RaceStateManager.Instance.SwitchState(RaceStateManager.RaceState.RacePlaying);
+                RaceStateManager.Instance.RestartRace();
+                // RaceStateManager.Instance.HumanPlayer.Respawn(); 
+                // RaceStateManager.Instance.SwitchState(RaceStateManager.RaceState.RacePlaying);
             };
             
             Hide();

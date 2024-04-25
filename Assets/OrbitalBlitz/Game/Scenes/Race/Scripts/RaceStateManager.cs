@@ -1,14 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cinemachine;
 using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
 using OrbitalBlitz.Game.Scenes.Race.UI.EndMenu;
 using OrbitalBlitz.Game.Scenes.Race.UI.EscapeMenu;
+using Unity.Barracuda;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 using UnityEngine;
 using UnityEngine.Serialization;
+using Object = UnityEngine.Object;
 
 namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
     public class RaceStateManager : MonoBehaviour {
@@ -37,6 +40,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             Testing
         }
 
+        public event Action OnRaceRestart;
         public RaceMode raceMode = RaceMode.Classic; //TODO base this value on player input
 
         [Header("UI")] [SerializeField] public EndMenuController EndMenuController;
@@ -45,6 +49,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
 
         [Header("Prefabs")] [SerializeField] public Transform PlayerPrefab;
         [SerializeField] public Transform ShipPrefab;
+        [SerializeField] public Transform TutorialPrefab;
 
         [SerializeField] public int CountDownSeconds = 0;
 
@@ -52,6 +57,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         [SerializeField] private Material GoldBotMaterial;
         [SerializeField] private Material SilverBotMaterial;
         [SerializeField] private Material BronzeBotMaterial;
+        [SerializeField] private Material DefaultBotMaterial;
         public Dictionary<Circuit.MedalType, Material> MedalMaterials;
 
         [Header("Training")] [SerializeField] public TrainingModeTypes TrainingMode = TrainingModeTypes.Disabled;
@@ -64,8 +70,11 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         public Circuit.MedalType CurrentWinnableMedal = Circuit.MedalType.Gold;
 
         public OrbitalBlitzPlayer HumanPlayer;
+        public NNModel DefaultAI;
 
-        void Start() {
+        public event Action<RaceState, RaceState> OnRaceStateChanged;
+
+        void Awake() {
             Instance = this;
             States =
                 new() {
@@ -78,13 +87,16 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
                 { Circuit.MedalType.Gold, GoldBotMaterial },
                 { Circuit.MedalType.Silver, SilverBotMaterial },
                 { Circuit.MedalType.Bronze, BronzeBotMaterial },
+                { Circuit.MedalType.NoMedal, DefaultBotMaterial },
             };
             circuit = FindObjectOfType<Circuit>();
             MainCamera = FindObjectOfType<CinemachineBrain>();
 
-            if (PlayerPrefs.HasKey("RaceMode")) {
+            if (PlayerPrefs.HasKey("RaceMode"))
                 raceMode = Enum.Parse<RaceMode>(PlayerPrefs.GetString("RaceMode"));
-            }
+
+            if (PlayerPrefs.HasKey("Tutorial") && PlayerPrefs.GetInt("Tutorial") == 1)
+                Instantiate(TutorialPrefab);
 
             SwitchState(RaceState.RaceSetup);
 
@@ -96,16 +108,27 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             }
         }
 
+        public void RestartRace() {
+            FindObjectsOfType<OrbitalBlitzPlayer>().Aggregate("", (acc, player) => {
+                DestroyImmediate(player.gameObject);
+                return acc;
+            });
+            SwitchState(RaceState.RaceSetup);
+            OnRaceRestart?.Invoke();
+        }
+
         void FixedUpdate() {
             currentRaceState.UpdateState(this);
             currentRaceState.Update(this);
         }
 
         public void SwitchState(RaceState newState) {
+            var old_state = currentState;
             currentState = newState;
             currentRaceState?.ExitState(this);
             currentRaceState = States[newState];
             currentRaceState.EnterState(this);
+            OnRaceStateChanged?.Invoke(old_state, newState);
         }
     }
 

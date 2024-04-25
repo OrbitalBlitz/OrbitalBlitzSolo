@@ -9,6 +9,7 @@ using UnityEngine.Serialization;
 public class OrbitalBlitzPlayer : MonoBehaviour {
     public PlayerInputActions Input;
     public AbstractShipController AbstractShipController;
+    public PlayerAgent Agent;
     public Collider ShipCollider;
     public GameObject Ship;
     private ShipStateMemento memento;

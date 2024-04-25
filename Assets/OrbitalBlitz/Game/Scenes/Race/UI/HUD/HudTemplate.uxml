@@ -1,7 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/OrbitalBlitz/Game/Scenes/_USS/main.uss?fileID=7433441132597879392&amp;guid=386a62d47083c3f4bae1a00091ed7d57&amp;type=3#main" />
     <ui:VisualElement name="VisualElement" class="behind" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: column; justify-content: center; align-items: center; height: 100%; margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0; -unity-font-style: bold; font-size: 24px; width: 100%;">
-        <ui:Label tabindex="0" text="0&apos;00&apos;&apos;00&apos;&apos;&apos;" display-tooltip-when-elided="true" enable-rich-text="false" name="timer" class="outlined" style="-unity-font-style: bold;" />
+        <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); flex-direction: row; justify-content: center; align-items: center; align-self: stretch;">
+            <ui:VisualElement name="medal" style="flex-grow: 0; background-color: rgb(161, 161, 161); width: 50px; height: 50px; border-top-left-radius: 30px; border-bottom-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; margin-right: 14px; align-self: center;" />
+            <ui:Label tabindex="0" text="0&apos;00&apos;&apos;00&apos;&apos;&apos;" display-tooltip-when-elided="true" enable-rich-text="false" name="timer" class="outlined" style="-unity-font-style: bold; align-self: center;" />
+        </ui:VisualElement>
         <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; flex-direction: row; justify-content: space-between;">
             <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); width: 20%;" />
         </ui:VisualElement>

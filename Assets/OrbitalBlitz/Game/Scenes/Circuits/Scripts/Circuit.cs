@@ -13,16 +13,16 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts {
         public static Circuit Instance;
         
         public enum MedalType {
-            NoMedal,
             Gold,
             Silver,
-            Bronze
+            Bronze,
+            NoMedal,
         }
         
-        [SerializeField] public static Color GoldColor = new (255, 243, 100);
-        [SerializeField] public static Color SilverColor = new (191, 191, 191);
-        [SerializeField] public static Color BronzeColor = new (166, 81, 0);
-        [SerializeField] public static Color DefaultColor = new (84, 84, 84);
+        public static Color32 GoldColor = new    (255, 243, 100, 255);
+        public static Color32 SilverColor = new  (255, 255, 255, 255);
+        public static Color32 BronzeColor = new  (166, 81, 0, 255);
+        public static Color32 DefaultColor = new (84, 84, 84, 255);
         
         [Serializable]
         public struct Phantom {

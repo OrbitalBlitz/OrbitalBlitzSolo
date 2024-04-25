@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AbstractShipController: {fileID: 0}
+  Agent: {fileID: 0}
   ShipCollider: {fileID: 0}
   Ship: {fileID: 0}
   Info: {fileID: 1449983167823980825}

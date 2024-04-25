@@ -16,27 +16,45 @@ namespace OrbitalBlitz.Game.Scenes.SelectCircuit.UI {
         [FormerlySerializedAs("_view")] [SerializeField]
         private SelectCircuitView view;
 
-        private Loader.CircuitInfo _selectedCircuit;
+        [Header("Debug")] [SerializeField] private Loader.CircuitInfo _selectedCircuit;
 
         private void Start() {
             view.setCircuitList(getBasicCircuitInfo());
-            StartCoroutine(getCircuitsWithRecords(list => {
-                view.setCircuitList(list);
-            }));
+            StartCoroutine(getCircuitsWithRecords(
+                list => { view.setCircuitList(list); }
+            ));
             view.OnPlayClicked += loadSelectedCircuit;
             view.OnCircuitClicked += setSelectedCircuit;
             view.OnBackClicked += () => { Loader.LoadScene(Loader.Scene.MainMenu); };
 
             view.PlayClassicButton.style.display = DisplayStyle.None;
             view.PlayClockButton.style.display = DisplayStyle.None;
-            
         }
 
         private void setSelectedCircuit(Loader.CircuitInfo circuit) {
-            Loader.UnloadScene(_selectedCircuit.Scene);
-            Loader.LoadScene(circuit.Scene, LoadSceneMode.Additive);
             _selectedCircuit = circuit;
-            view.PlayClassicButton.style.display = DisplayStyle.Flex;
+
+            var is_tutorial = (circuit.Scene == Loader.Scene.Tutorial);
+            PlayerPrefs.SetInt(
+                "Tutorial",
+                 is_tutorial ? 1 : 0
+            );
+            view.PlayClockButton.text = is_tutorial ? "Tutorial" : "Clock";
+            view.PlayClassicButton.style.display = is_tutorial ? DisplayStyle.None : DisplayStyle.Flex;
+
+            Debug.Log($"Selected circuit {circuit.Name} => {(is_tutorial ? "Tutorial" : "Not Tutorial")}");
+            List<string> tolerated = new() {
+                Loader.Scene.SelectCircuit.ToString(),
+                _selectedCircuit.Scene.ToString()
+            };
+            for (var i = 0; i < SceneManager.sceneCount; i++) {
+                var current = SceneManager.GetSceneAt(i);
+                if (!tolerated.Contains(current.name)) {
+                    SceneManager.UnloadSceneAsync(current);
+                }
+            }
+
+            Loader.LoadScene(circuit.Scene, LoadSceneMode.Additive);
             view.PlayClockButton.style.display = DisplayStyle.Flex;
         }
 
@@ -70,10 +88,11 @@ namespace OrbitalBlitz.Game.Scenes.SelectCircuit.UI {
 
             return circuitsInfo;
         }
+
         private IEnumerator getCircuitsWithRecords(Action<List<Loader.CircuitInfo>> onComplete) {
             var circuits = Loader.Circuits;
             var circuitsWithRecords = new List<Loader.CircuitInfo>();
-            
+
             foreach (var circuit in circuits) {
                 List<Record> personalBests = new();
                 Circuit.MedalType medal = Circuit.MedalType.NoMedal;
@@ -137,6 +156,7 @@ namespace OrbitalBlitz.Game.Scenes.SelectCircuit.UI {
 
                 circuitsWithRecords.Add(circuitInfo);
             }
+
             Debug.Log($"getCircuitsWithRecords: onComplete?.Invoke({circuitsWithRecords.Count} circuits)");
             onComplete?.Invoke(circuitsWithRecords);
         }

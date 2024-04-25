@@ -37,7 +37,7 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
         const string k_reward_checkpoints_root = "reward_checkpoints";
 
         [Header("Mesh Extruding")] protected const float DEFAULT_ROAD_WIDTH = 4f;
-        [SerializeField] protected float m_roadWidth = DEFAULT_ROAD_WIDTH;
+        [FormerlySerializedAs("m_roadWidth")] [SerializeField] public float RoadWidth = DEFAULT_ROAD_WIDTH;
         [SerializeField] protected Material m_roadMaterial;
         [HideInInspector] [SerializeField] protected ExtrudeFlatRoadOnSpline m_extruder;
         [HideInInspector] [SerializeField] protected MeshFilter m_mesh_filter;
@@ -105,11 +105,11 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
             DestroyImmediate(m_mesh_collider);
             DestroyImmediate(m_container);
             DestroyImmediate(mCircuit);
+            DestroyImmediate(m_fall_catcher.gameObject);
 
             DestroyImmediate(GameObject.Find(k_spawnpoints_root));
             DestroyImmediate(GameObject.Find(k_checkpoints_root));
             DestroyImmediate(GameObject.Find(k_reward_checkpoints_root));
-            DestroyImmediate(GameObject.Find(k_fallcatcher_root));
 
             m_generated = false;
         }
@@ -156,7 +156,7 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
 
             m_checkpoint_instantiator.MinSpacing = (int)(m_spline.Knots.Count() / m_cp_every_n_node);
             m_checkpoint_instantiator.MinPositionOffset = new Vector3(0f, 1f, 0f);
-            float scale_factor = m_roadWidth / DEFAULT_ROAD_WIDTH;
+            float scale_factor = RoadWidth / DEFAULT_ROAD_WIDTH;
             m_checkpoint_instantiator.MinScaleOffset = new Vector3(scale_factor - 1, scale_factor - 1, scale_factor - 1);
             m_checkpoint_instantiator.UpdateInstances();
 
@@ -184,7 +184,7 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
 
             m_reward_checkpoint_instantiator.MinSpacing = (int)(m_spline.Knots.Count() / m_reward_cp_every_n_node);
             m_reward_checkpoint_instantiator.MinPositionOffset = new Vector3(0f, 1f, 0f);
-            float scale_factor = m_roadWidth / DEFAULT_ROAD_WIDTH;
+            float scale_factor = RoadWidth / DEFAULT_ROAD_WIDTH;
             m_reward_checkpoint_instantiator.MinScaleOffset = new Vector3(scale_factor - 1, scale_factor - 1, scale_factor - 1);
             m_reward_checkpoint_instantiator.UpdateInstances();
 

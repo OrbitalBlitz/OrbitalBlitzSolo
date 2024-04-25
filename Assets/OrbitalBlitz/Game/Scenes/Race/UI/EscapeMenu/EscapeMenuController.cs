@@ -14,8 +14,9 @@ namespace OrbitalBlitz.Game.Scenes.Race.UI.EscapeMenu {
             _view.OnQuitClicked += () => { Loader.LoadScene(Loader.Scene.MainMenu); };
             _view.OnResumeClicked += () => { Hide(); };
             _view.OnRestartClicked += () => {
-                RaceStateManager.Instance.HumanPlayer.Respawn();
-                RaceStateManager.Instance.SwitchState(RaceStateManager.RaceState.RaceCountDown);
+                RaceStateManager.Instance.RestartRace();
+                // RaceStateManager.Instance.HumanPlayer.Respawn();
+                // RaceStateManager.Instance.SwitchState(RaceStateManager.RaceState.RaceCountDown);
             };
             _view.OnRespawnClicked += () => { RaceStateManager.Instance.HumanPlayer.RespawnToLastCheckpoint(); };
             

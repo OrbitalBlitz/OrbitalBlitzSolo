@@ -236,7 +236,8 @@ namespace OrbitalBlitz.Game.Features.Ship {
                     m => { Debug.Log(m);},
                     e => { Debug.Log(e); }
                 ));
-                
+
+                if (RaceStateManager.Instance.raceMode != RaceStateManager.RaceMode.Classic) return;
                 wonMedal = RaceStateManager.Instance.CurrentWinnableMedal;
                 StartCoroutine(UserSession.Instance.SaveMedal(
                     RaceStateManager.Instance.circuit.Id.ToString(), 

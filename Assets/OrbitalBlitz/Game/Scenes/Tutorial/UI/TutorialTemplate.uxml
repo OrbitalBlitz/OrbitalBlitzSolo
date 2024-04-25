@@ -1,0 +1,51 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/OrbitalBlitz/Game/Scenes/_USS/main.uss?fileID=7433441132597879392&amp;guid=386a62d47083c3f4bae1a00091ed7d57&amp;type=3#main" />
+    <ui:VisualElement name="VisualElement" class="behind" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; justify-content: flex-start; align-items: center; height: 100%; margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0; -unity-font-style: bold; font-size: 24px; width: 100%; align-self: auto;">
+        <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0.45); width: auto; flex-direction: column; justify-content: space-between; border-top-left-radius: 11px; border-bottom-left-radius: 11px; border-top-right-radius: 11px; border-bottom-right-radius: 11px; margin-left: 11px; margin-right: 11px; margin-top: 11px; margin-bottom: 11px; padding-left: 13px; padding-right: 13px; padding-top: 13px; padding-bottom: 13px;">
+            <ui:VisualElement name="challenge" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); min-width: 0; flex-direction: column; font-size: 14px; color: rgb(255, 255, 255); margin-bottom: 10px;">
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-items: center; -unity-font-style: bold;">
+                    <ui:VisualElement name="boost_checkbox" style="flex-grow: 0; background-color: rgba(214, 214, 214, 0.54); width: 25px; height: 25px; flex-shrink: 0; border-top-left-radius: 78px; border-bottom-left-radius: 78px; border-top-right-radius: 78px; border-bottom-right-radius: 78px;" />
+                    <ui:Label tabindex="-1" text="Use your boost" display-tooltip-when-elided="true" name="boost_text" style="margin-left: 10px;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                    <ui:Label tabindex="-1" text="Press [maj]" display-tooltip-when-elided="true" style="font-size: 8px; -unity-font-style: bold-and-italic; margin-top: 0; padding-top: 0; align-self: flex-end;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="challenge" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); min-width: 0; flex-direction: column; font-size: 14px; color: rgb(255, 255, 255); margin-bottom: 10px;">
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-items: center; -unity-font-style: bold;">
+                    <ui:VisualElement name="drift_checkbox" style="flex-grow: 0; background-color: rgba(214, 214, 214, 0.54); width: 25px; height: 25px; flex-shrink: 0; border-top-left-radius: 78px; border-bottom-left-radius: 78px; border-top-right-radius: 78px; border-bottom-right-radius: 78px;" />
+                    <ui:Label tabindex="-1" text="Drift 5 seconds" display-tooltip-when-elided="true" name="drift_text" style="margin-left: 10px;" />
+                    <ui:Label tabindex="-1" text="0.0" display-tooltip-when-elided="true" name="drift_time" style="-unity-font-style: normal; margin-left: 30px;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                    <ui:Label tabindex="-1" text="Press [space] when your trail becomes yellow" display-tooltip-when-elided="true" style="font-size: 8px; -unity-font-style: bold-and-italic; margin-top: 0; padding-top: 0; align-self: flex-end;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="challenge" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); min-width: 0; flex-direction: column; font-size: 14px; color: rgb(255, 255, 255); margin-bottom: 10px;">
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-items: center; -unity-font-style: bold;">
+                    <ui:VisualElement name="respawn_checkbox" style="flex-grow: 0; background-color: rgba(214, 214, 214, 0.54); width: 25px; height: 25px; flex-shrink: 0; border-top-left-radius: 78px; border-bottom-left-radius: 78px; border-top-right-radius: 78px; border-bottom-right-radius: 78px;" />
+                    <ui:Label tabindex="-1" text="Respawn to checkpoint" display-tooltip-when-elided="true" name="respawn_text" style="margin-left: 10px;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-self: flex-end;">
+                    <ui:Label tabindex="-1" text="Press [R]" display-tooltip-when-elided="true" style="font-size: 8px; -unity-font-style: bold-and-italic; margin-top: 0; padding-top: 0; align-self: center;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="challenge" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); min-width: 0; flex-direction: column; font-size: 14px; color: rgb(255, 255, 255); margin-bottom: 10px;">
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-items: center; -unity-font-style: bold;">
+                    <ui:VisualElement name="restart_checkbox" style="flex-grow: 0; background-color: rgba(214, 214, 214, 0.54); width: 25px; height: 25px; flex-shrink: 0; border-top-left-radius: 78px; border-bottom-left-radius: 78px; border-top-right-radius: 78px; border-bottom-right-radius: 78px;" />
+                    <ui:Label tabindex="-1" text="Restart the race" display-tooltip-when-elided="true" name="restart_text" style="margin-left: 10px;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+                    <ui:Label tabindex="-1" text="Press [T]" display-tooltip-when-elided="true" style="font-size: 8px; -unity-font-style: bold-and-italic; margin-top: 0; padding-top: 0; align-self: flex-end;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="challenge" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); min-width: 0; flex-direction: column; font-size: 14px; color: rgb(255, 255, 255); margin-bottom: 10px;">
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; align-items: center; -unity-font-style: bold;">
+                    <ui:VisualElement name="finish_checkbox" style="flex-grow: 0; background-color: rgba(214, 214, 214, 0.54); width: 25px; height: 25px; flex-shrink: 0; border-top-left-radius: 78px; border-bottom-left-radius: 78px; border-top-right-radius: 78px; border-bottom-right-radius: 78px;" />
+                    <ui:Label tabindex="-1" text="Finish the race" display-tooltip-when-elided="true" name="finish_text" style="margin-left: 10px;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

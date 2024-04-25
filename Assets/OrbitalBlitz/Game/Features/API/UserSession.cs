@@ -2,18 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
-using JetBrains.Annotations;
+using OrbitalBlitz.Game.Features.API;
 using OrbitalBlitz.Game.Features.API.Models;
-using OrbitalBlitz.Game.Scenes;
 using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
-using Palmmedia.ReportGenerator.Core.Common;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
-using Random = UnityEngine.Random;
 
 public class UserSession : MonoBehaviour {
     public static UserSession Instance;
@@ -26,7 +21,18 @@ public class UserSession : MonoBehaviour {
     public event Action<string> onLogInError;
 
     private bool TEST = false;
-    private string URL = "http://localhost:3001/api";
+
+    private string URL {
+        get {
+            string url;
+            #if UNITY_EDITOR
+            url =  "https://127.0.0.1/api";
+            #else
+            url = "https://5.39.76.139/api";
+            #endif
+            return url;
+        }
+    }
 
     private HttpClient _client;
 
@@ -65,6 +71,7 @@ public class UserSession : MonoBehaviour {
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);
             webRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
             webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            webRequest.certificateHandler = new BypassCertificate();
             webRequest.SetRequestHeader("Content-Type", "application/json");
             // webRequest.SetRequestHeader("Authorization", "Bearer your_access_token_here");
 
@@ -101,6 +108,8 @@ public class UserSession : MonoBehaviour {
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json_data);
             webRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
             webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            webRequest.certificateHandler = new BypassCertificate();
+
             webRequest.SetRequestHeader("Content-Type", "application/json");
 
             yield return webRequest.SendWebRequest();
@@ -135,6 +144,8 @@ public class UserSession : MonoBehaviour {
         }
 
         UnityWebRequest webRequest = UnityWebRequest.Get($"{URL}/records/{user_id}/{circuit_id}");
+        webRequest.certificateHandler = new BypassCertificate();
+
         webRequest.SetRequestHeader("Authorization", $"Bearer {token}");
 
         yield return webRequest.SendWebRequest(); // This will pause the coroutine and resume after the request is done
@@ -186,6 +197,8 @@ public class UserSession : MonoBehaviour {
         UnityWebRequest webRequest = UnityWebRequest.Get($"{URL}/medals/{user_id}/{circuit_id}");
         webRequest.SetRequestHeader("Authorization", $"Bearer {token}");
 
+        webRequest.certificateHandler = new BypassCertificate();
+
         yield return webRequest.SendWebRequest();
 
         if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
@@ -225,6 +238,8 @@ public class UserSession : MonoBehaviour {
         }
 
         UnityWebRequest webRequest = UnityWebRequest.Get($"{URL}/records/{circuit_id}");
+        webRequest.certificateHandler = new BypassCertificate();
+
         yield return webRequest.SendWebRequest();
 
         if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
@@ -270,6 +285,8 @@ public class UserSession : MonoBehaviour {
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json_data);
             webRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
             webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            webRequest.certificateHandler = new BypassCertificate();
+
             webRequest.SetRequestHeader("Content-Type", "application/json");
             // webRequest.SetRequestHeader("Authorization", $"Bearer {token}");
 
@@ -314,6 +331,8 @@ public class UserSession : MonoBehaviour {
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json_data);
             webRequest.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
             webRequest.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            webRequest.certificateHandler = new BypassCertificate();
+
             webRequest.SetRequestHeader("Content-Type", "application/json");
             webRequest.SetRequestHeader("Authorization", $"Bearer {token}");
 

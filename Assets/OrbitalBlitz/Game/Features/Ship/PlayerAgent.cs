@@ -25,6 +25,10 @@ namespace OrbitalBlitz.Game.Features.Ship {
         private float base_respawn_timer = 1f;
         private float respawn_timer = 1f;
 
+        public event Action OnPlayerRespawnedToLastCheckpoint;
+        public event Action OnPlayerToggledBoost;
+
+
         private void Update() {
             respawn_timer = Math.Max(0, respawn_timer - Time.deltaTime);
             AddReward(-Time.deltaTime / 2);
@@ -140,6 +144,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
 
         public override void OnEpisodeBegin() {
             // Debug.Log($"{gameObject.name} : OnEpisodeBegin (reward is {GetCumulativeReward()})!");
+            if (player == null) return; 
             player.Respawn();
         }
 
@@ -180,7 +185,10 @@ namespace OrbitalBlitz.Game.Features.Ship {
             player.AbstractShipController.Steer(actions.ContinuousActions[1]);
 
             player.AbstractShipController.Brake(actions.DiscreteActions[1]);
-            if (Convert.ToBoolean(actions.DiscreteActions[2])) player.AbstractShipController.ActivateBlitz();
+            if (Convert.ToBoolean(actions.DiscreteActions[2])) {
+                player.AbstractShipController.ActivateBlitz();
+                OnPlayerToggledBoost?.Invoke();
+            }
             
             if (!IsHuman) return;
             
@@ -188,14 +196,16 @@ namespace OrbitalBlitz.Game.Features.Ship {
                 if (respawn_timer == 0) {
                     AddReward(-5f);
                     player.RespawnToLastCheckpoint();
+                    OnPlayerRespawnedToLastCheckpoint?.Invoke();
                     respawn_timer = base_respawn_timer;
                 }
 
             if (Convert.ToBoolean(actions.DiscreteActions[3]))
                 if (respawn_timer == 0) { 
-                    AddReward(-1f);
-                    EndEpisode();
+                    // AddReward(-1f);
+                    // EndEpisode();
                     // player.Respawn();
+                    RaceStateManager.Instance.RestartRace();
                     respawn_timer = base_respawn_timer;
                 }
         }

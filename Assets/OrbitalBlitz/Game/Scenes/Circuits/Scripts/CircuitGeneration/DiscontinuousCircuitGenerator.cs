@@ -2,11 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
-using Unity.Splines.Examples;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Splines;
-using UnityEditor.Splines;
 
 namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
     [ExecuteInEditMode]

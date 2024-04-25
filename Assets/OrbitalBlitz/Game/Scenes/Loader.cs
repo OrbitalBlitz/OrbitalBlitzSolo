@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using OrbitalBlitz.Game.Features.API.Models;
 using OrbitalBlitz.Game.Scenes.Circuits.Scripts;
@@ -6,6 +7,7 @@ using UnityEngine.SceneManagement;
 namespace OrbitalBlitz.Game.Scenes {
     public static class Loader {
 
+        [Serializable]
         public struct CircuitInfo {
             public string Name;
             public long Id;
@@ -20,23 +22,72 @@ namespace OrbitalBlitz.Game.Scenes {
         
         public static List<CircuitInfo> Circuits = new() {
             new CircuitInfo {
-                Name = "Level1",
-                Id = 1712506995,
-                Scene = Scene.Level1,
+                Name = "Tutorial",
+                Id = 0,
+                Scene = Scene.Tutorial,
                 PersonalBests = new(),
                 WorldBests = new()
             },
             new CircuitInfo {
-                Name = "Level2",
-                Id = 2,
-                Scene = Scene.Level2,
+                Name = "Precision - 1",
+                Id = 1713687387,
+                Scene = Scene.Precision1,
                 PersonalBests = new(),
                 WorldBests = new()
             },
             new CircuitInfo {
-                Name = "Level3",
-                Id = 3,
-                Scene = Scene.Level3,
+                Name = "Speed - 1",
+                Id = 1714047001,
+                Scene = Scene.Speed1,
+                PersonalBests = new(),
+                WorldBests = new()
+            },
+            new CircuitInfo {
+                Name = "Endurance - 1",
+                Id = 1714045896,
+                Scene = Scene.Endurance1,
+                PersonalBests = new(),
+                WorldBests = new()
+            },
+            new CircuitInfo {
+                Name = "Precision - 2",
+                Id = 1713687402,
+                Scene = Scene.Precision2,
+                PersonalBests = new(),
+                WorldBests = new()
+            },
+            new CircuitInfo {
+                Name = "Speed - 2",
+                Id = 1714047054,
+                Scene = Scene.Speed2,
+                PersonalBests = new(),
+                WorldBests = new()
+            },
+            new CircuitInfo {
+                Name = "Endurance - 2",
+                Id = 1714046173,
+                Scene = Scene.Endurance2,
+                PersonalBests = new(),
+                WorldBests = new()
+            },
+            new CircuitInfo {
+                Name = "Precision - 3",
+                Id = 1714046896,
+                Scene = Scene.Precision3,
+                PersonalBests = new(),
+                WorldBests = new()
+            },
+            new CircuitInfo {
+                Name = "Speed - 3",
+                Id = 1714047145,
+                Scene = Scene.Speed3,
+                PersonalBests = new(),
+                WorldBests = new()
+            },
+            new CircuitInfo {
+                Name = "Endurance - 3",
+                Id = 1714046749,
+                Scene = Scene.Endurance3,
                 PersonalBests = new(),
                 WorldBests = new()
             }
@@ -46,12 +97,16 @@ namespace OrbitalBlitz.Game.Scenes {
             MainMenu,
             SelectCircuit,
             Race,
-            Level1,
-            Level2,
-            Level3,
-            // TestCircuit_1,
-            // TestCircuitGen,
-            // TestCircuitGen_Custom
+            Tutorial,
+            Precision1,
+            Speed1,
+            Endurance1,
+            Precision2,
+            Speed2,
+            Endurance2,
+            Precision3,
+            Speed3,
+            Endurance3
         }
 
         public static void LoadScene(Scene scene, LoadSceneMode mode = LoadSceneMode.Single) {

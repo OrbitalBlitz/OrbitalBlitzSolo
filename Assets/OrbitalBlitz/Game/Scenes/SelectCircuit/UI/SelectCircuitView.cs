@@ -36,10 +36,13 @@ namespace OrbitalBlitz.Game.Scenes.SelectCircuit.UI {
             BackButton.clicked += () => { OnBackClicked?.Invoke(); };
             
             _listView = root.Q<ListView>("ListView");
+            _listView.itemsChosen += objects => {
+                Debug.Log($"Objects chosen : {objects.Select(o => o.ToString()).Aggregate((acc, o) => $"{acc},{o}")}");
+            };
             _circuitElementTemplate = Resources.Load<VisualTreeAsset>("CircuitElement");
             
         }
-        
+
         public void setCircuitList(List<Loader.CircuitInfo> circuits) {
             VisualElement MakeItem() {
                 return _circuitElementTemplate.CloneTree().contentContainer;
@@ -47,12 +50,17 @@ namespace OrbitalBlitz.Game.Scenes.SelectCircuit.UI {
             void BindItem(VisualElement element, int index) {
                 
                 Loader.CircuitInfo circuit = (Loader.CircuitInfo)_listView.itemsSource[index];
+                Debug.Log($"Binding circuit {index} ({circuit.Name})");
                 element.Q<Label>("text_name").text = circuit.Name;
                 
+                
                 Button joinButton = element.Q<Button>("btn_select");
-                joinButton.clicked += () => {
+                Action clickHandler = () => {
+                    Debug.Log($"Clicked on circuit {circuit.Name}");
                     OnCircuitClicked?.Invoke(circuit);
                 };
+                joinButton.clicked += clickHandler;
+                joinButton.userData = clickHandler;
                 
                 Color medal_color;      
                 switch(circuit.Medal)
@@ -108,6 +116,14 @@ namespace OrbitalBlitz.Game.Scenes.SelectCircuit.UI {
                     element.Q<VisualElement>("div_pbs").style.display = DisplayStyle.None;
 
             }
+            
+            void UnbindItem(VisualElement element, int index) {
+                Button joinButton = element.Q<Button>("btn_select");
+                Action clickHandler = joinButton.userData as Action;
+                if (clickHandler != null) {
+                    joinButton.clicked -= clickHandler;
+                }
+            }
         
 
             try {
@@ -116,6 +132,9 @@ namespace OrbitalBlitz.Game.Scenes.SelectCircuit.UI {
                 _listView.itemHeight = 150; // set an item height
                 _listView.makeItem = MakeItem;
                 _listView.bindItem = BindItem;
+                _listView.unbindItem = UnbindItem;
+                _listView.showBoundCollectionSize = true;
+                _listView.Rebuild();
             }
             catch (Exception e) {
                 Console.WriteLine(e);

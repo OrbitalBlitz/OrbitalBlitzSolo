@@ -23,7 +23,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
         private int _lastUsedSpawnPoint;
         private bool _hasCountdownStarted;
         private bool _setupFinished;
-        private RaceStateManager _stateManager;
+        private RaceStateManager state_manager;
         private int _spawnedPlayer = 0;
 
         [SerializeField] private const float CountdownLength = 3f;
@@ -36,11 +36,11 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
 
         public override void EnterState(RaceStateManager context) {
             base.EnterState(context);
-            _stateManager = context;
+            state_manager = context;
             
             Debug.Log("RaceManager/Setup : RaceSetup beginning...");
 
-            if (_stateManager.TrainingMode != RaceStateManager.TrainingModeTypes.Disabled) {
+            if (state_manager.TrainingMode != RaceStateManager.TrainingModeTypes.Disabled) {
                 TrainingSetup();
                 _setupFinished = true;
                 return;
@@ -54,21 +54,37 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
 
         private void PlayingSetup() {
             var ( human_player,  human_player_ship) = spawnPlayer();
+            state_manager.CurrentWinnableMedal = Circuit.MedalType.NoMedal;
 
-            if (_stateManager.raceMode == RaceStateManager.RaceMode.Classic) {
-                foreach (var phantom in _stateManager.circuit.Phantoms) {
-                    var (bot_player, _ ) = spawnPlayer(
-                        isHuman: false,
-                        material: _stateManager.MedalMaterials[phantom.Medal],
-                        alpha: 0.3f,
-                        model: phantom.Model
+            if (state_manager.raceMode == RaceStateManager.RaceMode.Classic) {
+                state_manager.CurrentWinnableMedal = Circuit.MedalType.Gold;
+                if (state_manager.circuit.Phantoms.Count > 0) {
+                    foreach (var phantom in state_manager.circuit.Phantoms) {
+                        var (bot_player, _ ) = spawnPlayer(
+                            isHuman: false,
+                            material: state_manager.MedalMaterials[phantom.Medal],
+                            alpha: 0.3f,
+                            model: phantom.Model
+                            );
+    
+                        bot_player.Info.onHasFinished += f => {
+                            state_manager.CurrentWinnableMedal += 1;
+                        };
+                    }
+                }
+                else if (state_manager.DefaultAI != null) {
+                    for (var i = 0; i < 3; i++) {
+                        var (bot_player, _ ) = spawnPlayer(
+                            isHuman: false,
+                            material: state_manager.MedalMaterials[Circuit.MedalType.NoMedal],
+                            alpha: 0.3f,
+                            model: state_manager.DefaultAI
                         );
-
-                    bot_player.Info.onHasFinished += f => {
-                        _stateManager.CurrentWinnableMedal = _stateManager.CurrentWinnableMedal > phantom.Medal
-                            ? _stateManager.CurrentWinnableMedal
-                            : phantom.Medal;
-                    };
+    
+                        bot_player.Info.onHasFinished += f => {
+                            state_manager.CurrentWinnableMedal += 1;
+                        };
+                    }
                 }
             }
         }
@@ -77,7 +93,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             OrbitalBlitzPlayer human_player;
             GameObject human_player_ship;
             
-            switch (_stateManager.TrainingMode) {
+            switch (state_manager.TrainingMode) {
                 
                 case RaceStateManager.TrainingModeTypes.Recording:
                     ( human_player,  human_player_ship) = spawnPlayer();
@@ -97,11 +113,11 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
                     break;
                 
                 case RaceStateManager.TrainingModeTypes.Training:
-                    for (var i = 0; i < _stateManager.NumberOfAgents; i++) {
+                    for (var i = 0; i < state_manager.NumberOfAgents; i++) {
                         spawnPlayer(
                             isHuman: false, 
-                            alpha: _stateManager.BotAlpha, 
-                            render: _stateManager.RenderAgents);
+                            alpha: state_manager.BotAlpha, 
+                            render: state_manager.RenderAgents);
                     }
                     break;
             }
@@ -116,17 +132,17 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             ) {
             
             Debug.Log($"\t[RaceManager/Setup] : SpawnPlayer beginning ({(isHuman ? "Human" : "Bot")})");
-            int spawnpointsCount = _stateManager.circuit.Spawnpoints.Count;
+            int spawnpointsCount = state_manager.circuit.Spawnpoints.Count;
             int i = (_lastUsedSpawnPoint + 1) % spawnpointsCount;
-            Transform spTransform = _stateManager.circuit.Spawnpoints[i].gameObject.transform;
+            Transform spTransform = state_manager.circuit.Spawnpoints[i].gameObject.transform;
 
             var spPosition = spTransform.position;
             var spRotation = spTransform.rotation;
 
-            Transform player_tf = Object.Instantiate(_stateManager.PlayerPrefab);
+            Transform player_tf = Object.Instantiate(state_manager.PlayerPrefab);
             player_tf.gameObject.name = $"player_{_spawnedPlayer}";
             
-            Transform ship_tf = Object.Instantiate(_stateManager.ShipPrefab, spPosition, spRotation, player_tf);
+            Transform ship_tf = Object.Instantiate(state_manager.ShipPrefab, spPosition, spRotation, player_tf);
             ship_tf.gameObject.name = $"ship_{_spawnedPlayer}";
             var skin = ship_tf.gameObject.GetComponentInChildren<ShipSkin>();
             
@@ -138,6 +154,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
             if (!render) skin.gameObject.GetComponent<MeshRenderer>().enabled = false;
 
             var agent = player_tf.GetComponent<PlayerAgent>();
+            player.Agent = agent;
             if (!isHuman) {
                 var systems = ship_tf.gameObject.GetComponentsInChildren<ParticleSystem>();
                 foreach (var sys in systems) {
@@ -149,7 +166,7 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
                 Object.DestroyImmediate(virtual_camera.gameObject);
             }
             else {
-                _stateManager.HumanPlayer = player;
+                state_manager.HumanPlayer = player;
                 agent.IsHuman = true;
                 player.Input.defaultMap.ToggleEscapeMenu.started += toggleEscapeMenuCallback;
                 ship_tf.GetComponentInChildren<CinemachineVirtualCamera>().Priority = 100; 
@@ -159,6 +176,9 @@ namespace OrbitalBlitz.Game.Scenes.Race.Scripts {
 
             if (!isHuman || RaceStateManager.Instance.TrainingMode == RaceStateManager.TrainingModeTypes.Recording) {
                 ship_tf.GetComponentInChildren<AbstractShipController>().IsHuman = false;
+            }
+            else {
+                ship_tf.GetComponentInChildren<AbstractShipController>().IsHuman = true;
             }
 
             _spawnedPlayer++;

@@ -1,0 +1,65 @@
+{
+    "PlayerBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 6499849,
+                "file_path": "results\\2024.04.18_NoImitation_NoNormalize_BigNN_SmallSensors_NoFallPenalty_NoPosition_r3\\PlayerBehaviour\\PlayerBehaviour-6499849.onnx",
+                "reward": 142.42829069980354,
+                "creation_time": 1713446953.323818,
+                "auxillary_file_paths": [
+                    "results\\2024.04.18_NoImitation_NoNormalize_BigNN_SmallSensors_NoFallPenalty_NoPosition_r3\\PlayerBehaviour\\PlayerBehaviour-6499849.pt"
+                ]
+            },
+            {
+                "steps": 6999934,
+                "file_path": "results\\2024.04.18_NoImitation_NoNormalize_BigNN_SmallSensors_NoFallPenalty_NoPosition_r3\\PlayerBehaviour\\PlayerBehaviour-6999934.onnx",
+                "reward": 145.04166308316317,
+                "creation_time": 1713447247.2590806,
+                "auxillary_file_paths": [
+                    "results\\2024.04.18_NoImitation_NoNormalize_BigNN_SmallSensors_NoFallPenalty_NoPosition_r3\\PlayerBehaviour\\PlayerBehaviour-6999934.pt"
+                ]
+            },
+            {
+                "steps": 7499721,
+                "file_path": "results\\2024.04.18_NoImitation_NoNormalize_BigNN_SmallSensors_NoFallPenalty_NoPosition_r3\\PlayerBehaviour\\PlayerBehaviour-7499721.onnx",
+                "reward": null,
+                "creation_time": 1713447539.1870062,
+                "auxillary_file_paths": [
+                    "results\\2024.04.18_NoImitation_NoNormalize_BigNN_SmallSensors_NoFallPenalty_NoPosition_r3\\PlayerBehaviour\\PlayerBehaviour-7499721.pt"
+                ]
+            },
+            {
+                "steps": 7999875,
+                "file_path": "results\\2024.04.18_NoImitation_NoNormalize_BigNN_SmallSensors_NoFallPenalty_NoPosition_r3\\PlayerBehaviour\\PlayerBehaviour-7999875.onnx",
+                "reward": 140.93951225376898,
+                "creation_time": 1713447841.7315955,
+                "auxillary_file_paths": [
+                    "results\\2024.04.18_NoImitation_NoNormalize_BigNN_SmallSensors_NoFallPenalty_NoPosition_r3\\PlayerBehaviour\\PlayerBehaviour-7999875.pt"
+                ]
+            },
+            {
+                "steps": 8406519,
+                "file_path": "results\\2024.04.18_NoImitation_NoNormalize_BigNN_SmallSensors_NoFallPenalty_NoPosition_r3\\PlayerBehaviour\\PlayerBehaviour-8406519.onnx",
+                "reward": 142.64678395122564,
+                "creation_time": 1713448099.1526582,
+                "auxillary_file_paths": [
+                    "results\\2024.04.18_NoImitation_NoNormalize_BigNN_SmallSensors_NoFallPenalty_NoPosition_r3\\PlayerBehaviour\\PlayerBehaviour-8406519.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 8406519,
+            "file_path": "results\\2024.04.18_NoImitation_NoNormalize_BigNN_SmallSensors_NoFallPenalty_NoPosition_r3\\PlayerBehaviour.onnx",
+            "reward": 142.64678395122564,
+            "creation_time": 1713448099.1526582,
+            "auxillary_file_paths": [
+                "results\\2024.04.18_NoImitation_NoNormalize_BigNN_SmallSensors_NoFallPenalty_NoPosition_r3\\PlayerBehaviour\\PlayerBehaviour-8406519.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

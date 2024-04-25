@@ -18,7 +18,11 @@ namespace OrbitalBlitz.Game.Scenes.Circuits.Scripts.CircuitGeneration {
     [RequireComponent(typeof(MeshCollider))]
     public class ExtrudeFlatRoadOnSpline : MonoBehaviour {
         [SerializeField] List<SplineData<float>> m_Widths = new();
-        [SerializeField] float m_default_road_width = 5f;
+        private float m_default_road_width;
+
+        private void Awake() {
+            m_default_road_width = gameObject.GetComponent<BasicCircuitGenerator>().RoadWidth;
+        }
 
         public List<SplineData<float>> Widths {
             get {
