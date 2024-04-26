@@ -36,7 +36,11 @@ public class OrbitalBlitzPlayer : MonoBehaviour {
     }
 
     public void Respawn() {
-        Debug.Log("OBPlayer.Respawn()");
+        Debug.Log($"{gameObject.name}.OBPlayer.Respawn()");
+        if (memento == null) {
+            Debug.LogError("memento is null");
+            return;
+        }
         memento.RestoreInitialState();        
         memento.Reset();
         Info.Reset();

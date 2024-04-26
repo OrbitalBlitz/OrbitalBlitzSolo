@@ -241,6 +241,7 @@ namespace OrbitalBlitz.Game.Features.Ship {
                 
                 onHasFinished?.Invoke(timer);
                 if (UserSession.Instance == null) return;
+                if (!player.Agent.IsHuman) return;
                 
                 var final_time = TimeSpan.FromSeconds(timer).TotalMilliseconds;
                 StartCoroutine(UserSession.Instance.SaveRecord(

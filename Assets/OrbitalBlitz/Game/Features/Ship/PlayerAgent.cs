@@ -105,8 +105,10 @@ namespace OrbitalBlitz.Game.Features.Ship {
                 
                 // player.Info.onHasFinished += timer => { ; };
                 player.Info.onFall += (timer) => { player.RespawnToLastCheckpoint(); };
+                Debug.Log($"{gameObject.name} : IsHuman PlayerAgent.Init()");
                 return;
             }
+            Debug.Log($"{gameObject.name} : !IsHuman PlayerAgent.Init()");
 
             player.Info.onHasFinished += timer => {
                 Debug.Log($"{gameObject.name} finsihed");
