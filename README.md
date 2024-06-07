@@ -5,12 +5,11 @@ Orbital blitz is a racing game made by students of Epitech Lyon using Unity3D. T
 It is playable here (not working properly with Edge) : https://5.39.76.139/
 
 # Procedural Generation
-![Orbital Blitz procedural generation](images/gen_proc.gif)
+![Orbital Blitz procedural generation](images/gen_proc.gif)  
 The generation algorithm relies on the backtracking algorithm define a random path on a grid. Discontinuity is added by breaking up the generated path. A mesh is then extruded based on the final path.
 
 # Reinforcement Learning
 ![Orbital Blitz Reinforcement Learning](images/OrbitalBlitzTraining.gif)  
-
 AIs have been trained using the MLagents library on our procedurally generated circuits.  
 
 # Credits
